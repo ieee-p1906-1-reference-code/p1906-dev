@@ -1,0 +1,96 @@
+
+     P1906.1 Simulation Framework
+             Release Notes
+=====================================
+
+This file contains P1906.1 Simulation Framework release notes 
+(ordered from the most recent one).  
+
+
+Release 1.4 (29 September 2014)
+=========================
+
+Availability
+------------
+This release is available from this svn repository
+        http://ieee-p1906-1-reference-code.googlecode.com/svn/
+
+Supported platforms
+-------------------
+tested on
+       - Linux amd64 Ubuntu 12.04 with g++-4.6
+       - Mac OS X v10.6.8
+       - Windows XP
+
+New user-visible features
+-------------------------
+  - complete Molecular-base communication example
+  - scripts for evaluating channel capacity
+
+
+Release 1.3 (28 August 2014)
+=========================
+
+Availability
+------------
+This release is available from this svn repository
+        http://ieee-p1906-1-reference-code.googlecode.com/svn/
+
+Supported platforms
+-------------------
+tested on
+       - Linux amd64 Ubuntu 12.04 with g++-4.6
+       - Mac OS X v10.6.8
+       - Windows XP
+
+New user-visible features
+-------------------------
+  - complete EM-base communication example
+  - new copyright
+
+
+
+Release 1.2 (2 July 2014)
+=========================
+
+Availability
+------------
+This release is available from this svn repository
+        http://ieee-p1906-1-reference-code.googlecode.com/svn/
+
+Supported platforms
+-------------------
+tested on
+       - Linux amd64 Ubuntu 12.04 with g++-4.6
+       - Mac OS X v10.6.8
+       - Windows XP
+
+New user-visible features
+-------------------------
+  - EM-base communication example
+
+Bugs fixed
+----------
+  - Motion implementation within the core
+
+
+
+Release 1.1 (9 April 2014)
+=========================
+
+Availability
+------------
+This release is available from this svn repository
+        http://ieee-p1906-1-reference-code.googlecode.com/svn/
+
+Supported platforms
+-------------------
+tested on
+       - Linux amd64 Ubuntu 12.04 with g++-4.6
+       - Mac OS X v10.6.8
+       - Windows XP
+
+New user-visible features
+-------------------------
+  - First implementation of the P1906 core
+

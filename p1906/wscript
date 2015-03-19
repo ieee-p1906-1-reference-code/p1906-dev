@@ -1,0 +1,78 @@
+## -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
+
+def build(bld):
+    module = bld.create_ns3_module('p1906', ['network', 'spectrum'])
+    module.source = [
+    	'helper/p1906-helper.cc',
+    	'model-core/p1906-medium.cc',
+    	'model-core/p1906-net-device.cc',
+    	'model-core/p1906-message-carrier.cc',
+    	'model-core/p1906-field.cc',
+    	'model-core/p1906-motion.cc',
+    	'model-core/p1906-perturbation.cc',
+    	'model-core/p1906-specificity.cc',
+    	'model-core/p1906-communication-interface.cc',
+    	'model-core/p1906-transmitter-communication-interface.cc',
+    	'model-core/p1906-receiver-communication-interface.cc',
+    	
+    	'model-em/p1906-em-field.cc',
+		'model-em/p1906-em-motion.cc',
+		'model-em/p1906-em-message-carrier.cc',
+		'model-em/p1906-em-perturbation.cc',
+		'model-em/p1906-em-specificity.cc',
+		'model-em/p1906-em-communication-interface.cc',
+    	'model-em/p1906-em-transmitter-communication-interface.cc',
+    	'model-em/p1906-em-receiver-communication-interface.cc',
+    	
+    	'model-mol/p1906-mol-field.cc',
+		'model-mol/p1906-mol-motion.cc',
+		'model-mol/p1906-mol-message-carrier.cc',
+		'model-mol/p1906-mol-perturbation.cc',
+		'model-mol/p1906-mol-specificity.cc',
+		'model-mol/p1906-mol-communication-interface.cc',
+    	'model-mol/p1906-mol-transmitter-communication-interface.cc',
+    	'model-mol/p1906-mol-receiver-communication-interface.cc',
+    	]
+
+    module_test = bld.create_ns3_module_test_library('p1906')
+    module_test.source = [
+        ]
+    headers = bld(features='ns3header')
+    headers.module = 'p1906'
+    headers.source = [
+        'helper/p1906-helper.h',
+        'model-core/p1906-medium.h',
+    	'model-core/p1906-net-device.h',
+    	'model-core/p1906-communication-interface.h',
+    	'model-core/p1906-transmitter-communication-interface.h',
+    	'model-core/p1906-receiver-communication-interface.h',
+		'model-core/p1906-message-carrier.h',
+    	'model-core/p1906-field.h',
+    	'model-core/p1906-motion.h',
+    	'model-core/p1906-perturbation.h',
+    	'model-core/p1906-specificity.h',
+    	
+    	'model-em/p1906-em-field.h',
+		'model-em/p1906-em-motion.h',
+		'model-em/p1906-em-message-carrier.h',
+		'model-em/p1906-em-perturbation.h',
+		'model-em/p1906-em-specificity.h',
+		'model-em/p1906-em-communication-interface.h',
+    	'model-em/p1906-em-transmitter-communication-interface.h',
+    	'model-em/p1906-em-receiver-communication-interface.h',
+    	
+    	'model-mol/p1906-mol-field.h',
+		'model-mol/p1906-mol-motion.h',
+		'model-mol/p1906-mol-message-carrier.h',
+		'model-mol/p1906-mol-perturbation.h',
+		'model-mol/p1906-mol-specificity.h',
+		'model-mol/p1906-mol-communication-interface.h',
+    	'model-mol/p1906-mol-transmitter-communication-interface.h',
+    	'model-mol/p1906-mol-receiver-communication-interface.h',
+    	]
+
+    if (bld.env['ENABLE_EXAMPLES']):
+      bld.recurse('examples')
+
+    bld.ns3_python_bindings()
+    

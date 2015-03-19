@@ -1,0 +1,36 @@
+
+     P1906.1 Simulation Framework
+=====================================
+
+
+== Wiki page ==
+Please, refer to the official wiki page for more details:
+https://standardswiki.comsoc.org/wiki/NS-3_simulation_framework
+
+== How installing the tool ==
+1) download and compile the latest version of ns-3
+
+hg clone http://code.nsnam.org/ns-3-dev
+cd ns-3-dev
+./waf configure
+./waf 
+
+2) download the p1906.1 simulation framework code
+from https://code.google.com/p/ieee-p1906-1-reference-code/source/checkout
+and copy paste the p1906 folder within ns-3-dev/src folder
+
+3) compile again the ns-3 simulator
+
+./waf configure
+./waf 
+
+
+== Run the simple example == 
+A simple example is stored into the ns-3-dev/p1906/example folder
+
+cp ns-3-dev/p1906/example/first-example.cc scratch
+./waf --run scratch/first-example
+
+== Run EM or MOLECULAR examples ==
+Have a look to the presentation into the docs folder 
+
