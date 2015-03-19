@@ -6,6 +6,26 @@
 This file contains P1906.1 Simulation Framework release notes 
 (ordered from the most recent one).  
 
+Release 1.5 (21 February 2015)
+=========================
+
+Availability
+------------
+This release is available from this svn repository
+        http://ieee-p1906-1-reference-code.googlecode.com/svn/
+
+Supported platforms
+-------------------
+tested on
+       - Linux amd64 Ubuntu 12.04 with g++-4.6
+       - Mac OS X v10.6.8
+       - Windows XP
+
+New user-visible features
+-------------------------
+  - extension-template folder ready to be extend for new models
+
+
 
 Release 1.4 (29 September 2014)
 =========================
