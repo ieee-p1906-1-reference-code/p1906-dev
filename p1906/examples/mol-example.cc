@@ -68,6 +68,7 @@ int main (int argc, char *argv[])
   cmd.AddValue("pulseInterval", "pulseInterval", pulseInterval);
   cmd.Parse(argc, argv);
 
+  diffusionCoefficient = diffusionCoefficient * 1e-9;
 
   Time::SetResolution(Time::NS);
 
