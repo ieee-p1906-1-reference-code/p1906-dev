@@ -1,0 +1,58 @@
+\form#0:$A = \int_S \int_t \Delta f(t) dt dS$
+\form#1:$|\vec{pt} - \vec{pt1}| \times |\vec{pt} - \vec{pt2}| / |\vec{pt2} - \vec{pt1}|$
+\form#2:$\sigma^2 = \sqrt(2 \Delta s / l_p)$
+\form#3:$l_p$
+\form#4:$\Delta$
+\form#5:$K = L_p k_BT$
+\form#6:$E = 1/2 k x^2$
+\form#7:$E = 1/2 K L (dt/ds)^2$
+\form#8:$dt/ds$
+\form#9:$R$
+\form#10:$dt/ds = 1/R$
+\form#11:$E = 1/2 K L/R^2 = 1/2 L_p L/R^2 k_BT$
+\form#12:$E_{bend} = 1/2 * (50 nm)*(6800 nm)/(42 nm)2 k_BT ~ 10^2 k_BT$
+\form#13:$1/R^2$
+\form#14:$~10^3 k_BT$
+\form#15:$ H(x) = - sum( P(x) \log P(x) ) $
+\form#16:\[ E_{mc} \over I_{mc} \]
+\form#17:$E_{mc}$
+\form#18:$I_{mc}$
+\form#19:\[ C_{r} = V_{AC} \over V_{BC} \]
+\form#20:$C_{r}$
+\form#21:$V_{AC}$
+\form#22:$V_{BC}$
+\form#23:\[ \]
+\form#24:$ $
+\form#25:\[A = \oint_S \int_t \Delta fdt dS\]
+\form#26:$t$
+\form#27:$S$
+\form#28:$f(t)$
+\form#29:$\Delta f(t)$
+\form#30:\[ V = V_{transmitter} + V_{receiver} + V_{message-carrier}\]
+\form#31:$V_{transmitter}$
+\form#32:$V_{receiver}$
+\form#33:$V_{message-carrier}$
+\form#34:\[u(s) = \partial R \over \partial s\]
+\form#35:$R(s)$
+\form#36:$s$
+\form#37:\[ \langle u(s) \dot u(0) \rangle = e^{-s \over \zeta_p}\]
+\form#38:$u(s)$
+\form#39:$u(0)$
+\form#40:$\zeta_p$
+\form#41:\[ \zeta_p = B_S \over k_B T\]
+\form#42:$B_S$
+\form#43:$k_B$
+\form#44:$T$
+\form#45:$B_S = YI$
+\form#46:$I$
+\form#47:$I = \pi r^4 \over 64$
+\form#48:$r$
+\form#49:\[ Y = 64 K_B T \over \zeta_p \pi r^4\]
+\form#50:\[ C_{r} = {V_{AC} \over V_{BC}} \]
+\form#51:\[u(s) = {\partial R \over \partial s}\]
+\form#52:\[ \langle u(s) \cdot u(0) \rangle = e^{-s \over \zeta_p}\]
+\form#53:\[ \zeta_p = {B_S \over k_B T}\]
+\form#54:$I = {\pi r^4 \over 64}$
+\form#55:\[ Y = {{64 K_B T} \over {\zeta_p \pi r^4}}\]
+\form#56:$\bar{x^2} = 2 D t$
+\form#57:$D$

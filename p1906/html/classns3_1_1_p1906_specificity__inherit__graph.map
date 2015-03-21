@@ -1,0 +1,5 @@
+<map id="ns3::P1906Specificity" name="ns3::P1906Specificity">
+<area shape="rect" id="node3" href="$classns3_1_1_extension_name_p1906_specificity.html" title="Base class implementing the Specificity component of the P1906 framework. " alt="" coords="309,5,549,32"/>
+<area shape="rect" id="node4" href="$classns3_1_1_p1906_e_m_specificity.html" title="Base class implementing the Specificity component of the P1906 framework, dedicated to the EM example..." alt="" coords="345,56,513,83"/>
+<area shape="rect" id="node5" href="$classns3_1_1_p1906_m_o_l_specificity.html" title="Base class implementing the Specificity component of the P1906 framework, dedicated to the MOLECULAR ..." alt="" coords="341,107,517,133"/>
+</map>

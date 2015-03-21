@@ -44,7 +44,7 @@ NS_LOG_COMPONENT_DEFINE ("P1906MOLCommunicationInterface");
 TypeId P1906MOLCommunicationInterface::GetTypeId (void)
 {
   static TypeId tid = TypeId ("ns3::P1906MOLCommunicationInterface")
-    .SetParent<Object> ();
+    .SetParent<P1906CommunicationInterface> ();
   return tid;
 }
 

@@ -14,6 +14,17 @@ def build(bld):
     	'model-core/p1906-communication-interface.cc',
     	'model-core/p1906-transmitter-communication-interface.cc',
     	'model-core/p1906-receiver-communication-interface.cc',
+		
+		'extension-template/extension-name-p1906-net-device.cc',
+		'extension-template/extension-name-p1906-medium.cc',
+		'extension-template/extension-name-p1906-field.cc',
+		'extension-template/extension-name-p1906-motion.cc',
+		'extension-template/extension-name-p1906-message-carrier.cc',
+		'extension-template/extension-name-p1906-perturbation.cc',
+		'extension-template/extension-name-p1906-specificity.cc',
+		'extension-template/extension-name-p1906-communication-interface.cc',
+    	'extension-template/extension-name-p1906-transmitter-communication-interface.cc',
+    	'extension-template/extension-name-p1906-receiver-communication-interface.cc',
     	
     	'model-em/p1906-em-field.cc',
 		'model-em/p1906-em-motion.cc',
@@ -32,17 +43,23 @@ def build(bld):
 		'model-mol/p1906-mol-communication-interface.cc',
     	'model-mol/p1906-mol-transmitter-communication-interface.cc',
     	'model-mol/p1906-mol-receiver-communication-interface.cc',
-    	   	
-    	'extension-template/extension-name-p1906-medium.cc',
-    	'extension-template/extension-name-p1906-net-device.cc',
-    	'extension-template/extension-name-p1906-message-carrier.cc',
-    	'extension-template/extension-name-p1906-field.cc',
-    	'extension-template/extension-name-p1906-motion.cc',
-    	'extension-template/extension-name-p1906-perturbation.cc',
-    	'extension-template/extension-name-p1906-specificity.cc',
-    	'extension-template/extension-name-p1906-communication-interface.cc',
-    	'extension-template/extension-name-p1906-transmitter-communication-interface.cc',
-    	'extension-template/extension-name-p1906-receiver-communication-interface.cc'
+    	
+        'model-motor/p1906-mol-motor-microtubule.cc',
+		'model-motor/p1906-mol-motor-field.cc',
+		'model-motor/p1906-mol-motor-motion.cc',
+		'model-motor/p1906-mol-motor-MathematicaHelper.cc',
+		'model-motor/p1906-mol-motor-MATLABHelper.cc',
+		'model-motor/p1906-metrics.cc',
+		'model-motor/p1906-mol-motor.cc',
+		'model-motor/p1906-mol-motor-tube.cc',
+		'model-motor/p1906-mol-motor-vol-surface.cc',
+		'model-motor/p1906-mol-motor-pos.cc',
+		'model-motor/p1906-mol-motor-perturbation.cc',
+		'model-motor/p1906-mol-motor-communication-interface.cc',
+    	'model-motor/p1906-mol-motor-transmitter-communication-interface.cc',
+    	'model-motor/p1906-mol-motor-receiver-communication-interface.cc',
+		'model-motor/p1906-mol-diffusion.cc',
+		'model-motor/p1906-mol-diffusion-wave.cc'
     	]
 
     module_test = bld.create_ns3_module_test_library('p1906')
@@ -62,6 +79,17 @@ def build(bld):
     	'model-core/p1906-motion.h',
     	'model-core/p1906-perturbation.h',
     	'model-core/p1906-specificity.h',
+		
+		'extension-template/extension-name-p1906-net-device.h',
+		'extension-template/extension-name-p1906-medium.h',
+		'extension-template/extension-name-p1906-field.h',
+		'extension-template/extension-name-p1906-motion.h',
+		'extension-template/extension-name-p1906-message-carrier.h',
+		'extension-template/extension-name-p1906-perturbation.h',
+		'extension-template/extension-name-p1906-specificity.h',
+		'extension-template/extension-name-p1906-communication-interface.h',
+    	'extension-template/extension-name-p1906-transmitter-communication-interface.h',
+    	'extension-template/extension-name-p1906-receiver-communication-interface.h',
     	
     	'model-em/p1906-em-field.h',
 		'model-em/p1906-em-motion.h',
@@ -81,17 +109,24 @@ def build(bld):
     	'model-mol/p1906-mol-transmitter-communication-interface.h',
     	'model-mol/p1906-mol-receiver-communication-interface.h',
 
-		'extension-template/extension-name-p1906-medium.h',
-    	'extension-template/extension-name-p1906-net-device.h',
-    	'extension-template/extension-name-p1906-message-carrier.h',
-    	'extension-template/extension-name-p1906-field.h',
-    	'extension-template/extension-name-p1906-motion.h',
-    	'extension-template/extension-name-p1906-perturbation.h',
-    	'extension-template/extension-name-p1906-specificity.h',
-    	'extension-template/extension-name-p1906-communication-interface.h',
-    	'extension-template/extension-name-p1906-transmitter-communication-interface.h',
-    	'extension-template/extension-name-p1906-receiver-communication-interface.h'
+	    'model-motor/p1906-mol-motor-field.h',
+		'model-motor/p1906-mol-motor-motion.h',
+		'model-motor/p1906-mol-motor-MathematicaHelper.h',
+		'model-motor/p1906-mol-motor-microtubule.h',
+		'model-motor/p1906-mol-motor-MATLABHelper.h',
+		'model-motor/p1906-metrics.h',
+		'model-motor/p1906-mol-motor.h',
+		'model-motor/p1906-mol-motor-tube.h',
+		'model-motor/p1906-mol-motor-vol-surface.h',
+		'model-motor/p1906-mol-motor-pos.h',
+		'model-motor/p1906-mol-motor-perturbation.h',
+		'model-motor/p1906-mol-motor-communication-interface.h',
+    	'model-motor/p1906-mol-motor-transmitter-communication-interface.h',
+    	'model-motor/p1906-mol-motor-receiver-communication-interface.h',
+		'model-motor/p1906-mol-diffusion.h',
+		'model-motor/p1906-mol-diffusion-wave.h',
 		
+		'model-motor/p1906-mol-motor-tube-characteristics.h'
     	]
 
     if (bld.env['ENABLE_EXAMPLES']):

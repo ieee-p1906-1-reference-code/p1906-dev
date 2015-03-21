@@ -1,0 +1,6 @@
+<map id="ns3::P1906ReceiverCommunicationInterface" name="ns3::P1906ReceiverCommunicationInterface">
+<area shape="rect" id="node3" href="$classns3_1_1_extension_name_p1906_receiver_communication_interface.html" title="Base class implementing a the Receiver entity of the P1906 framework. " alt="" coords="401,5,630,47"/>
+<area shape="rect" id="node4" href="$classns3_1_1_p1906_e_m_receiver_communication_interface.html" title="Base class implementing a the Receiver entity of the P1906 framework for the EM example. " alt="" coords="392,71,639,112"/>
+<area shape="rect" id="node5" href="$classns3_1_1_p1906_m_o_l___m_o_t_o_r___receiver_communication_interface.html" title="Base class implementing a the Receiver entity of the P1906 framework for the MOLECULAR Example..." alt="" coords="407,136,624,177"/>
+<area shape="rect" id="node6" href="$classns3_1_1_p1906_m_o_l_receiver_communication_interface.html" title="Base class implementing a the Receiver entity of the P1906 framework for the MOLECULAR Example..." alt="" coords="388,201,643,243"/>
+</map>

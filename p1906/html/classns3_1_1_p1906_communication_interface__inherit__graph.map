@@ -1,0 +1,6 @@
+<map id="ns3::P1906CommunicationInterface" name="ns3::P1906CommunicationInterface">
+<area shape="rect" id="node3" href="$classns3_1_1_extension_name_p1906_communication_interface.html" title="Template class implementing a communication interface, which is a container of the transmitter and th..." alt="" coords="388,5,659,47"/>
+<area shape="rect" id="node4" href="$classns3_1_1_p1906_e_m_communication_interface.html" title="Base class implementing a communication interface, which is a container of the transmitter and the re..." alt="" coords="424,71,623,112"/>
+<area shape="rect" id="node5" href="$classns3_1_1_p1906_m_o_l___m_o_t_o_r___communication_interface.html" title="ns3::P1906MOL_MOTOR\l_CommunicationInterface" alt="" coords="438,136,609,177"/>
+<area shape="rect" id="node6" href="$classns3_1_1_p1906_m_o_l_communication_interface.html" title="Base class implementing a communication interface, which is a container of the transmitter and the re..." alt="" coords="420,201,627,243"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="ns3::P1906Motion" name="ns3::P1906Motion">
+<area shape="rect" id="node3" href="$classns3_1_1_extension_name_p1906_motion.html" title="Base class implementing the Force component of the P1906 framework. " alt="" coords="5,155,224,181"/>
+<area shape="rect" id="node4" href="$classns3_1_1_p1906_e_m_motion.html" title="Base class implementing the Motion component of the P1906 framework, dedicated to the EM example..." alt="" coords="248,155,395,181"/>
+<area shape="rect" id="node5" href="$classns3_1_1_p1906_m_o_l_motion.html" title="Base class implementing the Motion component of the P1906 framework, dedicated to the MOLECULAR Examp..." alt="" coords="419,155,573,181"/>
+<area shape="rect" id="node6" href="$classns3_1_1_p1906_m_o_l___m_o_t_o_r___motion.html" title="Class extends the capability of the P1906 molecular Motion component towards molecular motor motion..." alt="" coords="411,229,581,271"/>
+</map>
