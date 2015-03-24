@@ -73,6 +73,7 @@ P1906MOL_MOTOR_MATLABHelper::P1906MOL_MOTOR_MATLABHelper ()
 	  
   */
 
+  NS_LOG_FUNCTION(this);
 }
 
 //! write a list of vectors into file fname in MATLAB loadable format
@@ -80,6 +81,7 @@ void P1906MOL_MOTOR_MATLABHelper::vectorFieldPlotMATLAB(gsl_matrix * vf, const c
 {
   FILE * pFile;
 
+  NS_LOG_FUNCTION(this);
   pFile = fopen (fname,"w");
   
   for (size_t i = 0; i < vf->size1; i++)
@@ -103,6 +105,7 @@ void P1906MOL_MOTOR_MATLABHelper::vectorFieldMeshMATLAB(gsl_matrix * vf, const c
 {
   FILE * pFile;
 
+  NS_LOG_FUNCTION(this);
   pFile = fopen (fname,"w");
   
   // find the mesh volume limits
@@ -136,8 +139,8 @@ void P1906MOL_MOTOR_MATLABHelper::vectorFieldMeshMATLAB(gsl_matrix * vf, const c
   gsl_vector_minmax (v, &vMin, &vMax);
   gsl_vector_minmax (w, &wMin, &wMax);
   
-  //printf ("xMin: %f yMin: %f zMin: %f uMin: %f vMin: %f wMin: %f\n", xMin, yMin, zMin, vMin, uMin, wMin);
-  //printf ("xMax: %f yMax: %f zMax: %f uMax: %f vMax: %f wMax: %f\n", xMax, yMax, zMax, vMax, uMax, wMax);
+  //NS_LOG_FUNCTION ("xMin: " << xMin << " yMin: " << yMin << " zMin: " << zMin << " uMin: " << uMin << " vMin: " << vMin << " wMin: " << wMin);
+  //NS_LOG_FUNCTION ("xMax: " << xMax << " yMax: " << yMax << " zMax: " << zMax << " uMax: " << uMax << " vMax: " << vMax << " wMax: " << wMax);
 	
   gsl_vector * pt1 = gsl_vector_alloc (3);
   gsl_vector * pt2 = gsl_vector_alloc (3);
@@ -148,7 +151,7 @@ void P1906MOL_MOTOR_MATLABHelper::vectorFieldMeshMATLAB(gsl_matrix * vf, const c
   double yStepsize = (yMax - yMin) / 10.0;
   double zStepsize = (zMax - zMin) / 10.0;
   
-  //printf ("xStepsize: %f yStepsize: %f zStepsize: %f\n", xStepsize, yStepsize, zStepsize);
+  //NS_LOG_FUNCTION ("xStepsize: " << xStepsize << " yStepsize: " << yStepsize << " zStepsize: " << zStepsize);
   
   //! step through equidistant points in a volume and store the vector values at each point
   for (double i = xMin; i < xMax; i += xStepsize)

@@ -73,6 +73,7 @@ P1906MOL_MOTOR_MathematicaHelper::P1906MOL_MOTOR_MathematicaHelper ()
 	  
   */
 
+  NS_LOG_FUNCTION(this);
 }
 
 //! display the vector field in Mathematica format for VectorPlot3D in file fname
@@ -80,6 +81,7 @@ void P1906MOL_MOTOR_MathematicaHelper::vectorFieldPlotMma(gsl_matrix * vf, const
 {
   FILE * pFile;
 
+  NS_LOG_FUNCTION(this);
   pFile = fopen (fname,"w");
   
   fprintf (pFile, "ListVectorPlot3D[{");
@@ -108,6 +110,7 @@ void P1906MOL_MOTOR_MathematicaHelper::vectorFieldMeshMma(gsl_matrix * vf, const
 {
   FILE * pFile;
 
+  NS_LOG_FUNCTION(this);
   pFile = fopen (fname,"w");
   
   fprintf (pFile, "ListVectorPlot3D[{");
@@ -136,6 +139,7 @@ void P1906MOL_MOTOR_MathematicaHelper::vectorPlotMma(gsl_matrix * vf, const char
 {
   FILE * pFile;
 
+  NS_LOG_FUNCTION(this);
   pFile = fopen (fname,"w");
   
   fprintf (pFile, "Graphics3D[{");
@@ -162,6 +166,7 @@ void P1906MOL_MOTOR_MathematicaHelper::connectedPoints2Mma(vector<P1906MOL_MOTOR
   FILE * pFile;
   double x, y, z;
   
+  NS_LOG_FUNCTION(this);
   pFile = fopen (fname,"w");
   size_t pt = 1;
   
@@ -220,6 +225,7 @@ void P1906MOL_MOTOR_MathematicaHelper::volSurfacePlot(P1906MOL_MOTOR_Pos center,
   FILE * pFile;
   double x, y, z;
   
+  NS_LOG_FUNCTION(this);
   pFile = fopen (fname,"w");
   
   center.getPos (&x, &y, &z);
@@ -234,6 +240,7 @@ void P1906MOL_MOTOR_MathematicaHelper::plot2Mma(gsl_matrix * vals, const char * 
   FILE * pFile;
   size_t numVals = vals->size1;
   
+  NS_LOG_FUNCTION(this);
   pFile = fopen (fname,"w");
   
   fprintf (pFile, "ListLinePlot[{");
@@ -260,7 +267,8 @@ void P1906MOL_MOTOR_MathematicaHelper::tubes2Mma(gsl_matrix * tubeMatrix, size_t
   */
   FILE * pFile;
 
-  pFile = fopen (fname,"w");
+  NS_LOG_FUNCTION(this);
+  pFile = fopen (fname, "w");
   
   size_t numSegments = tubeMatrix->size1;
   size_t pt = 1;

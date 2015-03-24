@@ -161,6 +161,9 @@ public:
 
 };
 
+std::ostream& operator<<(std::ostream& out, const P1906MOL_MOTOR_MicrotubulesField& m_field);
+std::istream& operator>>(std::istream& is, P1906MOL_MOTOR_MicrotubulesField& m_field);
+
 }
 
 #endif /* P1906_MOL_MOTOR_FIELD_MICROTUBULES */

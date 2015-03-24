@@ -307,5 +307,7 @@ Second, CalculateReceivedMessageCarrier() simply returns the message carrier as 
 == Notes ==
 * vector field reconstruction using 3D interpolation is done using output data in Mathematica
 * more IEEE 1906 metrics should be implemented and tested
+* to control output, issue: setenv NS_LOG "P1906MOL_Motor=info|prefix_all:P1906MOL_MOTOR_Motion=info|prefix_all" where 
+  colons separate additional objects to log and prefix_all shows information about the context of each message.
 
 [[Category:Reference Model]]

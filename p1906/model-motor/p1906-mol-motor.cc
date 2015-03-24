@@ -40,6 +40,10 @@
  * STARTING                      +--------------------+             
  *  POINT                  lower-left corner                                             
  * </pre>
+ *
+ * Molecular motors are derived from Message Carriers and are created as fast as Packets arrive. 
+ * Thus, there may be many motors operating in parallel with one another depending upon the packet rate and motor propagation rate.
+ * There is currently no motor interaction, but this is something that should be considered.
  */
 
 #include "ns3/log.h"
@@ -50,10 +54,34 @@ namespace ns3 {
 
 NS_LOG_COMPONENT_DEFINE ("P1906MOL_Motor");
 
+NS_OBJECT_ENSURE_REGISTERED (P1906MOL_Motor);
+
 TypeId P1906MOL_Motor::GetTypeId (void)
 {
   static TypeId tid = TypeId ("ns3::P1906MOL_Motor")
-    .SetParent<P1906MOLMessageCarrier> ();
+    .SetParent<P1906MOLMessageCarrier> ()
+	.AddConstructor<P1906MOL_Motor> ()
+	.AddAttribute ("Initial X Location",
+	               "The motor starting Euclidean X position.",
+				   ObjectVectorValue (),
+				   MakeDoubleAccessor (&P1906MOL_Motor::start_x),
+				   MakeDoubleChecker<double> ())
+	.AddAttribute ("Initial Y Location",
+	               "The motor starting Euclidean Y position.",
+				   ObjectVectorValue (),
+				   MakeDoubleAccessor (&P1906MOL_Motor::start_y),
+				   MakeDoubleChecker<double> ())
+	.AddAttribute ("Initial Z Location",
+	               "The motor starting Euclidean Z position.",
+				   ObjectVectorValue (),
+				   MakeDoubleAccessor (&P1906MOL_Motor::start_z),
+				   MakeDoubleChecker<double> ())
+	//.AddAttribute ("Current location",
+	//               "The current motor location.",
+	//			   P1906MOL_MOTOR_PosValue (),
+	//			   MakeP1906MOL_MOTOR_PosAccessor (&P1906MOL_Motor::current_location),
+	//			   MakeP1906MOL_MOTOR_PosChecker ())
+	;
   return tid;
 }
 
@@ -75,7 +103,9 @@ P1906MOL_Motor::P1906MOL_Motor ()
     All random number are derived from gsl_rng *.
   */
   
-  current_location = gsl_vector_alloc (3);
+  NS_LOG_FUNCTION(this);
+  //current_location = gsl_vector_alloc (3);
+  current_location.setPos (start_x, start_y, start_z);
     
   //! start with an empty record of for tracking position
   pos_history.clear();
@@ -84,7 +114,16 @@ P1906MOL_Motor::P1906MOL_Motor ()
   T = gsl_rng_default;
   r = gsl_rng_alloc (T);
   gsl_rng_env_setup();
-  
+}
+
+std::ostream& operator<<(std::ostream& out, const P1906MOL_Motor& m)
+{
+  return out << m.t.time << " " << m.current_location;
+}
+
+std::istream& operator>>(std::istream& is, P1906MOL_Motor& m)
+{
+  return is >> m.t.time >> m.current_location;
 }
 
 //! create and store a new volume surface of any type: FluxMeter, ReflectiveBarrier, Receiver
@@ -92,15 +131,23 @@ void P1906MOL_Motor::addVolumeSurface(P1906MOL_MOTOR_Pos v_c, double v_radius, P
 {
   P1906MOL_MOTOR_VolSurface vs;
   
+  NS_LOG_FUNCTION(this);
   vs.setVolume(v_c, v_radius);
   vs.setType (v_type);
   vsl.insert(vsl.end(), vs);
+  
+  NS_LOG_DEBUG ("volume surface added: " << vs);
 }
 
 //! this is where the motor starts, for example, the location of the transmitter
+//! this function takes precedence over the attribute settings
 void P1906MOL_Motor::setStartingPoint(gsl_vector * pt)
 {
-  gsl_vector_memcpy(current_location, pt);
+  NS_LOG_FUNCTION(this);
+  current_location.setPos (pt);
+  start_x = gsl_vector_get (pt, 0);
+  start_y = gsl_vector_get (pt, 1);
+  start_z = gsl_vector_get (pt, 2);
 }
 
 //! display all the volume surfaces recognizing the motor
@@ -114,17 +161,16 @@ void P1906MOL_Motor::displayVolSurfaces()
 bool P1906MOL_Motor::inDestination()
 {
   bool inDest = false;
-  P1906MOL_MOTOR_Pos cl;
-  cl.setPos (current_location);
   size_t numDest = 0;
   
+  NS_LOG_FUNCTION(this);
   //! find the Receiver space(s)
   for (size_t i = 0; i < vsl.size(); i++)
   {
     if (vsl.at(i).getType() == P1906MOL_MOTOR_VolSurface::Receiver)
 	{
 	  numDest++;
-	  if (vsl.at(i).isInsideVolSurf(cl))
+	  if (vsl.at(i).isInsideVolSurf(current_location))
 	    inDest = true;
 	}
   }
@@ -132,6 +178,7 @@ bool P1906MOL_Motor::inDestination()
   if (numDest < 1)
   {
     printf ("(inDestination) Warning! No destination P1906MOL_MOTOR_VolSurface::Receiver volume found!\n");
+	NS_LOG_WARN ("No destination P1906MOL_MOTOR_VolSurface::Receiver volume found!");
   }
   
   return inDest;
@@ -142,50 +189,54 @@ void P1906MOL_Motor::setLocation(P1906MOL_MOTOR_Pos pt)
 {
   double x, y, z;
   
+  NS_LOG_FUNCTION(this);
   pt.getPos (&x, &y, &z);
-  gsl_vector_set( current_location, 0, x);
-  gsl_vector_set( current_location, 1, y);
-  gsl_vector_set( current_location, 2, z);
+  current_location.setPos (x, y, z);
 }
 
 //! set the current location to the 3D Cartesian coordinates
 void P1906MOL_Motor::setLocation(double x, double y, double z)
 {
-  gsl_vector_set( current_location, 0, x);
-  gsl_vector_set( current_location, 1, y);
-  gsl_vector_set( current_location, 2, z);
+  NS_LOG_FUNCTION(this);
+  current_location.setPos (x, y, z);
 }
 
 //! print the current motor location
 void P1906MOL_Motor::displayLocation()
 {
-  printf ("current location: %f %f %f\n", 
-    gsl_vector_get( current_location, 0),
-	gsl_vector_get( current_location, 1),
-	gsl_vector_get( current_location, 2));
+  double x, y, z;
+  
+  NS_LOG_FUNCTION(this);
+  current_location.getPos (&x, &y, &z);
+  printf ("current location: %f %f %f\n", x, y, z);
 }
 
 //! return simulation time
 double P1906MOL_Motor::getTime()
 {
+  NS_LOG_FUNCTION(this);
   return t.time;
 }
 
 //! initialize simulation time
 void P1906MOL_Motor::initTime()
 {
+  NS_LOG_FUNCTION(this);
   t.time = 0;
 }
 
 //! update simulation time
 void P1906MOL_Motor::updateTime(double event_time)
 {
+  NS_LOG_FUNCTION(this);
   t.time += event_time;
+  NS_LOG_DEBUG ("event occurred of duration: " << event_time);
 }
 
 //! return the elapsed time since the motor time was last initialized
 double P1906MOL_Motor::propagationDelay()
 {
+  NS_LOG_FUNCTION(this);
   return getTime();
 }
 

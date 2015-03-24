@@ -106,6 +106,9 @@ public:
 
 };
 
+std::ostream& operator<<(std::ostream& out, const P1906MOL_ExtendedDiffusion& d);
+std::istream& operator>>(std::istream& is, P1906MOL_ExtendedDiffusion& d);
+
 }
 
 #endif /* P1906MOL_EXTENDED_DIFFUSION */

@@ -83,15 +83,14 @@ P1906MOL_MOTOR_Field::P1906MOL_MOTOR_Field ()
     Each tube is comprised of a list of segments within a gsl_matrix * of size s x 6 -> s x ((x1, y1, z1), (x2, y2, z2)).
     A set of tubes is also a gsl_matrix * of size (s * t) x 6, where s is the number of segments and t the number of tubes.
     All random number are derived from gsl_rng *  
-  */
-  
+  */ 
 }
 
 //! set point pt with x, y, and z coordinates
 void P1906MOL_MOTOR_Field::point(gsl_vector * pt, double x, double y, double z)
 {
   if (pt->size != 3)
-    printf ("(point) warning: point vector incorrect length: %ld\n", pt->size);
+    NS_LOG_WARN ("warning: point vector incorrect length: " << pt->size);
 	
   gsl_vector_set (pt, 0, x);
   gsl_vector_set (pt, 1, y);
@@ -109,13 +108,13 @@ void P1906MOL_MOTOR_Field::point(gsl_vector * pt, double x, double y, double z)
 void P1906MOL_MOTOR_Field::line(gsl_vector * line, gsl_vector * pt1, gsl_vector * pt2)
 {
   if (pt1->size != 3)
-    printf ("(line) warning: point vector incorrect length: %ld\n", pt1->size);
+    NS_LOG_WARN ("warning: point vector incorrect length: " << pt1->size);
 
   if (pt2->size != 3)
-    printf ("(line) warning: point vector incorrect length: %ld\n", pt2->size);
+    NS_LOG_WARN ("(line) warning: point vector incorrect length: " << pt2->size);
 
   if (line->size != 6)
-    printf ("(line) warning: line vector incorrect length: %ld\n", line->size);
+    NS_LOG_WARN ("(line) warning: line vector incorrect length: " << line->size);
 	
   for (int i = 0; i < 3; i++)
     gsl_vector_set (line, i, gsl_vector_get (pt1, i));
@@ -145,7 +144,7 @@ void P1906MOL_MOTOR_Field::line(gsl_vector * line, gsl_vector * pt1, gsl_vector 
 void P1906MOL_MOTOR_Field::line(gsl_vector * segment, gsl_matrix * tubeMatrix, size_t mp)
 {
   if (mp > tubeMatrix->size1)
-    printf ("(line) warning: mp %ld is larger than matrix %ld", mp, tubeMatrix->size1);
+    NS_LOG_WARN ("warning: mp " << mp << " is larger than matrix " << tubeMatrix->size1);
 
   for (size_t i = 0; i < 6; i++)
     gsl_vector_set (segment, i, gsl_matrix_get( tubeMatrix, mp, i ));
@@ -155,7 +154,7 @@ void P1906MOL_MOTOR_Field::line(gsl_vector * segment, gsl_matrix * tubeMatrix, s
 void P1906MOL_MOTOR_Field::line(gsl_matrix * line, size_t mp, gsl_vector * pt1, gsl_vector * pt2)
 {
   if (mp > line->size1)
-    printf ("(line)warning: mp %ld is larger than matrix %ld", mp, line->size1);
+    NS_LOG_WARN ("warning: mp " << mp << " is larger than matrix " << line->size1);
 
   for (int i = 0; i < 3; i++)
     gsl_matrix_set (line, mp, i, gsl_vector_get (pt1, i));
@@ -183,7 +182,7 @@ void P1906MOL_MOTOR_Field::displayLine(gsl_vector * line)
 {
   if (line->size != 6)
   {
-    printf ("(displayLine) invalid size: %ld\n", line->size);
+    NS_LOG_WARN ("invalid size: " << line->size);
   }
   
   printf ("(displayLine) pt1: %lf, %lf, %lf\n", gsl_vector_get (line, 0), gsl_vector_get (line, 1), gsl_vector_get (line, 2));
@@ -195,7 +194,7 @@ void P1906MOL_MOTOR_Field::insertVector(gsl_matrix * v_list, size_t index, gsl_v
 {
   if (index > v_list->size1)
   {
-    printf ("(insertVector) index: %ld larger than v_list size: %ld\n", index, v_list->size1);
+    NS_LOG_WARN ("index: " << index << " larger than v_list size: " << v_list->size1);
   }
 	
   //! copy the vector into the vector list at position index
@@ -299,17 +298,17 @@ void P1906MOL_MOTOR_Field::tubes2VectorField(gsl_matrix * tubeMatrix, gsl_matrix
       gsl_matrix_set (v, i, j, gsl_matrix_get (tubeMatrix, i, j + 3));
     }
         
-  // printf ("(tubes2VectorField) set pt and v\n");
+  // NS_LOG_DEBUG ("set pt and v");
   gsl_matrix_sub (v, pt);
-  // printf ("(tubes2VectorField) subtracted pt from v\n");
+  // NS_LOG_DEBUG ("subtracted pt from v");
   
   for (size_t i = 0; i < tubeMatrix->size1; i++)
     for (size_t j = 0; j < 3; j++)
     {
-          gsl_matrix_set (vf, i, j, gsl_matrix_get (pt, i, j));
+      gsl_matrix_set (vf, i, j, gsl_matrix_get (pt, i, j));
       gsl_matrix_set (vf, i, j + 3, gsl_matrix_get (v, i, j));
     }  
-  // printf ("(tubes2VectorField) set vf\n");
+  // NS_LOG_DEBUG ("set vf");
 }
 
 //! return the index of the nearest tube in tubeMatrix within a given radius from pt, otherwise return -1 
@@ -331,7 +330,7 @@ size_t P1906MOL_MOTOR_Field::findNearestTube(gsl_vector * pt, gsl_matrix * tubeM
 	}
   }
   
-  // printf ("shortestDistance: %f\n", shortestDistance);
+  // NS_LOG_DEBUG ("shortestDistance: " << shortestDistance);
   return closestSegment;
 }
 
@@ -374,31 +373,31 @@ double P1906MOL_MOTOR_Field::distance(gsl_vector *pt, gsl_vector *segment_or_poi
       gsl_vector_memcpy (res1, pt);
       gsl_vector_sub (res1, pt1);
   
-      // printf ("res1\n");
+      // NS_LOG_DEBUG ("res1\n");
       // displayPoint (res1);
   
       gsl_vector_memcpy (res2, pt);
       gsl_vector_sub (res2, pt2);
   
-      // printf ("res2\n");
+      // NS_LOG_DEBUG ("res2\n");
       // displayPoint (res2);
   
       cross_product (res1, res2, res);
-      // printf ("res\n");
+      // NS_LOG_DEBUG ("res\n");
       // displayPoint (res);
   
       gsl_vector_memcpy (res1, pt2);
       gsl_vector_sub (res1, pt1);
-      // printf ("res1\n");
+      // NS_LOG_DEBUG ("res1\n");
       // displayPoint (res1);
   
       d = gsl_blas_dasum (res) / gsl_blas_dasum (res1);
-      // printf ("distance: %g\n", d);
+      // NS_LOG_DEBUG ("distance: " << d);
   
       return d;
       /* gsl_blas_sdsdot (0, x, y, result); */
     default:
-      printf ("(distance) invalid argument to distance\n");
+      NS_LOG_WARN ("invalid argument to distance");
 	  return -1;
   }
 }
@@ -447,7 +446,7 @@ bool P1906MOL_MOTOR_Field::unitTest_getOverlap()
   line (tubeMatrix, 0, pt3, pt4);
  
   int numPts = getOverlap3D(segment, tubeMatrix, pts, tubeSegments);
-  printf ("numPts: %d\n", numPts);
+  NS_LOG_INFO ("numPts: " << numPts);
   displayPoints (pts);
   
   //! Test 2: Moving cross
@@ -532,10 +531,10 @@ int P1906MOL_MOTOR_Field::getOverlap3D(gsl_vector * segment, gsl_matrix * tubeMa
     c1 = gsl_matrix_get (tubeMatrix, i, 0), c2 = gsl_matrix_get (tubeMatrix, i, 1), c3 = gsl_matrix_get (tubeMatrix, i, 2);
     d1 = gsl_matrix_get (tubeMatrix, i, 3), d2 = gsl_matrix_get (tubeMatrix, i, 4), d3 = gsl_matrix_get (tubeMatrix, i, 5);
     
-	// printf ("a1 = %g, a2 = %g, a3 = %g\n", a1, a2, a3);
-	// printf ("b1 = %g, b2 = %g, b3 = %g\n", b1, b2, b3);
-	// printf ("c1 = %g, c2 = %g, c3 = %g\n", c1, c2, c3);
-	// printf ("d1 = %g, d2 = %g, d3 = %g\n", d1, d2, d3);
+	// NS_LOG_DEBUG ("a1 = " << a1 << " a2 = " << a2 << " a3 = " << a3);
+	// NS_LOG_DEBUG ("b1 = " << b1 << " b2 = " << b2 << " b3 = " << b3);
+	// NS_LOG_DEBUG ("c1 = " << c1 << " c2 = " << c2 << " c3 = " << c3);
+	// NS_LOG_DEBUG ("d1 = " << d1 << " d2 = " << d2 << " d3 = " << d3);
   
     gsl_matrix_set(A, 0, 0, b1 - a1);
     gsl_matrix_set(A, 0, 1, - (d1 - c1));
@@ -548,13 +547,13 @@ int P1906MOL_MOTOR_Field::getOverlap3D(gsl_vector * segment, gsl_matrix * tubeMa
     gsl_vector_set(b, 1, c2 - a2);
 	gsl_vector_set(b, 2, c3 - a3);
 	
-	// printf ("A = %g %g\n    %g %g\n    %g %g\n", 
-	//  gsl_matrix_get(A, 0, 0), gsl_matrix_get(A, 0, 1), 
-	//  gsl_matrix_get(A, 1, 0), gsl_matrix_get(A, 1, 1),
-	//  gsl_matrix_get(A, 2, 0), gsl_matrix_get(A, 2, 1));
-	//printf ("b = %g\n    %g\n    %g\n", 
-	//  gsl_vector_get(b, 0), 
-	//  gsl_vector_get(b, 1),
+	// NS_LOG_DEBUG ("A = " << 
+	//  gsl_matrix_get(A, 0, 0) << gsl_matrix_get(A, 0, 1) << " " <<
+	//  gsl_matrix_get(A, 1, 0) << gsl_matrix_get(A, 1, 1) << " " <<
+	//  gsl_matrix_get(A, 2, 0) << gsl_matrix_get(A, 2, 1));
+	//NS_LOG_DEBUG ("b = " << 
+	//  gsl_vector_get(b, 0) << " " << 
+	//  gsl_vector_get(b, 1) << " " <<
 	//  gsl_vector_get(b, 2));
   
     //! solve A x = b
@@ -562,8 +561,8 @@ int P1906MOL_MOTOR_Field::getOverlap3D(gsl_vector * segment, gsl_matrix * tubeMa
     gsl_linalg_SV_decomp (A, V, S, work);
     gsl_linalg_SV_solve (A, V, S, b, x);
 
-    // printf ("x = \n");
-    // gsl_vector_fprintf(stdout, x, "%g");
+    // NS_LOG_DEBUG ("x = ");
+	// gsl_vector_fprintf(stdout, x, "%g");
 	
 	//! if x(0) = t, x(1) = s exist, then substitute and solve for overlapping point
 	
@@ -571,7 +570,7 @@ int P1906MOL_MOTOR_Field::getOverlap3D(gsl_vector * segment, gsl_matrix * tubeMa
 	gsl_vector_set (pt, 1, a2 + gsl_vector_get(x, 0) * (b2 - a2));
 	gsl_vector_set (pt, 2, a3 + gsl_vector_get(x, 0) * (b3 - a3));
     
-	// printf ("pt = \n");
+	// NS_LOG_DEBUG ("pt = ");
     // gsl_vector_fprintf(stdout, pt, "%g");
 	
     if(!gsl_isnan (gsl_vector_get(x, 0)) && !gsl_isnan (gsl_vector_get(x, 1)))
@@ -598,9 +597,9 @@ int P1906MOL_MOTOR_Field::getOverlap3D(gsl_vector * segment, gsl_matrix * tubeMa
 	    gsl_matrix_set(pts, numPts, 0, gsl_vector_get(pt, 0));
 	    gsl_matrix_set(pts, numPts, 1, gsl_vector_get(pt, 1));
 		gsl_matrix_set(pts, numPts, 2, gsl_vector_get(pt, 2));
-	    // printf ("numPts(%ld) = %g %g %g\n", numPts, 
-		//  gsl_matrix_get(pts, numPts, 0), 
-		//  gsl_matrix_get(pts, numPts, 1),
+	    //NS_LOG_DEBUG ("numPts(" << numPts << ") = " << 
+		//  gsl_matrix_get(pts, numPts, 0) << " " <<
+		//  gsl_matrix_get(pts, numPts, 1) << " " <<
 		//  gsl_matrix_get(pts, numPts, 2));
 		gsl_vector_set (tubeSegments, ts++, i);
 	    numPts++;
@@ -623,12 +622,12 @@ void P1906MOL_MOTOR_Field::findClosestPoint(gsl_vector * pt, gsl_matrix * vf, gs
   //! display the vector field
   // for (size_t i = 0; i < vf->size1; i++)
   // {
-  //  printf ("vf: %f %f %f %f %f %f\n",
-  //	  gsl_matrix_get (vf, i, 0),
-  //	  gsl_matrix_get (vf, i, 1),
-  //	  gsl_matrix_get (vf, i, 2),
-  //	  gsl_matrix_get (vf, i, 3),
-  //	  gsl_matrix_get (vf, i, 4),
+  //  NS_LOG_DEBUG ("vf: " <<
+  //	  gsl_matrix_get (vf, i, 0) << " " <<
+  //	  gsl_matrix_get (vf, i, 1) << " " <<
+  //	  gsl_matrix_get (vf, i, 2) << " " <<
+  //	  gsl_matrix_get (vf, i, 3) << " " <<
+  //	  gsl_matrix_get (vf, i, 4) << " " <<
   //	  gsl_matrix_get (vf, i, 5));
   // }
   
@@ -642,38 +641,38 @@ void P1906MOL_MOTOR_Field::findClosestPoint(gsl_vector * pt, gsl_matrix * vf, gs
 	  gsl_matrix_get (vf, i, 1),
 	  gsl_matrix_get (vf, i, 2));
 	
-	// printf ("pt\n");
+	// NS_LOG_DEBUG ("pt");
 	// displayPoint (pt);
-	// printf ("tpt\n");
+	// NS_LOG_DEBUG ("tpt");
 	// displayPoint (tpt);
-	// printf ("cpt\n");
+	// NS_LOG_DEBUG ("cpt");
 	// displayPoint (cpt);
 	
 	//! tpt is point under test from vector field
 	//! cpt is the current shortest distance point
-	// printf ("(findClosestPoint) distance to tpt: %f\n", distance (tpt, pt));
-	// printf ("(findClosestPoint) distance to cpt: %f\n", distance (cpt, pt));
+	// NS_LOG_DEBUG ("distance to tpt: " << distance (tpt, pt));
+	// NS_LOG_DEBUG ("distance to cpt: " << distance (cpt, pt));
 	
 	//! update the location and vector if closer
 	if ((distance (tpt, pt) < distance (cpt, pt)) || gsl_isnan(distance (cpt, pt)))
 	{
-	  // printf ("storing point\n");
+	  // NS_LOG_DEBUG ("storing point");
 	  point (cpt, 
 	    gsl_vector_get (tpt, 0),
 	    gsl_vector_get (tpt, 1),
 	    gsl_vector_get (tpt, 2));
-	  // printf ("cpt\n");
+	  // NS_LOG_DEBUG ("cpt");
 	  // displayPoint (cpt);
       point (cv, 
 	    gsl_matrix_get (vf, i, 3),
 	    gsl_matrix_get (vf, i, 4),
 	    gsl_matrix_get (vf, i, 5));
-	  // printf ("cv\n");
+	  // NS_LOG_DEBUG ("cv");
 	  // displayPoint (cv);
 	}
   }
   
-  // printf ("(findClosestPoint) final cv\n");
+  // NS_LOG_DEBUG ("final cv");
   // displayPoint (cv);
   
   //! return the result
@@ -684,13 +683,13 @@ void P1906MOL_MOTOR_Field::findClosestPoint(gsl_vector * pt, gsl_matrix * vf, gs
   gsl_vector_set (result, 4, gsl_vector_get (cv, 1));
   gsl_vector_set (result, 5, gsl_vector_get (cv, 2));
   
-  // printf ("(findClosestPoint) result: %f %f %f %f %f %f\n",
-  //  gsl_vector_get (result, 0),
-  //	gsl_vector_get (result, 1),
-  //	gsl_vector_get (result, 2),
-  //	gsl_vector_get (result, 3),
-  //	gsl_vector_get (result, 4),
-  //	gsl_vector_get (result, 5));
+  // NS_LOG_DEBUG ("result: " <<
+  //  gsl_vector_get (result, 0) << " " <<
+  //  gsl_vector_get (result, 1) << " " <<
+  //  gsl_vector_get (result, 2) << " " <<
+  //  gsl_vector_get (result, 3) << " " <<
+  //  gsl_vector_get (result, 4) << " " <<
+  //  gsl_vector_get (result, 5));
 }
 
 //! return the information entropy \f$ H(x) = - sum( P(x) \log P(x) ) \f$ of a tube segment defined by its list of angles in segAngle
@@ -709,7 +708,7 @@ double P1906MOL_MOTOR_Field::sEntropy(gsl_matrix *segAngle)
   for (size_t i = 0; i < segAngle->size1; i++)
     for (size_t j = 0; j < 1; j++)
 	{
-	  //! printf ("segAngle(%ld,%ld) = %g\t", i, j, gsl_matrix_get (segAngle, i, j)); */
+	  //! NS_LOG_DEBUG ("segAngle(" << i << "," << j << ") = " << gsl_matrix_get (segAngle, i, j));
 	  gsl_histogram_increment (h, gsl_matrix_get (segAngle, i, j));
     }
 
@@ -718,15 +717,15 @@ double P1906MOL_MOTOR_Field::sEntropy(gsl_matrix *segAngle)
   for(int i = 0; i < numBins; i++)
   {
 	double p = gsl_histogram_get (h, i) / gsl_histogram_sum(h);
-	//! printf("p = %g\n", p);
+	//! NS_LOG_DEBUG("p = " << p);
 	if (p > 0)
 	{
 	  H = H - p * gsl_sf_log(p);
-	  //! printf("H = %g\n", H);
+	  //! NS_LOG_DEBUG ("H = " << H);
 	}
   }
 	
-  // printf("H = %g\n", H);
+  // NS_LOG_DEBUG ("H = " << H);
   //! gsl_histogram_fprintf (stdout, h, "%g", "%g");
   //gsl_histogram_free (h);
   

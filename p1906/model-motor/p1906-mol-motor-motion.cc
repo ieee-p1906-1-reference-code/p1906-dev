@@ -96,7 +96,6 @@ P1906MOL_MOTOR_Motion::P1906MOL_MOTOR_Motion ()
   */
     
   NS_LOG_FUNCTION (this);
-  NS_LOG_FUNCTION (this << "Created MOL Extended Motion Component");
 }
 
 //! assumes motor is within radius of a tube, otherwise it simply returns
@@ -130,7 +129,7 @@ void P1906MOL_MOTOR_Motion::motorWalk(Ptr<P1906MessageCarrier> carrier, gsl_rng 
   //! bind with a given probability
   if (gsl_rng_uniform(r) > binding_probability) //! \todo set realistic binding probability
   {
-    printf ("(motorWalk) motor did not bind\n");
+    NS_LOG_WARN ("motor did not bind to microtubule");
     return;
   }
   
@@ -140,7 +139,7 @@ void P1906MOL_MOTOR_Motion::motorWalk(Ptr<P1906MessageCarrier> carrier, gsl_rng 
   //! no tube is within the radius, so exit
   if (seg == ULONG_MAX)
   {
-    printf ("(motorWalk) no tube is within radius: %f\n", radius);
+    NS_LOG_WARN ("no tube is within radius:" << radius);
     return;
   }
   
@@ -150,15 +149,14 @@ void P1906MOL_MOTOR_Motion::motorWalk(Ptr<P1906MessageCarrier> carrier, gsl_rng 
                gsl_vector_get(startPt, 1),
                gsl_vector_get(startPt, 2) );
   pts.insert(pts.end(), Pos);
-  //printf ("(motorWalk) recorded first location\n");
-  //Pos.displayPos();
+  //NS_LOG_DEBUG ("recorded first location: " << Pos);
   
   //! walk along tube for distance determined by bound time
   //! segments are sequential in tubeMatrix of length segPerTube
   size_t segOfTube = seg % segPerTube; //! the current segment within the tube
   size_t segToGo = segPerTube - segOfTube; //! segments until the end of tube
   
-  //printf ("(motorWalk) seg: %ld segOfTube: %ld segToGo: %ld\n", seg, segOfTube, segToGo);
+  //NS_LOG_DEBUG ("seg: << seg " segOfTube: << segOfTube << " segToGo: " << segToGo);
   for (size_t i = seg; i < (seg + segToGo); i++)
   {
     //! walk to end of segment
@@ -170,8 +168,7 @@ void P1906MOL_MOTOR_Motion::motorWalk(Ptr<P1906MessageCarrier> carrier, gsl_rng 
 	             gsl_vector_get(segment, 4), 
 			     gsl_vector_get(segment, 5) );
 	pts.insert(pts.end(), Pos);
-	//printf ("(motorWalk) segment(%ld) recorded position\n", i);
-	//Pos.displayPos();
+	//NS_LOG_DEBUG ("segment(" << i << ") recorded position "<< Pos);
 	
 	//! get next-to-last point
 	Pos1 = pts.at(pts.size() - 2);
@@ -183,11 +180,10 @@ void P1906MOL_MOTOR_Motion::motorWalk(Ptr<P1906MessageCarrier> carrier, gsl_rng 
 	Pos2.getPos (&x2, &y2, &z2);
     P1906MOL_MOTOR_Field::point (pt2, x2, y2, z2);
 
-	//printf ("(motorWalk) distance: %f movementRate: %f time: %f\n", 
-	//  P1906MOL_MOTOR_Field::distance(pt1, pt2), 
-	//  movementRate, 
-	//  P1906MOL_MOTOR_Field::distance(pt1, pt2) / movementRate);
-    motor->updateTime(P1906MOL_MOTOR_Field::distance(pt1, pt2) / movementRate);
+	//NS_LOG_DEBUG ("distance: " << P1906MOL_MOTOR_Field::distance(pt1, pt2) <<
+	//  " movementRate: " << movementRate << 
+	//  " time: " << P1906MOL_MOTOR_Field::distance(pt1, pt2) / movementRate) 
+	motor->updateTime(P1906MOL_MOTOR_Field::distance(pt1, pt2) / movementRate);
   }
 }
 
@@ -231,8 +227,7 @@ size_t P1906MOL_MOTOR_Motion::float2Tube(Ptr<P1906MessageCarrier> carrier, gsl_r
 	Pos.setPos ( gsl_vector_get (currentPos, 0), 
 	             gsl_vector_get (currentPos, 1), 
 			     gsl_vector_get (currentPos, 2) );
-	//printf ("(float2Tube) position\n");
-	//Pos.displayPos ();
+	//NS_LOG_DEBUG ("position: " << Pos);
 	pts.insert(pts.end(), Pos);
 	numPts++; //! consider starting position the first point
 	brownianMotion(r, currentPos, newPos, timePeriod, D, vsl);
@@ -243,7 +238,7 @@ size_t P1906MOL_MOTOR_Motion::float2Tube(Ptr<P1906MessageCarrier> carrier, gsl_r
 	ts = P1906MOL_MOTOR_Field::findNearestTube(currentPos, tubeMatrix, radius);
 	if ( ts !=  -1 )
 	{
-	  printf ("motor contact with segment: %d\n", ts);
+	  NS_LOG_WARN ("motor contact with segment: " << ts);
 	  break; //! end after contact with tube
 	}
   }
@@ -273,42 +268,37 @@ void P1906MOL_MOTOR_Motion::brownianMotion(gsl_rng * r, gsl_vector * currentPos,
   P1906MOL_MOTOR_Pos cp, np;
   
   cp.setPos (currentPos);
-  //printf ("(brownianMotion) current position\n");
-  //cp.displayPos ();
+  //NS_LOG_DEBUG ("current position: " << cp.displayPos ());
   np.setPos (newPos);
-  //printf ("(brownianMotion) new position\n");
-  //np.displayPos ();
+  //NS_LOG_DEBUG ("new position: np.displayPos ());
   
   P1906MOL_MOTOR_Field::line (segment, cp, np);
-  //P1906MOL_MOTOR_Field::displayLine (segment);
+  //NS_LOG_DEBUG (P1906MOL_MOTOR_Field::displayLine (segment));
   
-  //printf ("(brownianMotion) vsl.size: %ld\n", vsl.size());
+  //NS_LOG_DEBUG ("vsl.size: << vsl.size());
   
   //! there could be more than one reflective surface to check
   for (size_t i = 0; i < vsl.size(); i++)
   {
-    //printf ("(brownianMotion) volume surface (%ld) Type: %d ReflectiveBarrier %d\n", i, vsl.at(i).getType(), P1906MOL_MOTOR_VolSurface::ReflectiveBarrier);
-	//vsl.at(i).displayVolSurface();
-	
+    //NS_LOG_DEBUG ("volume surface (" << i << ") " << vsl);
+		
     if (vsl.at(i).getType() == P1906MOL_MOTOR_VolSurface::ReflectiveBarrier)
     {
       vsl.at(i).sphereIntersections(segment, ipt);
 	  
-	  //printf ("(brownianMotion) ipt.size(): %ld\n", ipt.size());
+	  //NS_LOG_DEBUG ("ipt.size(): " << ipt.size());
 	  
 	  //! intersection with volume surface
 	  if (ipt.size() != 0)
 	  {
-	    //printf ("(brownianMotion) surface intersection\n");
-	    //ipt.front().displayPos ();
-	  
+	    //NS_LOG_DEBUG ("surface intersection: " << ipt.front());
+		
 	    //! reflect np from surface
 	    vsl.at(i).reflect(cp, np);
 	  
 	    //! update the reflected position
         np.getPos (newPos);
-        //printf ("(brownianMotion) after reflection\n");
-        //np.displayPos ();
+        //NS_LOG_DEBUG ("after reflection: " << np);
 	  }
     }
   }
@@ -417,8 +407,8 @@ double P1906MOL_MOTOR_Motion::ComputePropagationDelay (Ptr<P1906CommunicationInt
   Vector sv = srcMobility->GetPosition();
   Vector dv = dstMobility->GetPosition();
   
-  //printf ("(ComputePropagationDelay) transmitter location x: %lf y: %lf z: %lf\n", sv.x, sv.y, sv.z);
-  //printf ("(ComputePropagationDelay) receiver location x: %lf y: %lf z: %lf\n", dv.x, dv.y, dv.z);
+  //NS_LOG_DEBUG ("transmitter location " << sv.x << " " << sv.y << " " << sv.z);
+  //NS_LOG_DEBUG ("receiver location " << dv.x " " << dv.y << " "<< dv.z);
   
   Ptr<P1906MOL_Motor> motor = message->GetObject <P1906MOL_Motor> ();
  
@@ -430,7 +420,7 @@ double P1906MOL_MOTOR_Motion::ComputePropagationDelay (Ptr<P1906CommunicationInt
     
   //! Receiver volume surface center comes from the receiver Node location
   P1906MOL_MOTOR_Pos dvol;
-  printf ("(ComputePropagationDelay) position dv.x: %lf multiplier: %lf\n", dv.x, distanceMultiplier);
+  NS_LOG_DEBUG ("position " << dv.x << " multiplier: " << distanceMultiplier);
   dvol.setPos (dv.x * distanceMultiplier, dv.y, dv.z);
   motor->addVolumeSurface(dvol, (dv.x * distanceMultiplier)/1.0001, P1906MOL_MOTOR_VolSurface::Receiver);
  
@@ -474,37 +464,27 @@ Ptr<P1906MessageCarrier> P1906MOL_MOTOR_Motion::CalculateReceivedMessageCarrier(
 void P1906MOL_MOTOR_Motion::float2Destination(Ptr<P1906MessageCarrier> carrier, double timePeriod)
 {
   gsl_vector * newPos = gsl_vector_alloc (3);
-  P1906MOL_MOTOR_Pos Pos;
+  gsl_vector * current_location = gsl_vector_alloc (3);
   Ptr<P1906MOL_Motor> motor = carrier->GetObject <P1906MOL_Motor> ();
   double D = 1.0; //! mass diffusivity (default)
     
   D = GetDiffusionConefficient ();
   
-  Pos.setPos ( gsl_vector_get (motor->current_location, 0),
-               gsl_vector_get (motor->current_location, 1),
-			   gsl_vector_get (motor->current_location, 2) );
-  motor->pos_history.insert (motor->pos_history.end(), Pos);
+  motor->pos_history.insert (motor->pos_history.end(), motor->current_location);
   
-  //printf ("(float2Destination) motor location:\n");
-  //displayPos(current_location);
+  //NS_LOG_DEBUG ("motor location: " << current_location);
 	
   //! float until in destination volume
   while (!motor->inDestination())
   {
-	brownianMotion(motor->r, motor->current_location, newPos, timePeriod, D, motor->vsl);
-	motor->updateTime(timePeriod);
-    gsl_vector_set (motor->current_location, 0, gsl_vector_get (newPos, 0));
-	gsl_vector_set (motor->current_location, 1, gsl_vector_get (newPos, 1));
-	gsl_vector_set (motor->current_location, 2, gsl_vector_get (newPos, 2));
+	motor->current_location.getPos (current_location);
+	brownianMotion (motor->r, current_location, newPos, timePeriod, D, motor->vsl);
+	motor->updateTime (timePeriod);
+    motor->current_location.setPos (newPos);
 	
-    //printf ("(float2Destination) motor location:\n");
-    //displayPos(current_location);
-	
-	P1906MOL_MOTOR_Pos Pos;
-    Pos.setPos ( gsl_vector_get (motor->current_location, 0),
-                 gsl_vector_get (motor->current_location, 1),
-			     gsl_vector_get (motor->current_location, 2) );
-    motor->pos_history.insert (motor->pos_history.end(), Pos);
+    //NS_LOG_DEBUG ("motor location: " << current_location);
+
+    motor->pos_history.insert (motor->pos_history.end(), motor->current_location);
   }
 }
 
@@ -514,21 +494,20 @@ void P1906MOL_MOTOR_Motion::move2Destination(Ptr<P1906MessageCarrier> carrier, g
   int timeout = 100; //! in case motor never reaches destination
   int loops = 0; //! keep track of iterations
   Ptr<P1906MOL_Motor> motor = carrier->GetObject <P1906MOL_Motor> ();
+  gsl_vector * current_location = gsl_vector_alloc (3);
   
   while (!motor->inDestination() && (loops < timeout))
-  {
+  {	
+    motor->current_location.getPos (current_location);
     //! returns the index of the segment in tubeMatrix to which the motor is bound 
-    float2Tube(motor, motor->r, motor->current_location, pts, tubeMatrix, timePeriod, motor->vsl);
+    float2Tube(motor, motor->r, current_location, pts, tubeMatrix, timePeriod, motor->vsl);
 	motor->setLocation(pts.back());
-    //printf ("(move2Destination) current location after float2Tube\n");
-	//displayLocation();
-	//pts.back().displayPos();
+    //NS_LOG_DEBUG ("current location after float2Tube " << current_location << " " << pts.back());
+	motor->current_location.getPos (current_location);
 	//! walk along tube until end of tube or unbound
-	motorWalk(motor, motor->r, motor->current_location, pts, tubeMatrix, segPerTube, motor->vsl);
+	motorWalk(motor, motor->r, current_location, pts, tubeMatrix, segPerTube, motor->vsl);
 	motor->setLocation(pts.back());
-    //printf ("(move2Destination) current location after motorWalk\n");
-	//pts.back().displayPos();
-	//displayLocation();
+    //NS_LOG_DEBUG ("current location after motorWalk " << pts.back() << " " << current_location);
 	loops++;
   }
 }

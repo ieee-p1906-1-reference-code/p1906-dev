@@ -67,6 +67,18 @@ P1906MOL_ExtendedDiffusion::P1906MOL_ExtendedDiffusion ()
     All random number are derived from gsl_rng *.
 	  
   */
+  NS_LOG_FUNCTION(this);
+}
+
+
+std::ostream& operator<<(std::ostream& out, const P1906MOL_ExtendedDiffusion& d)
+{
+	return out;
+}
+
+std::istream& operator>>(std::istream& is, P1906MOL_ExtendedDiffusion& d)
+{
+	return is;
 }
 
 //! trigger a release of a vector wave at time tt
@@ -75,6 +87,7 @@ void P1906MOL_ExtendedDiffusion::transmit(double tt, double D, double ic, P1906M
 {
   P1906MOL_ExtendedDiffusionWave wave;
   
+  NS_LOG_FUNCTION(this);
   //! record the time [s], concentration [nmol/nm^3], and location of transmission
   wave.prepare_transmission(tt, D, ic, ip);
   //! store the wave
@@ -89,7 +102,7 @@ bool IsDissipated(const P1906MOL_ExtendedDiffusionWave & o)
 //! check for waves below the minimum and remove (this needs to be a specific time and LOCATION)
 void P1906MOL_ExtendedDiffusion::clean_wavevector(double min_concentration, P1906MOL_MOTOR_Pos receiver, double time)
 {
-
+  NS_LOG_FUNCTION(this);
   for (size_t i; i < wv.size(); i++)
   {
     if (wv.at(i).concentration_wave (receiver, time) < min_concentration)
@@ -106,6 +119,7 @@ double P1906MOL_ExtendedDiffusion::receive(double rt, P1906MOL_MOTOR_Pos rp)
   //! the accumulated concentration
   double c = 0;
   
+  NS_LOG_FUNCTION(this);
   for (size_t i = 0; i < wv.size(); i++)
   {
     c += wv.at(i).concentration_wave (rp, rt);
@@ -159,6 +173,7 @@ double P1906MOL_ExtendedDiffusion::unitTest_diffusion ()
   //! location of the initial release [nm] (x,y,z)
   //transmitter.setPos (p);
 
+  NS_LOG_FUNCTION(this);
   transmitter.setPos (0, 0, 0);
   transmitter.getPos (xpos);
   receiver.setPos (10, 0, 0);
@@ -171,7 +186,7 @@ double P1906MOL_ExtendedDiffusion::unitTest_diffusion ()
 
 void P1906MOL_ExtendedDiffusion::displayODE ()
 {
-  printf ("(displayODE) testing ODE\n");
+  NS_LOG_DEBUG ("testing ODE");
 }
 
 // The following details are taken from the GSL documentation
@@ -251,7 +266,7 @@ double P1906MOL_ExtendedDiffusion::unitTest_ODE ()
 	   if (status != GSL_SUCCESS)
 		   break;
 
-	   printf ("(unitTestODE) %.5e %.5e %.5e\n", t, y[0], y[1]);
+	   NS_LOG_DEBUG (t << " " << y[0] << " " << y[1]);
 	}
 
 	gsl_odeiv_evolve_free (e);

@@ -52,6 +52,10 @@ using namespace std;
 #include "ns3/p1906-mol-motor-pos.h"
 #include "ns3/p1906-mol-motor-vol-surface.h"
 
+#include "ns3/double.h"
+#include "ns3/traced-value.h"
+#include "ns3/trace-source-accessor.h"
+
 namespace ns3 {
 
 /**
@@ -81,7 +85,11 @@ public:
   static TypeId GetTypeId (void);
   
   //! the current location of the motor in 3D space
-  gsl_vector * current_location;
+  P1906MOL_MOTOR_Pos current_location;
+  //! the start values are intended for use as ns-3 attributes
+  double start_x;
+  double start_y;
+  double start_z;
 
   //! a record of the position of the motor throughout its lifetime
   vector<P1906MOL_MOTOR_Pos> pos_history;
@@ -139,6 +147,9 @@ public:
   virtual ~P1906MOL_Motor ();
 
 };
+
+std::ostream& operator<<(std::ostream& out, const P1906MOL_Motor& m);
+std::istream& operator>>(std::istream& is, P1906MOL_Motor& p);
 
 }
 

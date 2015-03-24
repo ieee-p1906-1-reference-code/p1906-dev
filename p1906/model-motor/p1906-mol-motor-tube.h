@@ -40,6 +40,7 @@
 
 #include <iostream>
 #include <fstream>
+
 using namespace std;
 
 #include "ns3/object.h"
@@ -82,7 +83,7 @@ public:
   //! the tube starting point
   //! \todo get actual tube graph properties from a biologist
   gsl_vector * startPt;
-  //! hold the values for a tube comprised of many segments: x_start y_start x_start x_end y_end z_end
+  //! hold the values for a tube comprised of many segments: x_start y_start z_start x_end y_end z_end
   gsl_matrix * segMatrix;
 
   /*
@@ -112,6 +113,9 @@ public:
   virtual ~P1906MOL_MOTOR_Tube ();
 
 };
+
+std::ostream& operator<<(std::ostream& out, const P1906MOL_MOTOR_Tube& tube);
+std::istream& operator>>(std::istream& is, P1906MOL_MOTOR_Tube& tube);
 
 }
 

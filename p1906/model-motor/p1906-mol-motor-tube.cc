@@ -81,6 +81,8 @@ P1906MOL_MOTOR_Tube::P1906MOL_MOTOR_Tube (struct tubeCharacteristcs_t * ts, gsl_
 	  
   */
   
+  NS_LOG_FUNCTION(this);
+  
   T = gsl_rng_default;
   r = gsl_rng_alloc (T);  
   gsl_rng_env_setup();
@@ -92,9 +94,41 @@ P1906MOL_MOTOR_Tube::P1906MOL_MOTOR_Tube (struct tubeCharacteristcs_t * ts, gsl_
   genTube(ts, r, segMatrix, startPt);
 }
 
+std::ostream& operator<<(std::ostream& out, const P1906MOL_MOTOR_Tube& tube)
+{
+  // display segments that comprise the tube segMatrix (see displayTube)
+  for (size_t i = 0; i < tube.segMatrix->size1; i++)
+  {
+    for (size_t j = 0; j < tube.segMatrix->size2; j++)
+	{
+	  out << gsl_matrix_get (tube.segMatrix, i, j) << " ";
+    }
+  }
+  return out;
+}
+
+std::istream& operator>>(std::istream& is, P1906MOL_MOTOR_Tube& tube)
+{
+  // read in the segments for the tube
+  double pt_x, pt_y, pt_z;
+  size_t i;
+  
+  i = 0;
+  while (is >> pt_x >> pt_y >> pt_z)
+  {
+    gsl_matrix_set (tube.segMatrix, i, 0, pt_x);
+	gsl_matrix_set (tube.segMatrix, i, 1, pt_y);
+	gsl_matrix_set (tube.segMatrix, i, 2, pt_z);
+	i++;
+  }
+  
+  return is;
+}
+
 //! return the segMatrix, which is the tube segment end points
 void P1906MOL_MOTOR_Tube::getSegmatrix(gsl_matrix * sm)
 {
+  NS_LOG_FUNCTION(this);
   gsl_matrix_memcpy (sm, segMatrix);
 }
     
@@ -109,17 +143,17 @@ int P1906MOL_MOTOR_Tube::genTube(struct tubeCharacteristcs_t * ts, gsl_rng *r, g
 	z = r cos \theta
 	
   */
-   
+  
+  NS_LOG_FUNCTION(this);
   gsl_matrix * segAngleTheta = gsl_matrix_alloc (ts->numSegments, 1);
   gsl_matrix * segAnglePsi = gsl_matrix_alloc (ts->numSegments, 1);
 
-  //printf ("(genTube) startX = %g startY = %g startZ = %g numSegments = %ld segLength = %g persistenceLength = %g\n", 
-  //  gsl_vector_get (startPt, 0), 
-  //  gsl_vector_get (startPt, 1),  
-  //  gsl_vector_get (startPt, 2), 
-  //  ts->numSegments, 
-  //  ts->segLength, 
-  //  ts->persistenceLength);
+  //NS_LOG_DEBUG ("startX = " << gsl_vector_get (startPt, 0)
+  //<< " startY = " << gsl_vector_get (startPt, 1)
+  //<< " startZ = " << gsl_vector_get (startPt, 2)
+  //<< " numSegments = " << ts->numSegments
+  //<< " segLength = " << ts->segLength
+  //<< " persistenceLength = " << ts->persistenceLength);
   
   genPersistenceLength(r, segAngleTheta, ts->segLength, ts->persistenceLength);
   genPersistenceLength(r, segAnglePsi, ts->segLength, ts->persistenceLength);
@@ -129,11 +163,11 @@ int P1906MOL_MOTOR_Tube::genTube(struct tubeCharacteristcs_t * ts, gsl_rng *r, g
   //for (size_t i = 0; i < ts->numSegments; i++)
   //  for (size_t j = 0; j < 1; j++)
   //  {
-  //    printf ("segAngleTheta(%ld,%ld) = %g\n", i, j, gsl_matrix_get (segAngleTheta, i, j));
-  //    printf ("segAnglePsi(%ld,%ld) = %g\n", i, j, gsl_matrix_get (segAnglePsi, i, j));
+  //    NS_LOG_DEBUG ("segAngleTheta(" << i << "," << j << ") = " << gsl_matrix_get (segAngleTheta, i, j));
+  //    NS_LOG_DEBUG ("segAnglePsi(" << i, "," << j << ") = "<< gsl_matrix_get (segAnglePsi, i, j));
   //  }
 	
-  //printf ("(genTube) segments allocated %ld %ld numSegments %ld\n", segMatrix->size1, segMatrix->size2, ts->numSegments);
+  //NS_LOG_DEBUG ("segments allocated " << segMatrix->size1 << " " << segMatrix->size2 << " numSegments " << ts->numSegments);
   
   for (size_t i = 0; i < ts->segPerTube; i++)
   {
@@ -192,12 +226,13 @@ double P1906MOL_MOTOR_Tube::genPersistenceLength(gsl_rng * r, gsl_matrix * segAn
   double angle;
   double sigma;
 
+  NS_LOG_FUNCTION(this);
   if (persistenceLength > 0)
     sigma  = sqrt(2.0 * segLength / persistenceLength);
   else
 	sigma = DBL_MAX; //! maximum possible variance
 
-  //printf ("(genPersistenceLength) sigma = %g\n", sigma);
+  //NS_LOG_DEBUG ("sigma = " << sigma);
 	
   for(size_t i = 0; i < segAngle->size1; i++)
   {
@@ -205,9 +240,9 @@ double P1906MOL_MOTOR_Tube::genPersistenceLength(gsl_rng * r, gsl_matrix * segAn
     angle = fmod(gsl_ran_gaussian (r, sigma), (2 * M_PI));
 	if (!gsl_finite (angle))
 	  angle = gsl_ran_ugaussian (r) * (2 * M_PI); //! just pick a uniform random angle
-    //printf ("(genPersistenceLength) radian(%ld) = %g\n", i, angle);
+    //NS_LOG_DEBUG ("radian(" << i << ") = " << angle);
 	//! a radian is 180/Pi degrees
-	//printf ("(genPersistenceLength) angle(%ld) = %g\n", i, angle * 180.00 / M_PI);
+	//NS_LOG_DEBUG ("angle(" << i << ") = " << angle * 180.00 / M_PI);
     gsl_matrix_set(segAngle, i, 0, angle);
   }
     
@@ -221,7 +256,8 @@ double P1906MOL_MOTOR_Tube::genPersistenceLength(gsl_rng * r, gsl_matrix * segAn
 double P1906MOL_MOTOR_Tube::getPersistenceLength()
 {
   //! segMatrix rows are x_start x_end y_start y_end (may not need numSegments)
-    
+  NS_LOG_FUNCTION(this);
+  
   return 0;
 }
 

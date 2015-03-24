@@ -8,7 +8,7 @@ var searchData=
   ['sentropy',['sEntropy',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___field.html#ad319215b6afd9a39229be8695bb29ad6',1,'ns3::P1906MOL_MOTOR_Field']]],
   ['setlocation',['setLocation',['../classns3_1_1_p1906_m_o_l___motor.html#a07fa6eb38e094877d7db04b2752d230d',1,'ns3::P1906MOL_Motor::setLocation(P1906MOL_MOTOR_Pos pt)'],['../classns3_1_1_p1906_m_o_l___motor.html#aec796a8116ddd6b72dbe413ebf87a6aa',1,'ns3::P1906MOL_Motor::setLocation(double x, double y, double z)']]],
   ['setp1906communicationinterface',['SetP1906CommunicationInterface',['../classns3_1_1_p1906_net_device.html#a223fa80042dec156f94954b8ef3f441d',1,'ns3::P1906NetDevice']]],
-  ['setpos',['setPos',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___pos.html#ab0c7706ccfe3cbedc98f9686ca1d105a',1,'ns3::P1906MOL_MOTOR_Pos::setPos(double x, double y, double z)'],['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___pos.html#a5993d6421a0047ceecc57375385fca88',1,'ns3::P1906MOL_MOTOR_Pos::setPos(gsl_vector *in_pos)']]],
+  ['setpos',['setPos',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___pos.html#ab0c7706ccfe3cbedc98f9686ca1d105a',1,'ns3::P1906MOL_MOTOR_Pos::setPos(double x, double y, double z)'],['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___pos.html#a5993d6421a0047ceecc57375385fca88',1,'ns3::P1906MOL_MOTOR_Pos::setPos(gsl_vector *in_pos)'],['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___pos.html#a7992a59efc06e837f9c8935a5ef2fd1f',1,'ns3::P1906MOL_MOTOR_Pos::setPos(P1906MOL_MOTOR_Pos &amp;p)']]],
   ['setstartingpoint',['setStartingPoint',['../classns3_1_1_p1906_m_o_l___motor.html#aefc4c4603b97397ae16f27d09b6ecc58',1,'ns3::P1906MOL_Motor']]],
   ['settubedensity',['setTubeDensity',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___microtubules_field.html#ac8fd3e43004a96258cecf36011df5629',1,'ns3::P1906MOL_MOTOR_MicrotubulesField']]],
   ['settubeinterangle',['setTubeInterAngle',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___microtubules_field.html#a10bca44eb9c4e4d3dc2771321fecd981',1,'ns3::P1906MOL_MOTOR_MicrotubulesField']]],
@@ -24,6 +24,7 @@ var searchData=
   ['simtime_5ft',['simtime_t',['../structns3_1_1_p1906_m_o_l___motor_1_1simtime__t.html',1,'ns3::P1906MOL_Motor']]],
   ['specificity',['Specificity',['../classns3_1_1_p1906___metrics.html#ac5ba66b9b6d4b5fe7fdd7c4cb997932d',1,'ns3::P1906_Metrics']]],
   ['sphereintersections',['sphereIntersections',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___vol_surface.html#a96e42b531cac69602ee65a6edf202510',1,'ns3::P1906MOL_MOTOR_VolSurface']]],
+  ['start_5fx',['start_x',['../classns3_1_1_p1906_m_o_l___motor.html#a19bea9817c457c7efb6052012f8b1bd7',1,'ns3::P1906MOL_Motor']]],
   ['startpt',['startPt',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___tube.html#aa67d7e1c9c59f557a6bc0ad358a5e75e',1,'ns3::P1906MOL_MOTOR_Tube']]],
   ['supersystem_5fdegradation',['Supersystem_Degradation',['../classns3_1_1_p1906___metrics.html#ac9fa7878d2fcf8c9ecbb72f8bd31c4f0',1,'ns3::P1906_Metrics']]]
 ];

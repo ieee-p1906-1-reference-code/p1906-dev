@@ -109,6 +109,10 @@ public:
 
 };
 
+std::ostream& operator<<(std::ostream& out, const P1906MOL_ExtendedDiffusionWave& d_wave);
+std::istream& operator>>(std::istream& is, P1906MOL_ExtendedDiffusionWave& d_wave);
+
+
 }
 
 #endif /* P1906MOL_EXTENDED_DIFFUSION_WAVE */
