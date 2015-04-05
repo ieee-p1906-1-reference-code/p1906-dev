@@ -96,7 +96,6 @@ P1906MOL_MOTOR_Perturbation::CreateMessageCarrier (Ptr<Packet> p)
   NS_LOG_FUNCTION (this << "[t,bits,pulseI,duration]" << now << p->GetSize() * 8
 		  << m_pulseInterval << duration);
 
-
   carrier->SetPulseInterval (m_pulseInterval);
   carrier->SetDuration (Seconds(duration));
   carrier->SetStartTime (Simulator::Now ());

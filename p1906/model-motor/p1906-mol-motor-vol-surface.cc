@@ -66,16 +66,73 @@ TypeId P1906MOL_MOTOR_VolSurface::GetTypeId (void)
 {
   static TypeId tid = TypeId ("ns3::P1906MOL_MOTOR_VolSurface")
     .SetParent<P1906MOL_MOTOR_Field> ()
-	//.AddAttribute ("ZLocation",
-	//               "The current Euclidean Z position.",
-	//               ObjectVectorValue (),
-	//			     MakeDoubleAccessor (&P1906MOL_MOTOR_Pos::pos_z),
-	//			     MakeDoubleChecker<double> ())
-	;
+	.AddConstructor<P1906MOL_MOTOR_VolSurface> ()
+	.AddAttribute ("TypeOfVolume",
+			   "Type of surface volume [typeOfVolume: 1/2/3].",
+				IntegerValue (Receiver),
+				MakeIntegerAccessor (&P1906MOL_MOTOR_VolSurface::volType),
+				MakeIntegerChecker<uint32_t> ())
+	.AddAttribute ("Radius",
+			   "Radius of surface volume [nm].",
+				DoubleValue (100.0),
+				MakeDoubleAccessor (&P1906MOL_MOTOR_VolSurface::radius),
+				MakeDoubleChecker<double_t> ())
+	.AddAttribute ("CenterX",
+	            "The x component of the volume surface center [nm].",
+	            DoubleValue (0.0),
+				MakeDoubleAccessor (&P1906MOL_MOTOR_VolSurface::m_center_x),
+				MakeDoubleChecker<double_t> ())
+	.AddAttribute ("CenterY",
+	            "The y component of the volume surface center [nm].",
+	            DoubleValue (0.0),
+				MakeDoubleAccessor (&P1906MOL_MOTOR_VolSurface::m_center_y),
+				MakeDoubleChecker<double_t> ())
+	.AddAttribute ("CenterZ",
+	            "The z component of the volume surface center [nm].",
+	            DoubleValue (0.0),
+				MakeDoubleAccessor (&P1906MOL_MOTOR_VolSurface::m_center_z),
+				MakeDoubleChecker<double_t> ())
+	.AddAttribute ("Sensitivity", // this should be moved to the specificity component
+	            "The probability of detecting a message [probability] (only meaningful if Receiver).",
+	            DoubleValue (1.0),
+				MakeDoubleAccessor (&P1906MOL_MOTOR_VolSurface::m_sensitivity),
+				MakeDoubleChecker<double_t> ())
+	.AddAttribute ("Specificity", // this should be moved to the specificity component
+	            "The probability of detecting a false message [probability] (only meaningful if Receiver).",
+	            DoubleValue (0.0),
+				MakeDoubleAccessor (&P1906MOL_MOTOR_VolSurface::m_specificity),
+				MakeDoubleChecker<double_t> ())
+				// LOG these trace sources and post process
+	.AddTraceSource ("MessagesReceived", // track in motion component
+	                 "The number of messages received [-] (only meaningful if Receiver).",
+				     MakeTraceSourceAccessor (&P1906MOL_MOTOR_VolSurface::m_messages_received),
+					 "ns3::DoubleCallback")
+	.AddTraceSource ("Bandwidth", // track in motion component
+	                 "The mean information reception rate [bits/s] (only meaningful if Receiver).",
+				     MakeTraceSourceAccessor (&P1906MOL_MOTOR_VolSurface::m_bandwidth),
+					 "ns3::DoubleCallback")
+	.AddTraceSource ("Delay", // track in motion component
+	                 "The mean received message delay [s] (only meaningful if Receiver).",
+				     MakeTraceSourceAccessor (&P1906MOL_MOTOR_VolSurface::m_delay),
+					 "ns3::DoubleCallback")
+	.AddTraceSource ("Reflections", // track here
+	                 "The number of motors reflected from the surface [-] (only meaningful if ReflectiveBarrier).",
+				     MakeTraceSourceAccessor (&P1906MOL_MOTOR_VolSurface::m_reflections),
+					 "ns3::DoubleCallback")
+	.AddTraceSource ("Flux", // track here
+	                 "The flow of particles through the surface [particles/s] (only meaningful if FluxMeter).",
+				     MakeTraceSourceAccessor (&P1906MOL_MOTOR_VolSurface::m_flux),
+					 "ns3::DoubleCallback")
+  ;
   return tid;
 }
 
-P1906MOL_MOTOR_VolSurface::P1906MOL_MOTOR_VolSurface ()
+P1906MOL_MOTOR_VolSurface::P1906MOL_MOTOR_VolSurface () :
+m_center_x(0), 
+m_center_y(0), 
+m_center_z(0),
+radius(100),
+volType(Receiver)
 {
   /** This class implements persistence length as described in:
 	  Bush, S. F., & Goel, S. (2013). Persistence Length as a Metric for Modeling and 
@@ -95,12 +152,19 @@ P1906MOL_MOTOR_VolSurface::P1906MOL_MOTOR_VolSurface ()
   NS_LOG_FUNCTION(this);
   T = gsl_rng_default;
   r = gsl_rng_alloc (T);
-  gsl_rng_env_setup();  
+  gsl_rng_env_setup();
+  
+  // initialize traced values
+  m_messages_received = 0.0;
+  m_bandwidth = 0.0;
+  m_delay = 0.0;
+  m_reflections = 0.0;
+  m_flux = 0.0;
 }
 
 std::ostream& operator<<(std::ostream& out, const P1906MOL_MOTOR_VolSurface& vs)
 {
-   return out << vs.center << " " << vs.radius << " " << vs.volType;
+   return out << "center: " << vs.center << " radius " << vs.radius << " type: " << vs.volType;
 }
 
 std::istream& operator>>(std::istream& is, P1906MOL_MOTOR_VolSurface& vs)
@@ -108,7 +172,7 @@ std::istream& operator>>(std::istream& is, P1906MOL_MOTOR_VolSurface& vs)
   int vt;
   
   is >> vs.center >> vs.radius >> vt;
-  //vs.volType = vt;
+  vs.volType = static_cast<P1906MOL_MOTOR_VolSurface::typeOfVolume>(vt);
   
   return is;
 }
@@ -116,10 +180,7 @@ std::istream& operator>>(std::istream& is, P1906MOL_MOTOR_VolSurface& vs)
 //! print information about the volume surface
 void P1906MOL_MOTOR_VolSurface::displayVolSurface()
 {
-  NS_LOG_FUNCTION(this);
-  printf ("(displayVolSurface) radius: %lf type: %d\n", radius, volType);
-  printf ("(displayVolSurface) center point: ");
-  center.displayPos();
+  NS_LOG_INFO ("radius: " << radius << " center point: " << center << " type: " << volType);
 }
 
 //! define the volume location and size, in other words, the sphere center and radius
@@ -127,23 +188,23 @@ void P1906MOL_MOTOR_VolSurface::setVolume(P1906MOL_MOTOR_Pos v_center, double v_
 {
   double x, y, z;
   
-  NS_LOG_FUNCTION(this);
   v_center.getPos (&x, &y, &z);
   center.setPos (x, y, z);
   radius = v_radius;
+  NS_LOG_INFO (this);
 }
 
 //! set the type, which can be FluxMeter, ReflectiveBarrier, Receiver
 void P1906MOL_MOTOR_VolSurface::setType (typeOfVolume st)
 {
-  NS_LOG_FUNCTION(this);
   volType = st;
+  NS_LOG_INFO (this);
 }
 
 //! get the type, which can be FluxMeter, ReflectiveBarrier, Receiver
 P1906MOL_MOTOR_VolSurface::typeOfVolume P1906MOL_MOTOR_VolSurface::getType ()
 {
-  NS_LOG_FUNCTION(this);
+  NS_LOG_INFO (volType);
   return volType;
 }
 
@@ -177,7 +238,6 @@ void P1906MOL_MOTOR_VolSurface::reflect(P1906MOL_MOTOR_Pos last_pos, P1906MOL_MO
   gsl_vector * ip = gsl_vector_alloc (3);
   gsl_matrix * vectors = gsl_matrix_alloc (2, 6);
 
-  NS_LOG_FUNCTION(this);
   NS_LOG_DEBUG ("last_pos: " << last_pos << " current_pos: " << current_pos);
   
   //! x_1' - x_0 = v - 2 (v . n) n
@@ -256,16 +316,15 @@ void P1906MOL_MOTOR_VolSurface::reflect(P1906MOL_MOTOR_Pos last_pos, P1906MOL_MO
   current_pos.setPos (lp);
   //NS_LOG_DEBUG ("current_pos after reflection " << current_pos);
   
+  m_reflections++;
   NS_LOG_DEBUG ("reflected current_pos: " << current_pos);
-  
-  //printf ("(reflect) End\n");
 }
 
 //! return radius line segment from center to a point on the surface
 //! v_radius must be allocated for a line segment
 void P1906MOL_MOTOR_VolSurface::getRadiusLine(gsl_vector * v_radius, P1906MOL_MOTOR_Pos pt)
 {  
-  NS_LOG_FUNCTION(this);
+  NS_LOG_FUNCTION (this);
   line (v_radius, center, pt);
 }
 
@@ -319,7 +378,6 @@ double P1906MOL_MOTOR_VolSurface::vectorAngle(gsl_vector * seg1, gsl_vector * se
   double angle = acos (arc) * 180.0 / M_PI;
   
   NS_LOG_DEBUG ("angle: " << angle);
-  
   return angle;
 }
 
@@ -348,6 +406,8 @@ double P1906MOL_MOTOR_VolSurface::fluxMeter(gsl_matrix * tubeMatrix)
   //! \todo incorporate direction and motor rate along tube
   flux += ipts.size();
   
+  m_flux = flux;
+  NS_LOG_INFO ("flux: " << flux);
   return flux;
 }
 
@@ -359,7 +419,6 @@ bool P1906MOL_MOTOR_VolSurface::isInsideVolSurf(P1906MOL_MOTOR_Pos pt)
   gsl_vector * C = gsl_vector_alloc (3);
   gsl_vector * P = gsl_vector_alloc (3);
   
-  NS_LOG_FUNCTION(this);
   //! simply check if distance from center is less than radius
   center.getPos (C);
   pt.getPos (P);
@@ -367,24 +426,23 @@ bool P1906MOL_MOTOR_VolSurface::isInsideVolSurf(P1906MOL_MOTOR_Pos pt)
   gsl_vector_sub (C, P);
   //! magnitude of the vector from point to center
   norm = gsl_blas_dnrm2 (C);
-  
   if (norm < radius)
     isInside = true;
-  
+  m_messages_received++; // this should be moved to motion where it is called and message payload counted
+  NS_LOG_INFO (isInside);
   return isInside;
 }
 
 //! find the intersecting point(s) ipt that intersect the volume surface:
 //! (1) if no intersection, then ipt has zero values
 //! (2) if one intersection, then ipt has one intersection point
-//! (3)if two intersections, then ipt has two intersection points
+//! (3) if two intersections, then ipt has two intersection points
 void P1906MOL_MOTOR_VolSurface::sphereIntersections(gsl_vector * segment, vector<P1906MOL_MOTOR_Pos> & ipt)
 {
   P1906MOL_MOTOR_Pos o, l, c;
   double d, r;
   gsl_vector * lv = gsl_vector_alloc (3);
   
-  NS_LOG_FUNCTION(this);
   //! find all the tube segments intersecting with the surface: equation for surface as function of x, y, z == equation for segment
   //! sphere = x^2 + y^2 + z^2 = r^2
   //! see int P1906MOL_MOTOR_Field::getOverlap3D(gsl_vector * segment, gsl_matrix * tubeMatrix, gsl_matrix * pts, gsl_vector * tubeSegments)
@@ -511,7 +569,7 @@ void P1906MOL_MOTOR_VolSurface::sphereIntersections(gsl_vector * segment, vector
 		ipt.insert(ipt.end(), tmp);
 	}
   }
-  	
+  NS_LOG_INFO ("number of intersection points: " << ipt.size());
   //NS_LOG_DEBUG ("End");
 }
 

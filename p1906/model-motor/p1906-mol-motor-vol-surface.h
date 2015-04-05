@@ -45,6 +45,10 @@ using namespace std;
 #include "ns3/object.h"
 #include "ns3/nstime.h"
 #include "ns3/ptr.h"
+#include "ns3/uinteger.h"
+#include "ns3/double.h"
+#include "ns3/traced-value.h"
+#include "ns3/trace-source-accessor.h"
 #include "ns3/p1906-mol-motor-field.h"
 
 namespace ns3 {
@@ -81,6 +85,9 @@ public:
   
   //! define the volume surface assuming a sphere for now
   P1906MOL_MOTOR_Pos center; //! the center point of the sphere
+  double m_center_x;
+  double m_center_y;
+  double m_center_z;
   double radius; //! the radius of the sphere
   
   //! FluxMeter - measure flux through the volume surface
@@ -88,6 +95,14 @@ public:
   //! Receiver - act as a motor destination volume
   enum typeOfVolume { FluxMeter, ReflectiveBarrier, Receiver };
   typeOfVolume volType;
+  
+  double m_sensitivity;
+  double m_specificity;
+  TracedValue<double_t> m_messages_received;
+  TracedValue<double_t> m_bandwidth;
+  TracedValue<double_t> m_delay;
+  TracedValue<double_t> m_reflections;
+  TracedValue<double_t> m_flux;
   
   /*
    * Methods related to creating the volume surface

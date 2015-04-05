@@ -46,6 +46,7 @@ using namespace std;
 #include "ns3/ptr.h"
 #include "ns3/p1906-motion.h"
 #include "ns3/p1906-mol-motion.h"
+#include "ns3/p1906-mol-motor.h"
 #include "ns3/p1906-mol-motor-pos.h"
 #include "ns3/p1906-mol-motor-vol-surface.h"
 

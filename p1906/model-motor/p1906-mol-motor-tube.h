@@ -85,6 +85,16 @@ public:
   gsl_vector * startPt;
   //! hold the values for a tube comprised of many segments: x_start y_start z_start x_end y_end z_end
   gsl_matrix * segMatrix;
+  
+  double m_length;
+  double m_persistence_length;
+  double m_diameter;
+  double m_half_life;
+  double m_rate_of_growth;
+  double m_rate_of_shortening;
+  double m_frequency_of_catastrophe;
+  double m_frequency_of_rescue;
+  double m_energy_consumed;
 
   /*
    * Methods related to creating a tube

@@ -56,25 +56,24 @@ TypeId P1906MOL_MOTOR_Pos::GetTypeId (void)
   static TypeId tid = TypeId ("ns3::P1906MOL_MOTOR_Pos")
     .SetParent<Object> ()
 	.AddConstructor<P1906MOL_MOTOR_Pos> ()
-	//.AddTraceSource ("XLocation",
-	//                 "The current Euclidean X position.",
-	//			     MakeTraceSourceAccessor (&P1906MOL_MOTOR_Pos::pos_x))
-	//.AddTraceSource ("YLocation",
-	//               "The current Euclidean Y position.",
-	//			     MakeTraceSourceAccessor (&P1906MOL_MOTOR_Pos::pos_x))
-	//.AddTraceSource ("ZLocation",
-	//                 "The current Euclidean Z position.",
-	//			     MakeTraceSourceAccessor (&P1906MOL_MOTOR_Pos::pos_z))
-	//.AddAttribute ("ZLocation",
-	//               "The current Euclidean Z position.",
-	//			   ObjectVectorValue (),
-	//			   MakeDoubleAccessor (&P1906MOL_MOTOR_Pos::pos_z),
-	//			   MakeDoubleChecker<double> ())
+	.AddTraceSource ("XLocation",
+	                 "The current Euclidean X position.",
+				     MakeTraceSourceAccessor (&P1906MOL_MOTOR_Pos::pos_x),
+					 "ns3:posTracedCallback")
+	.AddTraceSource ("YLocation",
+	                 "The current Euclidean Y position.",
+				     MakeTraceSourceAccessor (&P1906MOL_MOTOR_Pos::pos_x),
+					 "ns3:posTracedCallback")
+	.AddTraceSource ("ZLocation",
+	                 "The current Euclidean Z position.",
+				     MakeTraceSourceAccessor (&P1906MOL_MOTOR_Pos::pos_z),
+					 "ns3:posTracedCallback")
   ;
   return tid;
 }
 
-P1906MOL_MOTOR_Pos::P1906MOL_MOTOR_Pos ()
+//! initial location values are optional
+P1906MOL_MOTOR_Pos::P1906MOL_MOTOR_Pos (double x, double y, double z)
 {
   /** This class implements persistence length as described in:
 	  Bush, S. F., & Goel, S. (2013). Persistence Length as a Metric for Modeling and 
@@ -93,6 +92,12 @@ P1906MOL_MOTOR_Pos::P1906MOL_MOTOR_Pos ()
 
   NS_LOG_FUNCTION(this);
   pos = gsl_vector_alloc (3);
+  gsl_vector_set (pos, 0, x);
+  gsl_vector_set (pos, 1, y);
+  gsl_vector_set (pos, 2, z);
+  pos_x = x;
+  pos_y = y;
+  pos_z = z;
 }
 
 ATTRIBUTE_HELPER_CPP (P1906MOL_MOTOR_Pos);
@@ -104,10 +109,16 @@ std::ostream& operator<<(std::ostream& out, const P1906MOL_MOTOR_Pos& p)
 
 std::istream& operator>>(std::istream& is, P1906MOL_MOTOR_Pos& p)
 {
-  is >> p.pos_x >> p.pos_y >> p.pos_z;
-  gsl_vector_set(p.pos, 0, p.pos_x);
-  gsl_vector_set(p.pos, 1, p.pos_y);
-  gsl_vector_set(p.pos, 2, p.pos_z);
+  double x, y, z; 
+  
+  is >> x >> y >> z;
+  gsl_vector_set(p.pos, 0, x);
+  gsl_vector_set(p.pos, 1, y);
+  gsl_vector_set(p.pos, 2, z);
+  
+  p.pos_x = x;
+  p.pos_y = y;
+  p.pos_z = z;
   
   return is;
 }
@@ -119,6 +130,7 @@ void P1906MOL_MOTOR_Pos::setPos (gsl_vector * in_pos)
   pos_x = gsl_vector_get (pos, 0);
   pos_y = gsl_vector_get (pos, 1);
   pos_z = gsl_vector_get (pos, 2);
+  NS_LOG_INFO(this << " " << pos_x << " " << pos_y << " " << pos_z);
 }
 
 //! set the object's position
@@ -130,6 +142,7 @@ void P1906MOL_MOTOR_Pos::setPos (double x, double y, double z)
   pos_x = x;
   pos_y = y;
   pos_z = z;
+  NS_LOG_INFO(this << " " << pos_x << " " << pos_y << " " << pos_z);
 }
 
 void P1906MOL_MOTOR_Pos::setPos (P1906MOL_MOTOR_Pos& p)
@@ -140,20 +153,26 @@ void P1906MOL_MOTOR_Pos::setPos (P1906MOL_MOTOR_Pos& p)
   pos_x = p.pos_x;
   pos_y = p.pos_y;
   pos_z = p.pos_z;
+  NS_LOG_INFO(this << " " << pos_x << " " << pos_y << " " << pos_z);
 }
 
 //! retrieve the position into out_pos vector [x y z]
 void P1906MOL_MOTOR_Pos::getPos (gsl_vector * out_pos)
 {
   gsl_vector_memcpy (out_pos, pos);
+  NS_LOG_INFO(this << " " << pos_x << " " << pos_y << " " << pos_z);
 }
 
 //! retrieve the position
 void P1906MOL_MOTOR_Pos::getPos (double * x, double * y, double * z)
 {
-  *x = gsl_vector_get (pos, 0);
-  *y = gsl_vector_get (pos, 1);
-  *z = gsl_vector_get (pos, 2);
+  *x = pos_x;
+  *y = pos_y;
+  *z = pos_z;
+  //*x = gsl_vector_get (pos, 0);
+  //*y = gsl_vector_get (pos, 1);
+  //*z = gsl_vector_get (pos, 2);
+  NS_LOG_INFO(this << " " << *x << " " << *y << " " << *z);
 }
 
 //! shift point by a scaled vector: new_pos = pos + d v_in
@@ -184,7 +203,7 @@ void P1906MOL_MOTOR_Pos::displayPos()
   double x, y, z;
   
   getPos (&x, &y, &z);
-  printf ("Position: %g %g %g\n", x, y, z); 
+  NS_LOG_INFO ("Position: " << x << " " << y << " " << z);
 }
 
 P1906MOL_MOTOR_Pos::~P1906MOL_MOTOR_Pos ()

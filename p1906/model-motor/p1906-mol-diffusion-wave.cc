@@ -45,31 +45,32 @@ TypeId P1906MOL_ExtendedDiffusionWave::GetTypeId (void)
 {
   static TypeId tid = TypeId ("P1906MOL_ExtendedDiffusionWave")
     .SetParent<Object> ()
-	//.AddAttribute ("Transmission_Time",
-	//               "Time the concentration was released in seconds.",
-	//			   DoubleValue (),
-	//			   MakeDoubleAccessor (&P1906MOL_ExtendedDiffusionWave::transmission_time),
-	//			   MakeDoubleChecker<double> ())
-	//.AddAttribute ("Diffusion_Coefficient",
-	//              "The diffusion coefficient [nm^2/s].",
-	//			   DoubleValue (),
-	//			   MakeDoubleAccessor (&P1906MOL_ExtendedDiffusionWave::D),
-	//			   MakeDoubleChecker<double> ())
-	//.AddAttribute ("Initial_Concentration",
-	//              "Initial concentration [nmol/nm^3].",
-	//			   DoubleValue (),
-	//			   MakeDoubleAccessor (&P1906MOL_ExtendedDiffusionWave::c_0),
-	//			   MakeDoubleChecker<double> ())
-	//.AddAttribute ("Transmission_Time",
-	//               "The location of the initial release [nm] (x,y,z).",
-	//			   P1906MOL_MOTOR_PosValue (),
-	//			   MakeP1906MOL_MOTOR_PosAccessor (&P1906MOL_ExtendedDiffusionWave::transmitter),
-	//			   MakeP1906MOL_MOTOR_PosChecker<P1906MOL_MOTOR_Pos> ())
-	//.AddAttribute ("isRemoveLowConcentration",
-	//               "Mark to remove since concentration is too low.",
-	//			   BoolValue (),
-	//			   MakeBoolAccessor (&P1906MOL_ExtendedDiffusionWave::low_concentration),
-	//			   MakeBoolChecker<bool> ())
+	.AddConstructor<P1906MOL_ExtendedDiffusionWave> ()
+	.AddAttribute ("Transmission_Time",
+	               "Time the concentration was released in seconds.",
+				   DoubleValue (),
+				   MakeDoubleAccessor (&P1906MOL_ExtendedDiffusionWave::transmission_time),
+				   MakeDoubleChecker<double> ())
+	.AddAttribute ("Diffusion_Coefficient",
+	              "The diffusion coefficient [nm^2/s].",
+			      DoubleValue (),
+				  MakeDoubleAccessor (&P1906MOL_ExtendedDiffusionWave::D),
+				   MakeDoubleChecker<double> ())
+	.AddAttribute ("Initial_Concentration",
+	              "Initial concentration [nmol/nm^3].",
+				   DoubleValue (),
+				   MakeDoubleAccessor (&P1906MOL_ExtendedDiffusionWave::c_0),
+				   MakeDoubleChecker<double> ())
+	.AddAttribute ("Transmitter_Location",
+	               "The location of the initial release [nm] (x,y,z).",
+				   P1906MOL_MOTOR_PosValue (P1906MOL_MOTOR_Pos (0, 0, 0)),
+				   MakeP1906MOL_MOTOR_PosAccessor (&P1906MOL_ExtendedDiffusionWave::transmitter),
+     			   MakeP1906MOL_MOTOR_PosChecker ())
+	.AddAttribute ("isRemoveLowConcentration",
+	               "Mark to remove since concentration is too low.",
+			       BooleanValue (),
+				   MakeBooleanAccessor (&P1906MOL_ExtendedDiffusionWave::low_concentration),
+				   MakeBooleanChecker ())
 	;
   return tid;
 }

@@ -41,10 +41,14 @@ namespace ns3 {
 
 NS_LOG_COMPONENT_DEFINE ("P1906MOL_ExtendedDiffusion");
 
+NS_OBJECT_ENSURE_REGISTERED (P1906MOL_ExtendedDiffusion);
+
 TypeId P1906MOL_ExtendedDiffusion::GetTypeId (void)
 {
   static TypeId tid = TypeId ("P1906MOL_ExtendedDiffusion")
-    .SetParent<Object> ();
+    .SetParent<Object> ()
+	.AddConstructor<P1906MOL_ExtendedDiffusion> ()
+	;
   return tid;
 }
 

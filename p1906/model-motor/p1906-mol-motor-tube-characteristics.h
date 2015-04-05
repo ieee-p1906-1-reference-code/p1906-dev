@@ -33,8 +33,12 @@
   {
     //! the volume of space in which tubes originate (nm^3)
     double volume;
-	//! the mean tube length in nm
-    double mean_tube_length;
+	//! the initial direction of growth of microtubules in degrees in 3D space using spherical coordinates. This is the azimuthal angle \phi.
+	double mean_orientation_phi;
+    //! The initial direction of growth of microtubules in degrees in 3D space using spherical coordinates. This is the polar angle \theta.
+	double mean_orientation_theta;
+    //! the mean tube length in nm
+	double mean_tube_length;
 	//! the mean angle between segments within a tube (deg)
     double mean_intra_tube_angle;
 	//! the mean angle between tubes (deg)

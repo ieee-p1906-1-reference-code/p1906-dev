@@ -87,6 +87,9 @@ public:
   float c_0;
   //! location of the initial release [nm] (x,y,z)
   P1906MOL_MOTOR_Pos transmitter;
+  double start_x;
+  double start_y;
+  double start_z;
   //! mark to remove since concentration is too low
   bool low_concentration;
   

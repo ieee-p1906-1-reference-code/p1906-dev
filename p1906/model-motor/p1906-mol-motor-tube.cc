@@ -56,10 +56,68 @@ namespace ns3 {
 
 NS_LOG_COMPONENT_DEFINE ("P1906MOL_MOTOR_Tube");
 
+NS_OBJECT_ENSURE_REGISTERED (P1906MOL_MOTOR_Tube);
+
+//! \todo tube might be made dynamic to implement dynamic instability, implement a callback from a Timer or Watchdog to modify tubes
+//! Molecular Biology of the Cell by Alberts et al.
+//! http://en.wikipedia.org/wiki/Microtubule
+//! Microtubule Assembly Dynamics at the Nanoscale, DOI 10.1016/j.cub.2007.07.011
+//! Rapid Microtubule Self-Assembly Kinetics, Cell 146, 582–592, August 19, 2011
+//! + end is high segment index, - end is low segment index
+//! Dynamic instability http://web.physics.ucsb.edu/~deborah/res/res_1.htm
+//! See file:///C:/Users/200004965/Documents/Book-Nanonets/docs/Gregoretti.pdf
 TypeId P1906MOL_MOTOR_Tube::GetTypeId (void)
 {
   static TypeId tid = TypeId ("ns3::P1906MOL_MOTOR_Tube")
-    .SetParent<P1906MOL_MOTOR_Field> ();
+    .SetParent<P1906MOL_MOTOR_Field> ()
+	//.AddConstructor<P1906MOL_MOTOR_Tube> ()
+	.AddAttribute ("ExpectedLength",
+					"Expected Length of a tube [micrometers].",
+					DoubleValue (50),
+					MakeDoubleAccessor (&P1906MOL_MOTOR_Tube::m_length),
+					MakeDoubleChecker<double_t> ())
+	.AddAttribute ("PersistenceLength",
+					"Persistence length of tube [micrometers].",
+					DoubleValue (30),
+					MakeDoubleAccessor (&P1906MOL_MOTOR_Tube::m_persistence_length),
+					MakeDoubleChecker<double_t> ())
+	.AddAttribute ("Diameter",
+					"Diameter of the microtubule [nm].",
+					DoubleValue (24),
+					MakeDoubleAccessor (&P1906MOL_MOTOR_Tube::m_diameter),
+					MakeDoubleChecker<double_t> ())
+	.AddAttribute ("HalfLife",
+					"Time for half the microtubules to disassemble [s].",
+					DoubleValue (600),
+					MakeDoubleAccessor (&P1906MOL_MOTOR_Tube::m_half_life),
+					MakeDoubleChecker<double_t> ())
+	.AddAttribute ("RateOfGrowth",
+					"TBD: Rate of microtubule growth (V+) [micrometers/s].",
+					DoubleValue (0),
+					MakeDoubleAccessor (&P1906MOL_MOTOR_Tube::m_rate_of_growth),
+					MakeDoubleChecker<double_t> ())
+	.AddAttribute ("RateOfShortening",
+					"TBD Rate of microtubule shortening (V-) [micrometers/s].",
+					DoubleValue (0),
+					MakeDoubleAccessor (&P1906MOL_MOTOR_Tube::m_rate_of_shortening),
+					MakeDoubleChecker<double_t> ())
+	.AddAttribute ("FrequencyOfCatastrophe",
+					"TBD: Frequency of catastrophe (growth and shortening) (f+-) [probability].",
+					DoubleValue (0),
+					MakeDoubleAccessor (&P1906MOL_MOTOR_Tube::m_frequency_of_catastrophe),
+					MakeDoubleChecker<double_t> ())
+	.AddAttribute ("FrequencyOfRescue",
+					"TBD Frequency of rescue (shortening and growth) (f-+) [micrometers/s].",
+					DoubleValue (0),
+					MakeDoubleAccessor (&P1906MOL_MOTOR_Tube::m_frequency_of_rescue),
+					MakeDoubleChecker<double_t> ())
+	//! Dielectric measurement of individual microtubules using the electroorientation method
+	.AddAttribute ("Conductivity",
+					"Microtubule conductivity (+/- 0.1) [mS/m].",
+					DoubleValue (1.5),
+					MakeDoubleAccessor (&P1906MOL_MOTOR_Tube::m_energy_consumed),
+					MakeDoubleChecker<double_t> ())
+	;
   return tid;
 }
 
@@ -82,7 +140,6 @@ P1906MOL_MOTOR_Tube::P1906MOL_MOTOR_Tube (struct tubeCharacteristcs_t * ts, gsl_
   */
   
   NS_LOG_FUNCTION(this);
-  
   T = gsl_rng_default;
   r = gsl_rng_alloc (T);  
   gsl_rng_env_setup();
@@ -144,16 +201,15 @@ int P1906MOL_MOTOR_Tube::genTube(struct tubeCharacteristcs_t * ts, gsl_rng *r, g
 	
   */
   
-  NS_LOG_FUNCTION(this);
   gsl_matrix * segAngleTheta = gsl_matrix_alloc (ts->numSegments, 1);
   gsl_matrix * segAnglePsi = gsl_matrix_alloc (ts->numSegments, 1);
 
-  //NS_LOG_DEBUG ("startX = " << gsl_vector_get (startPt, 0)
-  //<< " startY = " << gsl_vector_get (startPt, 1)
-  //<< " startZ = " << gsl_vector_get (startPt, 2)
-  //<< " numSegments = " << ts->numSegments
-  //<< " segLength = " << ts->segLength
-  //<< " persistenceLength = " << ts->persistenceLength);
+  NS_LOG_DEBUG ("startX = " << gsl_vector_get (startPt, 0) <<
+                " startY = " << gsl_vector_get (startPt, 1) <<
+                " startZ = " << gsl_vector_get (startPt, 2) <<
+                " numSegments = " << ts->numSegments <<
+                " segLength = " << ts->segLength <<
+                " persistenceLength = " << ts->persistenceLength);
   
   genPersistenceLength(r, segAngleTheta, ts->segLength, ts->persistenceLength);
   genPersistenceLength(r, segAnglePsi, ts->segLength, ts->persistenceLength);
@@ -164,10 +220,12 @@ int P1906MOL_MOTOR_Tube::genTube(struct tubeCharacteristcs_t * ts, gsl_rng *r, g
   //  for (size_t j = 0; j < 1; j++)
   //  {
   //    NS_LOG_DEBUG ("segAngleTheta(" << i << "," << j << ") = " << gsl_matrix_get (segAngleTheta, i, j));
-  //    NS_LOG_DEBUG ("segAnglePsi(" << i, "," << j << ") = "<< gsl_matrix_get (segAnglePsi, i, j));
+  //    NS_LOG_DEBUG ("segAnglePsi(" << i << "," << j << ") = " << gsl_matrix_get (segAnglePsi, i, j));
   //  }
+  
+  // \todo: the persistence length angles should be with respect to the given orientation. add the angles to the orientation before using.
 	
-  //NS_LOG_DEBUG ("segments allocated " << segMatrix->size1 << " " << segMatrix->size2 << " numSegments " << ts->numSegments);
+  NS_LOG_DEBUG ("segments allocated " << segMatrix->size1 << " " << segMatrix->size2 << " numSegments " << ts->numSegments);
   
   for (size_t i = 0; i < ts->segPerTube; i++)
   {
@@ -177,22 +235,41 @@ int P1906MOL_MOTOR_Tube::genTube(struct tubeCharacteristcs_t * ts, gsl_rng *r, g
       gsl_matrix_set(segMatrix, 0, 0, gsl_vector_get (startPt, 0));
       gsl_matrix_set(segMatrix, 0, 1, gsl_vector_get (startPt, 1));
 	  gsl_matrix_set(segMatrix, 0, 2, gsl_vector_get (startPt, 2));
+	  
+	  NS_LOG_DEBUG ("tube end point: " << 
+	    gsl_vector_get (startPt, 0) << " " << 
+		gsl_vector_get (startPt, 1) << " " << 
+		gsl_vector_get (startPt, 2));
     }
     else
     { //! use end of last segment
       gsl_matrix_set(segMatrix, i, 0, gsl_matrix_get(segMatrix, i - 1, 3));
       gsl_matrix_set(segMatrix, i, 1, gsl_matrix_get(segMatrix, i - 1, 4));
 	  gsl_matrix_set(segMatrix, i, 2, gsl_matrix_get(segMatrix, i - 1, 5));
+	  
+	  NS_LOG_DEBUG ("tube end point: " << 
+	    gsl_matrix_get(segMatrix, i - 1, 3) << " " <<
+		gsl_matrix_get(segMatrix, i - 1, 4) << " " <<
+		gsl_matrix_get(segMatrix, i - 1, 5));
     }
+	
+	NS_LOG_DEBUG ("tube orientation phi: " << ts->mean_orientation_phi << " theta: " << ts->mean_orientation_theta);
+	
 	//! set the end points of the segment
-	double x = ts->segLength * sin(gsl_matrix_get(segAngleTheta, i, 0)) * cos(gsl_matrix_get(segAnglePsi, i, 0));
-	double y = ts->segLength * sin(gsl_matrix_get(segAngleTheta, i, 0)) * sin(gsl_matrix_get(segAnglePsi, i, 0));
-	double z = ts->segLength * cos(gsl_matrix_get(segAngleTheta, i, 0));
+	double x = ts->segLength * sin(ts->mean_orientation_theta - gsl_matrix_get(segAngleTheta, i, 0)) * cos(ts->mean_orientation_phi - gsl_matrix_get(segAnglePsi, i, 0));
+	double y = ts->segLength * sin(ts->mean_orientation_theta - gsl_matrix_get(segAngleTheta, i, 0)) * sin(ts->mean_orientation_phi - gsl_matrix_get(segAnglePsi, i, 0));
+	double z = ts->segLength * cos(ts->mean_orientation_theta - gsl_matrix_get(segAngleTheta, i, 0));
+		
 	gsl_matrix_set(segMatrix, i, 3, x + gsl_matrix_get(segMatrix, i, 0));
-    gsl_matrix_set(segMatrix, i, 4, y + gsl_matrix_get(segMatrix, i, 1));
+	gsl_matrix_set(segMatrix, i, 4, y + gsl_matrix_get(segMatrix, i, 1));
 	gsl_matrix_set(segMatrix, i, 5, z + gsl_matrix_get(segMatrix, i, 2));
+	
+	NS_LOG_DEBUG ("tube end point: " << 
+		x + gsl_matrix_get(segMatrix, i, 0) << " " <<
+		y + gsl_matrix_get(segMatrix, i, 1) << " " <<
+		z + gsl_matrix_get(segMatrix, i, 2));
   }
-  
+  NS_LOG_FUNCTION(this << "tube created");
   return 0;
 }
 
@@ -231,9 +308,7 @@ double P1906MOL_MOTOR_Tube::genPersistenceLength(gsl_rng * r, gsl_matrix * segAn
     sigma  = sqrt(2.0 * segLength / persistenceLength);
   else
 	sigma = DBL_MAX; //! maximum possible variance
-
-  //NS_LOG_DEBUG ("sigma = " << sigma);
-	
+  NS_LOG_DEBUG ("sigma = " << sigma);
   for(size_t i = 0; i < segAngle->size1; i++)
   {
     //! return a valid radian [0..2\pi]
@@ -257,7 +332,6 @@ double P1906MOL_MOTOR_Tube::getPersistenceLength()
 {
   //! segMatrix rows are x_start x_end y_start y_end (may not need numSegments)
   NS_LOG_FUNCTION(this);
-  
   return 0;
 }
 
@@ -267,10 +341,7 @@ void P1906MOL_MOTOR_Tube::displayTube()
   for (size_t i = 0; i < segMatrix->size1; i++)
   {
     for (size_t j = 0; j < segMatrix->size2; j++)
-	{
-	  printf ("segMatrix(%ld,%ld) = %g\t", i, j, gsl_matrix_get (segMatrix, i, j));
-    }
-	printf ("\n");
+	  NS_LOG_INFO ("segMatrix(" << i << "," << j << ") = " << gsl_matrix_get (segMatrix, i, j));
   }
 }
 

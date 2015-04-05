@@ -90,6 +90,30 @@ public:
   double start_x;
   double start_y;
   double start_z;
+  
+  //static uint32_t last_id;
+  
+  //! unique id for this motor used for tracking multiple motors
+  uint32_t m_id;
+  
+  std::string m_source;
+  std::string m_domain_structure;
+  double m_lifetime;
+  bool isAlive;
+  double m_mass;
+  bool m_directionality;
+  double m_processivity;
+  double m_velocity;
+  double m_force;
+  double m_cargo_diameter;
+  double m_cargo_mass;
+  double m_diameter;
+  double m_message_information_density;
+  uint32_t m_collision_type;
+  double m_binding_rate;
+  double m_energy_consumed;
+  double m_localization_error;
+  double m_supersystem_degredation;
 
   //! a record of the position of the motor throughout its lifetime
   vector<P1906MOL_MOTOR_Pos> pos_history;
@@ -133,6 +157,8 @@ public:
   /*
    * Methods related to motor positioning and tracking
    */
+  //! write all the volume surfaces to volsurfaces.mma
+  void writeVolSurfaces();
   //! print the current location
   void displayLocation();
   //! set the current location

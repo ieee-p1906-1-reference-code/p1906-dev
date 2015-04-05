@@ -92,6 +92,35 @@ public:
   const gsl_rng_type * T;
   gsl_rng * r;
   
+  //! whether to record tubes in file
+  bool m_report_tubes;
+  //! the volume of space in which tubes originate (nm^3)
+  double m_volume;
+  //! the initial direction of growth of microtubules in degrees in 3D space using spherical coordinates. This is the azimuthal angle \phi.
+  double m_orientation_phi;
+  //! The initial direction of growth of microtubules in degrees in 3D space using spherical coordinates. This is the polar angle \theta.
+  double m_orientation_theta;
+  //! the mean tube length in nm
+  double m_mean_length;
+  //! the mean angle between segments within a tube (deg)
+  double m_mean_intra_tube_angle;
+  //! the mean angle between tubes (deg)
+  double m_mean_inter_tube_angle;
+  //! the density of tube segments within the volume (segments/nm^3)
+  double m_mean_density;
+  //! segment length (nm)
+  double m_segment_length;
+  //! the total number of segments for all tubes
+  size_t m_number_of_segments;
+  //! the persistence length (nm)
+  double m_persistence_length;
+  //! the number of segments per tube
+  size_t m_segments_per_tube;
+  //! the total number of tubes
+  size_t m_number_of_tubes;
+  //! the structural entropy of all tubes in bits
+  double m_structural_entropy;
+  
   P1906MOL_MOTOR_MicrotubulesField ();
   
   /*
@@ -99,6 +128,9 @@ public:
    */
   //! set the volume in which tubes will be generated
   void setTubeVolume(double volume = 25);
+  //! set the space in which the tube centers will be formed
+  void setTubeOrientationPhi(double orientation_phi);
+  void setTubeOrientationTheta(double orientation_theta);
   //! set the mean tube length
   void setTubeLength(double mean_tube_length = 100);
   //! set the mean angle between tube segments
@@ -117,6 +149,8 @@ public:
   /*
    * Methods related to creating microtubules and analyzing molecular motor transport
    */
+  //! create the microtubules
+  void createTubes();
   //! return the size of the matrix to allocate
   void getTubesSize(double * rows, double * cols);
   //! export tubes; copy the object's tubeMatrix into tm for use outside the object

@@ -52,7 +52,9 @@ NS_LOG_COMPONENT_DEFINE ("P1906MOL_MOTOR_MathematicaHelper");
 TypeId P1906MOL_MOTOR_MathematicaHelper::GetTypeId (void)
 {
   static TypeId tid = TypeId ("ns3::P1906MOL_MOTOR_MathematicaHelper")
-    .SetParent<Object> ();
+    .SetParent<Object> ()
+	// no .Attributes, although filename might be created as one
+	;
   return tid;
 }
 

@@ -51,6 +51,7 @@ using namespace std;
 #include "ns3/object-vector.h"
 #include "ns3/uinteger.h"
 #include "ns3/traced-value.h"
+#include "ns3/traced-callback.h"
 #include "ns3/trace-source-accessor.h"
 
 namespace ns3 {
@@ -80,16 +81,33 @@ class P1906MOL_MOTOR_Pos : public Object
 {
 public:
   static TypeId GetTypeId (void);
-  P1906MOL_MOTOR_Pos ();
+  P1906MOL_MOTOR_Pos (double x = 0, double y = 0, double z = 0);
 
   gsl_vector * pos;
   //! the pos_* values are intended for ns-3 attributes to be used for tracing
-  //TracedValue<double_t> pos_x;
-  //TracedValue<double_t> pos_y;
-  //TracedValue<double_t> pos_z;
-  double_t pos_x;
-  double_t pos_y;
-  double_t pos_z;
+  TracedValue<double_t> pos_x;
+  TracedValue<double_t> pos_y;
+  TracedValue<double_t> pos_z;
+  
+  /**
+   * TracedCallback signature for course change notifications.
+   *
+   * If the callback is connected using Config::ConnectWithoutContext()
+   * omit the \c context argument from the signature.
+   *
+   * \param [in] context The context string, supplied by the Trace source.
+   * \param [in] model The P1906MOL_MOTOR_Pos which is changing course.
+   */
+  typedef void (* posTracedCallback)
+    (const std::string context, const Ptr<const P1906MOL_MOTOR_Pos> p);
+  
+  /**
+   * Used to alert subscribers that a change in direction, velocity,
+   * or position has occurred.
+   */
+  ns3::TracedCallback<Ptr<const P1906MOL_MOTOR_Pos> > pos_xTrace;
+  ns3::TracedCallback<Ptr<const P1906MOL_MOTOR_Pos> > pos_yTrace;
+  ns3::TracedCallback<Ptr<const P1906MOL_MOTOR_Pos> > pos_zTrace;
   
   /*
    * Methods related to recording position

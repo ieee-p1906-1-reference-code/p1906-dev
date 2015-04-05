@@ -52,7 +52,9 @@ NS_LOG_COMPONENT_DEFINE ("P1906MOL_MOTOR_MATLABHelper");
 TypeId P1906MOL_MOTOR_MATLABHelper::GetTypeId (void)
 {
   static TypeId tid = TypeId ("ns3::P1906MOL_MOTOR_MATLABHelper")
-    .SetParent<Object> ();
+    .SetParent<Object> ()
+	// no .Attributes, although filename might be created as one
+	;
   return tid;
 }
 
