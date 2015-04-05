@@ -14,5 +14,5 @@ var searchData=
   ['gettubes',['getTubes',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___microtubules_field.html#a263e69b5b595b4309b4956bfb46a3d42',1,'ns3::P1906MOL_MOTOR_MicrotubulesField']]],
   ['gettubessize',['getTubesSize',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___microtubules_field.html#ac2883ac66c87592802f30d5d56a88c52',1,'ns3::P1906MOL_MOTOR_MicrotubulesField']]],
   ['gettype',['getType',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___vol_surface.html#ac357002679d6bdf6f6262ea38cb698a7',1,'ns3::P1906MOL_MOTOR_VolSurface']]],
-  ['gettypeid',['GetTypeId',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___vol_surface.html#a2a858ffa374524e97691b07ff2ead3b1',1,'ns3::P1906MOL_MOTOR_VolSurface']]]
+  ['gettypeid',['GetTypeId',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___tube.html#adf0d5d92a32c88ef31698a6d4fa17e16',1,'ns3::P1906MOL_MOTOR_Tube::GetTypeId()'],['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___vol_surface.html#a2a858ffa374524e97691b07ff2ead3b1',1,'ns3::P1906MOL_MOTOR_VolSurface::GetTypeId()'],['../classns3_1_1_p1906_m_o_l___motor.html#a1738606eb8c7968d0586ca81e14332a7',1,'ns3::P1906MOL_Motor::GetTypeId()']]]
 ];

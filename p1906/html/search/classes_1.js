@@ -29,6 +29,7 @@ var searchData=
   ['p1906mol_5fmotor_5ftransmittercommunicationinterface',['P1906MOL_MOTOR_TransmitterCommunicationInterface',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___transmitter_communication_interface.html',1,'ns3']]],
   ['p1906mol_5fmotor_5ftube',['P1906MOL_MOTOR_Tube',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___tube.html',1,'ns3']]],
   ['p1906mol_5fmotor_5fvolsurface',['P1906MOL_MOTOR_VolSurface',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___vol_surface.html',1,'ns3']]],
+  ['p1906mol_5fmotorspecificity',['P1906MOL_MOTORSpecificity',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r_specificity.html',1,'ns3']]],
   ['p1906molcommunicationinterface',['P1906MOLCommunicationInterface',['../classns3_1_1_p1906_m_o_l_communication_interface.html',1,'ns3']]],
   ['p1906molfield',['P1906MOLField',['../classns3_1_1_p1906_m_o_l_field.html',1,'ns3']]],
   ['p1906molmessagecarrier',['P1906MOLMessageCarrier',['../classns3_1_1_p1906_m_o_l_message_carrier.html',1,'ns3']]],

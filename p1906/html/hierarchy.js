@@ -64,6 +64,7 @@ var hierarchy =
       [ "ns3::P1906Specificity", "classns3_1_1_p1906_specificity.html", [
         [ "ns3::ExtensionNameP1906Specificity", "classns3_1_1_extension_name_p1906_specificity.html", null ],
         [ "ns3::P1906EMSpecificity", "classns3_1_1_p1906_e_m_specificity.html", null ],
+        [ "ns3::P1906MOL_MOTORSpecificity", "classns3_1_1_p1906_m_o_l___m_o_t_o_r_specificity.html", null ],
         [ "ns3::P1906MOLSpecificity", "classns3_1_1_p1906_m_o_l_specificity.html", null ]
       ] ],
       [ "ns3::P1906TransmitterCommunicationInterface", "classns3_1_1_p1906_transmitter_communication_interface.html", [

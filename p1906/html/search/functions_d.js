@@ -10,6 +10,8 @@ var searchData=
   ['settubeinterangle',['setTubeInterAngle',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___microtubules_field.html#a10bca44eb9c4e4d3dc2771321fecd981',1,'ns3::P1906MOL_MOTOR_MicrotubulesField']]],
   ['settubeintraangle',['setTubeIntraAngle',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___microtubules_field.html#ab8d67a032311400e5f6cec164d99e195',1,'ns3::P1906MOL_MOTOR_MicrotubulesField']]],
   ['settubelength',['setTubeLength',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___microtubules_field.html#aeb73313c1971f1235654510986cd0b4d',1,'ns3::P1906MOL_MOTOR_MicrotubulesField']]],
+  ['settubeorientationphi',['setTubeOrientationPhi',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___microtubules_field.html#afc72c10eb32e19338806f3af37629017',1,'ns3::P1906MOL_MOTOR_MicrotubulesField']]],
+  ['settubeorientationtheta',['setTubeOrientationTheta',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___microtubules_field.html#afeafa1108d2bfea208514660fbe3b2aa',1,'ns3::P1906MOL_MOTOR_MicrotubulesField']]],
   ['settubepersistencelength',['setTubePersistenceLength',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___microtubules_field.html#afcb2de622f85f6320f438e1a01231f0d',1,'ns3::P1906MOL_MOTOR_MicrotubulesField']]],
   ['settubes',['setTubes',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___microtubules_field.html#ae529628ce7b97936a8a60db0bcf2f096',1,'ns3::P1906MOL_MOTOR_MicrotubulesField']]],
   ['settubesegments',['setTubeSegments',['../classns3_1_1_p1906_m_o_l___m_o_t_o_r___microtubules_field.html#aed9ba6625eee4926560344db14a20dbf',1,'ns3::P1906MOL_MOTOR_MicrotubulesField']]],
