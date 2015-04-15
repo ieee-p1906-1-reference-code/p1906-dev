@@ -28,11 +28,24 @@
 set -x
 set -e
 
-# General microtubule orientation is governed in 3D space via spherical coordinates, orientationPhi and orientationTheta. A motor is transmitted and can bind to the microtubules to guide its motion. The results are stored in Mathematica files that can be Import[]'ed to display the microtubules and motor motion. Use setenv NS_LOG P1906MOL_MOTOR_Motion to display the motion details.
+# Use setenv NS_LOG P1906MOL_MOTOR_Motion to display the motion details.
+
+export NS_LOG='P1906MOL_MOTOR_CommunicationInterface=level_all|prefix_time'
+export NS_LOG=$NS_LOG:'P1906MOL_MOTOR_ReceiverCommunicationInterface=level_all|prefix_time'
+export NS_LOG=$NS_LOG:'P1906MOL_MOTORMedium=level_all|prefix_time'
+
+# Microtubule orientation is governed in 3D space via spherical coordinates, orientationPhi and orientationTheta. 
+# Microtubule rigidity is controlled vi a persistence length argument. 
+# A motor is injected at the origin and can bind and walk along microtubules to guide its motion. 
+# In this example we hold persistence length constant and modify the orientation of the MTs in radians and can simulate the impact on motor propagation time.
+# The results are stored in Mathematica files that can be Import[]'ed to display the microtubules and motor motion. 
 
 for orientationPhi in {0..3..1}
 do
 	../waf --run "motor-example --orientation-phi=${orientationPhi}" &> tmp_out
-	mv ../tubes.mma ../tubes${orientationPhi}.mma
-	mv ../float2destination_*.mma ../float2destination${orientationPhi}.mma
+	mkdir -p ../MT-Orientation-${orientationPhi}
+	mv tmp_out ../MT-Orientation-${orientationPhi}
+	mv ../tubes-*.mma ../MT-Orientation-${orientationPhi}
+	mv ../move2Destination-*.mma ../MT-Orientation-${orientationPhi}
+	mv ../volsurface_*.mma ../MT-Orientation-${orientationPhi}
 done
