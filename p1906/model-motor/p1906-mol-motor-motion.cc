@@ -49,8 +49,10 @@
 #include "ns3/object.h"
 #include "ns3/nstime.h"
 #include "ns3/ptr.h"
+#include "ns3/simulator.h"
 
 #include "ns3/p1906-mol-motor-motion.h"
+//#include "ns3/p1906-mol-motor-tube.h"
 #include "ns3/p1906-mol-motor-pos.h"
 
 #include "ns3/p1906-mol-motor-MathematicaHelper.h"
@@ -387,6 +389,9 @@ int P1906MOL_MOTOR_Motion::freeFloat(Ptr<P1906MessageCarrier> carrier, gsl_rng *
 //!                Reflective Barrier Volume Surface
 //!           
 //!</pre>
+//! return negative (-) delay value if motor is not yet received and needs to be rescheduled. motor state 
+//!   should remain as last modified and there may be multiple motors operating simultaneously. 
+//! return positive (+) delay value if motor reached its destination and should be considered received.
 double P1906MOL_MOTOR_Motion::ComputePropagationDelay (Ptr<P1906CommunicationInterface> src,
   		                                  Ptr<P1906CommunicationInterface> dst,
   		                                  Ptr<P1906MessageCarrier> message,
@@ -450,10 +455,13 @@ double P1906MOL_MOTOR_Motion::ComputePropagationDelay (Ptr<P1906CommunicationInt
   motor->writeVolSurfaces();
   
   /*
-   * move randomly until destination reached
+   * set the starting point
    */
   motor->setStartingPoint(startPt);
-  
+
+  /*
+   * move randomly until destination reached
+   */  
   //float2Destination(motor, timePeriod);
   move2Destination(motor, microtubules->tubeMatrix, microtubules->m_segments_per_tube, timePeriod, motor->pos_history);
   
@@ -465,10 +473,18 @@ double P1906MOL_MOTOR_Motion::ComputePropagationDelay (Ptr<P1906CommunicationInt
   NS_LOG_FUNCTION (this << "[propagation time]" << motor->getTime());
   sprintf (plot_filename, "float2destination_%lf_%lf.mma", sv.x, dv.x * distanceMultiplier);
   mathematica.connectedPoints2Mma(motor->pos_history, plot_filename);
-  
-  NS_LOG_FUNCTION (this << "Completed");
-  
-  return motor->getTime();
+
+  if (motor->inDestination())
+  {
+	NS_LOG_FUNCTION (this << "returning delay: " << motor->getTime());
+	return motor->getTime();
+  }
+  else
+  {
+	NS_LOG_FUNCTION (this << "returning delay: " << -(motor->getTime()));
+	//return -(motor->getTime());
+	return -10;
+  }
 }
 
 //! this is called inside the core Medium class before reception
@@ -524,11 +540,21 @@ void P1906MOL_MOTOR_Motion::move2Destination(Ptr<P1906MessageCarrier> carrier, g
   int loops = 0; //! keep track of iterations
   Ptr<P1906MOL_Motor> motor = carrier->GetObject <P1906MOL_Motor> ();
   gsl_vector * current_location = gsl_vector_alloc (3);
+  P1906MOL_MOTOR_MathematicaHelper mathematica;
   
   NS_LOG_FUNCTION (this);
   while (!motor->inDestination() && (loops < timeout))
   {	
     motor->current_location.getPos (current_location);
+	//! plot the location of the motor in a new file indexed by simulation time
+	std::ostringstream strs;
+	//strs << "move2Destination-" << Simulator::Now().GetSeconds() << ".mma";
+	strs << "move2Destination-" << motor->t.time << ".mma";
+	std::string fname = strs.str();
+	cout << fname << "\n";
+	mathematica.connectedPoints2Mma(motor->pos_history, fname.c_str());
+	//! \todo consider scheduling motor movement events rather than computing to end? Will that mess up the 1906 core?
+	// Simulator::Schedule(Seconds(1.0), &P1906MOL_MOTOR_Motion::move2Destination, this);
     //! returns the index of the segment in tubeMatrix to which the motor is bound 
     float2Tube(motor, motor->r, current_location, pts, tubeMatrix, timePeriod, motor->vsl);
 	motor->setLocation(pts.back());

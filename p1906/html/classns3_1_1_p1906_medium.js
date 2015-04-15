@@ -13,5 +13,7 @@ var classns3_1_1_p1906_medium =
     [ "HandleReception", "classns3_1_1_p1906_medium.html#a7c8b63b16e5358c03d4ce22a924f81dd", null ],
     [ "HandleTransmission", "classns3_1_1_p1906_medium.html#a4f2de9a6c29ef2aa55297873df40cf6b", null ],
     [ "SetP1906CommunicationInterfaces", "classns3_1_1_p1906_medium.html#aeba18cb9fe8e23f817b01fbdd3bf0d4b", null ],
-    [ "SetP1906Motion", "classns3_1_1_p1906_medium.html#ab7bc8eb9b4dd46c8d7dac7b959ccecfd", null ]
+    [ "SetP1906Motion", "classns3_1_1_p1906_medium.html#ab7bc8eb9b4dd46c8d7dac7b959ccecfd", null ],
+    [ "m_communicationInterfaces", "classns3_1_1_p1906_medium.html#a22909e6940e376aaca7c7de806369199", null ],
+    [ "m_motion", "classns3_1_1_p1906_medium.html#a706207c7cf2b2c2a801e4301ea12d998", null ]
 ];

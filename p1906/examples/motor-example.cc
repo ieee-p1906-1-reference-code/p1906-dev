@@ -118,17 +118,16 @@
 
 #include "ns3/p1906-helper.h"
 #include "ns3/p1906-net-device.h"
-#include "ns3/p1906-medium.h"
 
-#include "ns3/p1906-mol-specificity.h"
-
+#include "ns3/p1906-mol-motor-medium.h"
+#include "ns3/p1906-mol-motor-specificity.h"
 #include "ns3/p1906-mol-motor-perturbation.h"
 #include "ns3/p1906-mol-motor-field.h"
 #include "ns3/p1906-mol-motor-motion.h"
 #include "ns3/p1906-mol-motor-microtubule.h"
 #include "ns3/p1906-mol-motor-communication-interface.h"
-#include "ns3/p1906-mol-motor-transmitter-communication-interface.h"
-#include "ns3/p1906-mol-motor-receiver-communication-interface.h"
+//#include "ns3/p1906-mol-motor-transmitter-communication-interface.h"
+//#include "ns3/p1906-mol-motor-receiver-communication-interface.h"
 
 using namespace ns3;
 
@@ -150,8 +149,8 @@ int main (int argc, char *argv[])
   double m_mean_intra_tube_angle = 0.0; 			// [radians]
   double m_mean_inter_tube_angle = 0.0; 			// [radians]
   double m_mean_tube_density = 10.0; 				// [tube segments/nm^3]
-  double m_tube_persistence_length = 500.0;			// [nm]
-  uint32_t m_seg_per_tube = 10.0; 					// [segments/microtubule]
+  double m_tube_persistence_length = 20.0;			// [nm]
+  uint32_t m_seg_per_tube = 100.0; 					// [segments/microtubule]
   std::string m_transmitter_location = "0 0 0"; 	// [x y z nm]
   std::string m_receiver_location = "100 100 100 100"; // [x y z radius nm]
   std::string m_reflective_barrier = "0 0 0 1000"; 	// [x y z radius nm]
@@ -255,7 +254,7 @@ int main (int argc, char *argv[])
   n.Create (2);
 
   // Create a medium and the Motion component
-  Ptr<P1906Medium> medium = CreateObject<P1906Medium> ();
+  Ptr<P1906MOL_MOTORMedium> medium = CreateObject<P1906MOL_MOTORMedium> ();
   //! may need to set other motion properties...
   Ptr<P1906MOL_MOTOR_Motion> motion = CreateObject<P1906MOL_MOTOR_Motion> ();
   
@@ -265,7 +264,7 @@ int main (int argc, char *argv[])
   // Create Device 1 and related components/entities
   Ptr<P1906NetDevice> dev1 = CreateObject<P1906NetDevice> ();
   Ptr<P1906MOL_MOTOR_CommunicationInterface> c1 = CreateObject<P1906MOL_MOTOR_CommunicationInterface> ();
-  Ptr<P1906MOLSpecificity> s1 = CreateObject<P1906MOLSpecificity> ();
+  Ptr<P1906MOL_MOTORSpecificity> s1 = CreateObject<P1906MOL_MOTORSpecificity> ();
   Ptr<P1906MOL_MOTOR_MicrotubulesField> fi1 = CreateObject<P1906MOL_MOTOR_MicrotubulesField> ();
   fi1->setTubeVolume (m_tube_volume);
   fi1->setTubeOrientationPhi(m_orientation_phi);
@@ -276,7 +275,7 @@ int main (int argc, char *argv[])
   fi1->setTubeDensity (m_mean_tube_density);
   fi1->setTubePersistenceLength (m_tube_persistence_length);
   fi1->setTubeSegments (m_seg_per_tube);
-  fi1->createTubes();
+  fi1->createTubes(); // could create a watchdog timer here to re-create tubes periodically
   
   //! this class creates the motor (message carrier)
   Ptr<P1906MOL_MOTOR_Perturbation> p1 = CreateObject<P1906MOL_MOTOR_Perturbation> ();
@@ -286,7 +285,7 @@ int main (int argc, char *argv[])
   // Create Device 2 and related components/entities
   Ptr<P1906NetDevice> dev2 = CreateObject<P1906NetDevice> ();
   Ptr<P1906MOL_MOTOR_CommunicationInterface> c2 = CreateObject<P1906MOL_MOTOR_CommunicationInterface> ();
-  Ptr<P1906MOLSpecificity> s2 = CreateObject<P1906MOLSpecificity> ();
+  Ptr<P1906MOL_MOTORSpecificity> s2 = CreateObject<P1906MOL_MOTORSpecificity> ();
   //! SFB: this class creates the microtubules
   Ptr<P1906MOL_MOTOR_MicrotubulesField> fi2 = CreateObject<P1906MOL_MOTOR_MicrotubulesField> ();
   //! this class creates the motor (message carrier)
@@ -303,9 +302,7 @@ int main (int argc, char *argv[])
   
   std::istringstream iss(m_receiver_location);
   double x, y, z;
-
   iss >> x >> y >> z;
-
   positionAlloc->Add (Vector(x, y, z));
   MobilityHelper mobility;
   mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
@@ -348,7 +345,7 @@ int main (int argc, char *argv[])
   outputConfig2.ConfigureDefaults ();
   outputConfig2.ConfigureAttributes ();
 
-  Simulator::Stop (Seconds (0.01));
+  Simulator::Stop (Seconds (100.0));
   Simulator::Run ();
 
   Simulator::Destroy ();

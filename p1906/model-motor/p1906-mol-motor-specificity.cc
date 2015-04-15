@@ -27,17 +27,17 @@
 
 
 #include "ns3/log.h"
-
-#include "p1906-mol-motor-specificity.h"
-#include "ns3/p1906-specificity.h"
-#include "p1906-mol-motor.h"
 #include "ns3/p1906-net-device.h"
+#include "ns3/mobility-model.h"
+
+#include "ns3/p1906-specificity.h"
 #include "ns3/p1906-perturbation.h"
 #include "ns3/p1906-receiver-communication-interface.h"
 #include "ns3/p1906-transmitter-communication-interface.h"
-#include "p1906-mol-motor-perturbation.h"
-#include "ns3/mobility-model.h"
 
+#include "ns3/p1906-mol-motor-specificity.h"
+#include "ns3/p1906-mol-motor.h"
+#include "ns3/p1906-mol-motor-perturbation.h"
 
 namespace ns3 {
 
@@ -77,33 +77,18 @@ P1906MOL_MOTORSpecificity::~P1906MOL_MOTORSpecificity ()
 bool
 P1906MOL_MOTORSpecificity::CheckRxCompatibility (Ptr<P1906CommunicationInterface> src, Ptr<P1906CommunicationInterface> dst, Ptr<P1906MessageCarrier> message)
 {
-
+  //! always return true for now
+  //! \todo add attributes later
   NS_LOG_FUNCTION (this);
   Ptr<P1906MOL_Motor> m = message->GetObject <P1906MOL_Motor>();
-
-  double transmissionRate = 1. / m->GetPulseInterval ().GetSeconds ();
 
   Ptr<MobilityModel> srcMobility = src->GetP1906NetDevice ()->GetNode ()->GetObject<MobilityModel> ();
   Ptr<MobilityModel> dstMobility = dst->GetP1906NetDevice ()->GetNode ()->GetObject<MobilityModel> ();
   double distance = dstMobility->GetDistanceFrom (srcMobility);
 
-  NS_LOG_FUNCTION (this << "[distance,txRate]" << distance << transmissionRate);
+  NS_LOG_FUNCTION (this << "[distance]" << distance);
 
-  double minPulseWidth = (0.4501/GetDiffusionConefficient ()) * pow(distance,2);
-  double channelCapacity = 1. / minPulseWidth;
-
-  NS_LOG_FUNCTION (this << "testcapacity: [distance, txRate, channelCapacity]" << distance << transmissionRate << channelCapacity);
-
-  if (channelCapacity >= transmissionRate)
-	{
-	  NS_LOG_FUNCTION (this << "Fick's bound has been respected");
-	  return true;
-	}
-  else
-	{
-	  NS_LOG_FUNCTION (this << "Fick's bound has NOT been respected --> transmission failed");
-	  return false;
-	}
+  return true;
 }
 
 void

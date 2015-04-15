@@ -79,6 +79,7 @@
 #include "ns3/object.h"
 #include "ns3/nstime.h"
 #include "ns3/ptr.h"
+#include "ns3/simulator.h"
 
 #include "ns3/p1906-mol-motor-microtubule.h"
 #include "ns3/p1906-mol-motor-MathematicaHelper.h"
@@ -232,10 +233,7 @@ m_structural_entropy(0.0)
   setTubeDensity(m_mean_density);
   setTubePersistenceLength(m_persistence_length);
   setTubeSegments(m_segments_per_tube);
- 
-  //! display all the microtubule network properties
-  displayTubeChars();
-  
+   
   NS_LOG_FUNCTION (this << "Created P1906MOL_MOTOR_MicrotubulesField");
 }
 
@@ -273,12 +271,12 @@ std::istream& operator>>(std::istream& is, P1906MOL_MOTOR_MicrotubulesField& m_f
 //! print tube characteristics to standard output
 void P1906MOL_MOTOR_MicrotubulesField::displayTubeChars()
 {
-  NS_LOG_INFO ("volume = " << ts.volume <<
-               "mean_tube_length = " << ts.mean_tube_length <<
-	           "mean_intra_tube_angle = " << ts.mean_intra_tube_angle <<
-	           "mean_inter_tube_angle = " << ts.mean_inter_tube_angle <<
-	           "mean_tube_density = " << ts.mean_tube_density <<
-	           "segLength = " << ts.segLength <<
+  NS_LOG_INFO ("volume = " << ts.volume << " " <<
+               "mean_tube_length = " << ts.mean_tube_length << " " <<
+	           "mean_intra_tube_angle = " << ts.mean_intra_tube_angle << " " <<
+	           "mean_inter_tube_angle = " << ts.mean_inter_tube_angle << " " <<
+	           "mean_tube_density = " << ts.mean_tube_density << " " <<
+	           "segLength = " << ts.segLength << " " <<
 	           "numSegments = " << ts.numSegments
   );
 }
@@ -291,12 +289,18 @@ void P1906MOL_MOTOR_MicrotubulesField::createTubes()
   //! create the microtubules
   tubeMatrix = gsl_matrix_alloc (ts.numTubes * ts.segPerTube, 6);
   genTubes();
-  if (m_report_tubes) mathematica.tubes2Mma(tubeMatrix, ts.segPerTube, "tubes.mma");
+  std::ostringstream strs;
+  strs << "tubes-" << Simulator::Now().GetSeconds() << ".mma";
+  std::string fname = strs.str();
+  cout << fname << "\n";
+  if (m_report_tubes) mathematica.tubes2Mma(tubeMatrix, ts.segPerTube, fname.c_str());
   NS_LOG_DEBUG ("completed tube creation");
 
   //! create the vector field
   vf = gsl_matrix_alloc (ts.numTubes * ts.segPerTube, 6);
   tubes2VectorField(tubeMatrix, vf);
+  
+  Simulator::Schedule(Seconds(0.5), &P1906MOL_MOTOR_MicrotubulesField::createTubes, this);
 
   //! test the computation of distance
   //unitTest_Distance();

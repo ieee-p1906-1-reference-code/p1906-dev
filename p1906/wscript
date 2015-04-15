@@ -56,9 +56,10 @@ def build(bld):
 		'model-motor/p1906-mol-motor-pos.cc',
 		'model-motor/p1906-mol-motor-perturbation.cc',
 		'model-motor/p1906-mol-motor-communication-interface.cc',
-    	'model-motor/p1906-mol-motor-transmitter-communication-interface.cc',
     	'model-motor/p1906-mol-motor-receiver-communication-interface.cc',
+		'model-motor/p1906-mol-motor-transmitter-communication-interface.cc',
 		'model-motor/p1906-mol-motor-specificity.cc',
+		'model-motor/p1906-mol-motor-medium.cc',
 		'model-motor/p1906-mol-diffusion.cc',
 		'model-motor/p1906-mol-diffusion-wave.cc'
     	]
@@ -122,9 +123,10 @@ def build(bld):
 		'model-motor/p1906-mol-motor-pos.h',
 		'model-motor/p1906-mol-motor-perturbation.h',
 		'model-motor/p1906-mol-motor-communication-interface.h',
-    	'model-motor/p1906-mol-motor-transmitter-communication-interface.h',
     	'model-motor/p1906-mol-motor-receiver-communication-interface.h',
+		'model-motor/p1906-mol-motor-transmitter-communication-interface.h',
 		'model-motor/p1906-mol-motor-specificity.h',
+		'model-motor/p1906-mol-motor-medium.h',
 		'model-motor/p1906-mol-diffusion.h',
 		'model-motor/p1906-mol-diffusion-wave.h',
 		

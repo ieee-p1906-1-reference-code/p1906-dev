@@ -59,6 +59,7 @@ NS_LOG_COMPONENT_DEFINE ("P1906MOL_MOTOR_Tube");
 NS_OBJECT_ENSURE_REGISTERED (P1906MOL_MOTOR_Tube);
 
 //! \todo tube might be made dynamic to implement dynamic instability, implement a callback from a Timer or Watchdog to modify tubes
+//! \todo we could sub-class each type of segment: alpha, beta, etc. and control assembly based on type of segment
 //! Molecular Biology of the Cell by Alberts et al.
 //! http://en.wikipedia.org/wiki/Microtubule
 //! Microtubule Assembly Dynamics at the Nanoscale, DOI 10.1016/j.cub.2007.07.011
@@ -269,6 +270,8 @@ int P1906MOL_MOTOR_Tube::genTube(struct tubeCharacteristcs_t * ts, gsl_rng *r, g
 		y + gsl_matrix_get(segMatrix, i, 1) << " " <<
 		z + gsl_matrix_get(segMatrix, i, 2));
   }
+  //! consider performing interpolation to remove kinks
+  
   NS_LOG_FUNCTION(this << "tube created");
   return 0;
 }
@@ -302,24 +305,27 @@ double P1906MOL_MOTOR_Tube::genPersistenceLength(gsl_rng * r, gsl_matrix * segAn
   */
   double angle;
   double sigma;
-
+  
   NS_LOG_FUNCTION(this);
   if (persistenceLength > 0)
     sigma  = sqrt(2.0 * segLength / persistenceLength);
   else
 	sigma = DBL_MAX; //! maximum possible variance
   NS_LOG_DEBUG ("sigma = " << sigma);
+  
   for(size_t i = 0; i < segAngle->size1; i++)
   {
-    //! return a valid radian [0..2\pi]
+    //! return a valid radian (0..2*pi)
     angle = fmod(gsl_ran_gaussian (r, sigma), (2 * M_PI));
-	if (!gsl_finite (angle))
-	  angle = gsl_ran_ugaussian (r) * (2 * M_PI); //! just pick a uniform random angle
-    //NS_LOG_DEBUG ("radian(" << i << ") = " << angle);
-	//! a radian is 180/Pi degrees
+	NS_LOG_DEBUG ("angle(" << i << ") radians = " << angle);
+	
+    //! a radian is 180/Pi degrees
 	//NS_LOG_DEBUG ("angle(" << i << ") = " << angle * 180.00 / M_PI);
+	
     gsl_matrix_set(segAngle, i, 0, angle);
   }
+  
+  //! to remove kinks, consider smoothing in Mathematica
     
   sEntropy(segAngle);
   

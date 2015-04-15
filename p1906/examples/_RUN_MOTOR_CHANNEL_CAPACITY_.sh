@@ -28,13 +28,7 @@
 set -x
 set -e
 
-# General microtubule orientation is governed in 3D space via spherical coordinates, orientationPhi and orientationTheta. 
-# A motor is transmitted and can bind to the microtubules to guide its motion. The results are stored in Mathematica files 
-# that can be Import[]'ed to display the microtubules and motor motion. 
-# See "4_5_2015_Output.pdf" for an example of the Mathematica results.
-# Use "setenv NS_LOG P1906MOL_MOTOR_Motion" to display the motion details.
-# The simulation is an implementation of: Bush, S. F., & Goel, S. (2013). Persistence Length as a Metric for Modeling and 
-# Simulation of Nanoscale Communication Networks, 31(12), 815-824. http://dx.doi.org/10.1109/JSAC.2013.SUP2.12130014.
+# General microtubule orientation is governed in 3D space via spherical coordinates, orientationPhi and orientationTheta. A motor is transmitted and can bind to the microtubules to guide its motion. The results are stored in Mathematica files that can be Import[]'ed to display the microtubules and motor motion. Use setenv NS_LOG P1906MOL_MOTOR_Motion to display the motion details.
 
 for orientationPhi in {0..3..1}
 do

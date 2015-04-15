@@ -27,11 +27,11 @@
 
 
 #include "ns3/log.h"
-
 #include <ns3/packet.h>
-#include "ns3/p1906-medium.h"
+
 #include "ns3/p1906-net-device.h"
 
+#include "ns3/p1906-mol-motor-medium.h"
 #include "ns3/p1906-mol-motor-communication-interface.h"
 #include "ns3/p1906-mol-motor-transmitter-communication-interface.h"
 #include "ns3/p1906-mol-motor-receiver-communication-interface.h"
@@ -53,7 +53,7 @@ P1906MOL_MOTOR_CommunicationInterface::P1906MOL_MOTOR_CommunicationInterface ()
   SetP1906NetDevice (0);
   SetP1906Medium (0);
 
-  Ptr<P1906MOL_MOTOR_TransmitterCommunicationInterface> tx = CreateObject<P1906MOL_MOTOR_TransmitterCommunicationInterface> ();
+  Ptr<P1906TransmitterCommunicationInterface> tx = CreateObject<P1906TransmitterCommunicationInterface> ();
   Ptr<P1906MOL_MOTOR_ReceiverCommunicationInterface> rx = CreateObject<P1906MOL_MOTOR_ReceiverCommunicationInterface> ();
 
   SetP1906TransmitterCommunicationInterface (tx);

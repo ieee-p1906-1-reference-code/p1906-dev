@@ -167,7 +167,7 @@ $(document).ready(function(){initNavTree('p1906-medium_8h_source.html','');});
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keyword">virtual</span> uint32_t GetNDevices (<span class="keywordtype">void</span>) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keyword">virtual</span> Ptr&lt;NetDevice&gt; GetDevice (uint32_t i) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classns3_1_1_p1906_medium.html#a4f2de9a6c29ef2aa55297873df40cf6b">HandleTransmission</a>  (Ptr&lt;P1906CommunicationInterface&gt; src,</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classns3_1_1_p1906_medium.html#a4f2de9a6c29ef2aa55297873df40cf6b">HandleTransmission</a>  (Ptr&lt;P1906CommunicationInterface&gt; src,</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                            Ptr&lt;P1906MessageCarrier&gt; message,</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                            Ptr&lt;P1906Field&gt; field);</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
@@ -183,19 +183,17 @@ $(document).ready(function(){initNavTree('p1906-medium_8h_source.html','');});
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordtype">void</span> SetP1906CommunicationInterfaces (P1906CommunicationInterfaces* i);</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  P1906CommunicationInterfaces* GetP1906CommunicationInterfaces ();</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  P1906CommunicationInterfaces* m_communicationInterfaces;</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  Ptr&lt;P1906Motion&gt; m_motion;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> DoDispose ();</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;};</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> DoDispose ();</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;};</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;}</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* P1906_MEDIUM_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* P1906_MEDIUM_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="classns3_1_1_p1906_medium_html"><div class="ttname"><a href="classns3_1_1_p1906_medium.html">ns3::P1906Medium</a></div><div class="ttdoc">This class implements the medium of the P1906 framework. </div><div class="ttdef"><b>Definition:</b> <a href="p1906-medium_8h_source.html#l00053">p1906-medium.h:53</a></div></div>
-<div class="ttc" id="classns3_1_1_p1906_medium_html_a4f2de9a6c29ef2aa55297873df40cf6b"><div class="ttname"><a href="classns3_1_1_p1906_medium.html#a4f2de9a6c29ef2aa55297873df40cf6b">ns3::P1906Medium::HandleTransmission</a></div><div class="ttdeci">void HandleTransmission(Ptr&lt; P1906CommunicationInterface &gt; src, Ptr&lt; P1906MessageCarrier &gt; message, Ptr&lt; P1906Field &gt; field)</div><div class="ttdef"><b>Definition:</b> <a href="p1906-medium_8cc_source.html#l00115">p1906-medium.cc:115</a></div></div>
+<div class="ttc" id="classns3_1_1_p1906_medium_html_a4f2de9a6c29ef2aa55297873df40cf6b"><div class="ttname"><a href="classns3_1_1_p1906_medium.html#a4f2de9a6c29ef2aa55297873df40cf6b">ns3::P1906Medium::HandleTransmission</a></div><div class="ttdeci">virtual void HandleTransmission(Ptr&lt; P1906CommunicationInterface &gt; src, Ptr&lt; P1906MessageCarrier &gt; message, Ptr&lt; P1906Field &gt; field)</div><div class="ttdef"><b>Definition:</b> <a href="p1906-medium_8cc_source.html#l00115">p1906-medium.cc:115</a></div></div>
 <div class="ttc" id="namespacens3_html"><div class="ttname"><a href="namespacens3.html">ns3</a></div><div class="ttdoc">for ODE test </div><div class="ttdef"><b>Definition:</b> <a href="extension-name-p1906-communication-interface_8cc_source.html#l00041">extension-name-p1906-communication-interface.cc:41</a></div></div>
 <div class="ttc" id="classns3_1_1_p1906_medium_html_a7bfc0a61cdbbac04b58a447babb9e466"><div class="ttname"><a href="classns3_1_1_p1906_medium.html#a7bfc0a61cdbbac04b58a447babb9e466">ns3::P1906Medium::AddP1906CommunicationInterface</a></div><div class="ttdeci">void AddP1906CommunicationInterface(Ptr&lt; P1906CommunicationInterface &gt; i)</div><div class="ttdef"><b>Definition:</b> <a href="p1906-medium_8cc_source.html#l00156">p1906-medium.cc:156</a></div></div>
 <div class="ttc" id="classns3_1_1_p1906_medium_html_a7c8b63b16e5358c03d4ce22a924f81dd"><div class="ttname"><a href="classns3_1_1_p1906_medium.html#a7c8b63b16e5358c03d4ce22a924f81dd">ns3::P1906Medium::HandleReception</a></div><div class="ttdeci">void HandleReception(Ptr&lt; P1906CommunicationInterface &gt; src, Ptr&lt; P1906CommunicationInterface &gt; dst, Ptr&lt; P1906MessageCarrier &gt; message)</div><div class="ttdef"><b>Definition:</b> <a href="p1906-medium_8cc_source.html#l00148">p1906-medium.cc:148</a></div></div>
@@ -205,7 +203,7 @@ $(document).ready(function(){initNavTree('p1906-medium_8h_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_0be735354b5732be237f3316373e92ba.html">model-core</a></li><li class="navelem"><b>p1906-medium.h</b></li>
-    <li class="footer">Generated on Sun Apr 5 2015 11:27:28 for IEEE-Std-1906 by
+    <li class="footer">Generated on Wed Apr 15 2015 14:41:56 for IEEE-Std-1906 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

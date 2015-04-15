@@ -113,6 +113,7 @@ $(document).ready(function(){initNavTree('classns3_1_1_p1906_medium.html','');})
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classns3_1_1_p1906_medium-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">ns3::P1906Medium Class Reference</div>  </div>
@@ -128,7 +129,7 @@ Inheritance diagram for ns3::P1906Medium:</div>
 <div class="dyncontent">
 <div class="center"><img src="classns3_1_1_p1906_medium__inherit__graph.png" border="0" usemap="#ns3_1_1_p1906_medium_inherit__map" alt="Inheritance graph"/></div>
 <map name="ns3_1_1_p1906_medium_inherit__map" id="ns3_1_1_p1906_medium_inherit__map">
-<area shape="rect" id="node3" href="classns3_1_1_extension_name_p1906_medium.html" title="This class implements the medium of the P1906 framework. " alt="" coords="5,155,232,181"/></map>
+<area shape="rect" id="node3" href="classns3_1_1_extension_name_p1906_medium.html" title="This class implements the medium of the P1906 framework. " alt="" coords="5,155,232,181"/><area shape="rect" id="node4" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r_medium.html" title="This class implements the medium of the P1906 framework. " alt="" coords="256,155,472,181"/></map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for ns3::P1906Medium:</div>
@@ -150,7 +151,7 @@ virtual uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>GetNDevic
 <tr class="memitem:a65505890c85d605404c85d8bc508cbed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a65505890c85d605404c85d8bc508cbed"></a>
 virtual Ptr&lt; NetDevice &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetDevice</b> (uint32_t i) const </td></tr>
 <tr class="separator:a65505890c85d605404c85d8bc508cbed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f2de9a6c29ef2aa55297873df40cf6b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classns3_1_1_p1906_medium.html#a4f2de9a6c29ef2aa55297873df40cf6b">HandleTransmission</a> (Ptr&lt; <a class="el" href="classns3_1_1_p1906_communication_interface.html">P1906CommunicationInterface</a> &gt; src, Ptr&lt; <a class="el" href="classns3_1_1_p1906_message_carrier.html">P1906MessageCarrier</a> &gt; message, Ptr&lt; <a class="el" href="classns3_1_1_p1906_field.html">P1906Field</a> &gt; field)</td></tr>
+<tr class="memitem:a4f2de9a6c29ef2aa55297873df40cf6b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classns3_1_1_p1906_medium.html#a4f2de9a6c29ef2aa55297873df40cf6b">HandleTransmission</a> (Ptr&lt; <a class="el" href="classns3_1_1_p1906_communication_interface.html">P1906CommunicationInterface</a> &gt; src, Ptr&lt; <a class="el" href="classns3_1_1_p1906_message_carrier.html">P1906MessageCarrier</a> &gt; message, Ptr&lt; <a class="el" href="classns3_1_1_p1906_field.html">P1906Field</a> &gt; field)</td></tr>
 <tr class="separator:a4f2de9a6c29ef2aa55297873df40cf6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c8b63b16e5358c03d4ce22a924f81dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classns3_1_1_p1906_medium.html#a7c8b63b16e5358c03d4ce22a924f81dd">HandleReception</a> (Ptr&lt; <a class="el" href="classns3_1_1_p1906_communication_interface.html">P1906CommunicationInterface</a> &gt; src, Ptr&lt; <a class="el" href="classns3_1_1_p1906_communication_interface.html">P1906CommunicationInterface</a> &gt; dst, Ptr&lt; <a class="el" href="classns3_1_1_p1906_message_carrier.html">P1906MessageCarrier</a> &gt; message)</td></tr>
 <tr class="separator:a7c8b63b16e5358c03d4ce22a924f81dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -180,6 +181,15 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a887ef7fa11ba3d8f3c22d7b4c717a727"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a887ef7fa11ba3d8f3c22d7b4c717a727"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>DoDispose</b> ()</td></tr>
 <tr class="separator:a887ef7fa11ba3d8f3c22d7b4c717a727"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a22909e6940e376aaca7c7de806369199"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a22909e6940e376aaca7c7de806369199"></a>
+P1906CommunicationInterfaces *&#160;</td><td class="memItemRight" valign="bottom"><b>m_communicationInterfaces</b></td></tr>
+<tr class="separator:a22909e6940e376aaca7c7de806369199"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a706207c7cf2b2c2a801e4301ea12d998"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a706207c7cf2b2c2a801e4301ea12d998"></a>
+Ptr&lt; <a class="el" href="classns3_1_1_p1906_motion.html">P1906Motion</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_motion</b></td></tr>
+<tr class="separator:a706207c7cf2b2c2a801e4301ea12d998"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class implements the medium of the P1906 framework. </p>
@@ -254,7 +264,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classns3_1_1_p1906_medium_a7c8b63b16e5358c03d4ce22a924f81dd_icgraph.png" border="0" usemap="#classns3_1_1_p1906_medium_a7c8b63b16e5358c03d4ce22a924f81dd_icgraph" alt=""/></div>
 <map name="classns3_1_1_p1906_medium_a7c8b63b16e5358c03d4ce22a924f81dd_icgraph" id="classns3_1_1_p1906_medium_a7c8b63b16e5358c03d4ce22a924f81dd_icgraph">
-<area shape="rect" id="node2" href="classns3_1_1_p1906_medium.html#a4f2de9a6c29ef2aa55297873df40cf6b" title="ns3::P1906Medium::Handle\lTransmission" alt="" coords="236,5,419,47"/></map>
+<area shape="rect" id="node2" href="classns3_1_1_p1906_medium.html#a4f2de9a6c29ef2aa55297873df40cf6b" title="ns3::P1906Medium::Handle\lTransmission" alt="" coords="253,5,435,47"/><area shape="rect" id="node3" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r_medium.html#a6f67a999f2e5a745a06402c60f428efb" title="ns3::P1906MOL_MOTORMedium\l::HandleTransmission" alt="" coords="236,71,452,112"/></map>
 </div>
 </p>
 
@@ -263,6 +273,9 @@ Here is the caller graph for this function:</div>
 <a class="anchor" id="a4f2de9a6c29ef2aa55297873df40cf6b"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void ns3::P1906Medium::HandleTransmission </td>
@@ -288,6 +301,11 @@ Here is the caller graph for this function:</div>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -295,6 +313,8 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
+
+<p>Reimplemented in <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r_medium.html#a6f67a999f2e5a745a06402c60f428efb">ns3::P1906MOL_MOTORMedium</a>, and <a class="el" href="classns3_1_1_extension_name_p1906_medium.html#a72909c4ac786ea38cb37088756a4baf4">ns3::ExtensionNameP1906Medium</a>.</p>
 
 <p>Definition at line <a class="el" href="p1906-medium_8cc_source.html#l00115">115</a> of file <a class="el" href="p1906-medium_8cc_source.html">p1906-medium.cc</a>.</p>
 
@@ -321,7 +341,7 @@ Here is the call graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacens3.html">ns3</a></li><li class="navelem"><a class="el" href="classns3_1_1_p1906_medium.html">P1906Medium</a></li>
-    <li class="footer">Generated on Sun Apr 5 2015 11:27:30 for IEEE-Std-1906 by
+    <li class="footer">Generated on Wed Apr 15 2015 14:42:01 for IEEE-Std-1906 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

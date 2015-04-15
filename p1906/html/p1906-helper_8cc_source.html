@@ -154,113 +154,135 @@ $(document).ready(function(){initNavTree('p1906-helper_8cc_source.html','');});
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &quot;../model-core/p1906-transmitter-communication-interface.h&quot;</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &quot;../model-core/p1906-receiver-communication-interface.h&quot;</span></div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &quot;../model-core/p1906-message-carrier.h&quot;</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-message-carrier.h&quot;</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-perturbation.h&quot;</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-motion.h&quot;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-field.h&quot;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-specificity.h&quot;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-communication-interface.h&quot;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-transmitter-communication-interface.h&quot;</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-receiver-communication-interface.h&quot;</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-message-carrier.h&quot;</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-perturbation.h&quot;</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-motion.h&quot;</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-field.h&quot;</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-specificity.h&quot;</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-communication-interface.h&quot;</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-transmitter-communication-interface.h&quot;</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-receiver-communication-interface.h&quot;</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor.h&quot;</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-perturbation.h&quot;</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-motion.h&quot;</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-field.h&quot;</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-communication-interface.h&quot;</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-transmitter-communication-interface.h&quot;</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-receiver-communication-interface.h&quot;</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;NS_LOG_COMPONENT_DEFINE (<span class="stringliteral">&quot;P1906Helper&quot;</span>);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacens3.html">ns3</a> {</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="classns3_1_1_p1906_helper.html#a31f8954df3a8033d5d50f69a2ec5a15c">   75</a></span>&#160;<a class="code" href="classns3_1_1_p1906_helper.html#a31f8954df3a8033d5d50f69a2ec5a15c">P1906Helper::P1906Helper</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;{}</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;P1906Helper::~P1906Helper (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;{}</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="classns3_1_1_p1906_helper.html#ae0532eb83ebdf92b35779444379432ba">   82</a></span>&#160;<a class="code" href="classns3_1_1_p1906_helper.html#ae0532eb83ebdf92b35779444379432ba">P1906Helper::Connect</a> (Ptr&lt;Node&gt; n, Ptr&lt;P1906NetDevice&gt; d, Ptr&lt;P1906Medium&gt; m, Ptr&lt;P1906CommunicationInterface&gt; c, Ptr&lt;P1906Field&gt; fi, Ptr&lt;P1906Perturbation&gt; p, Ptr&lt;P1906Specificity&gt; s)</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;{</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  d-&gt;SetNode (n);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  n-&gt;AddDevice (d);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  c-&gt;SetP1906NetDevice (d);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  c-&gt;SetP1906Medium (m);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  c-&gt;GetP1906TransmitterCommunicationInterface ()-&gt;SetP1906Perturbation (p);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  c-&gt;GetP1906TransmitterCommunicationInterface ()-&gt;SetP1906Field (fi);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  c-&gt;GetP1906ReceiverCommunicationInterface ()-&gt;SetP1906Specificity (s);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  s-&gt;SetP1906CommunicationInterface (c);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  m-&gt;AddP1906CommunicationInterface (c);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keywordtype">void</span> </div>
-<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="classns3_1_1_p1906_helper.html#ac544dee8a3d204835a86c5f51b8a5228">   96</a></span>&#160;<a class="code" href="classns3_1_1_p1906_helper.html#ac544dee8a3d204835a86c5f51b8a5228">P1906Helper::EnableLogComponents</a> (<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;{</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906NetDevice&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906Medium&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MessageCarrier&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906CommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906TransmitterCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906ReceiverCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906Field&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906Motion&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906Perturbation&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906Specificity&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMMessageCarrier&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMTransmitterCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMReceiverCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMField&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMMotion&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMPerturbation&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMSpecificity&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLMessageCarrier&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLTransmitterCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLReceiverCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLField&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLMotion&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLPerturbation&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLSpecificity&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  </div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  </div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_Motor&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_Field&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_Motion&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_Perturbation&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_TransmitterCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_ReceiverCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_CommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;}</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;} <span class="comment">// namespace ns3</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-message-carrier.h&quot;</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-perturbation.h&quot;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-motion.h&quot;</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-field.h&quot;</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-specificity.h&quot;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-communication-interface.h&quot;</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-transmitter-communication-interface.h&quot;</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &quot;../model-em/p1906-em-receiver-communication-interface.h&quot;</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-message-carrier.h&quot;</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-perturbation.h&quot;</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-motion.h&quot;</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-field.h&quot;</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-specificity.h&quot;</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-communication-interface.h&quot;</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-transmitter-communication-interface.h&quot;</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#include &quot;../model-mol/p1906-mol-receiver-communication-interface.h&quot;</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor.h&quot;</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-perturbation.h&quot;</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-motion.h&quot;</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-field.h&quot;</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-communication-interface.h&quot;</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">//#include &quot;../model-motor/p1906-mol-motor-transmitter-communication-interface.h&quot;</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-receiver-communication-interface.h&quot;</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-diffusion.h&quot;</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-diffusion-wave.h&quot;</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-microtubule.h&quot;</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-vol-surface.h&quot;</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-tube.h&quot;</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-pos.h&quot;</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-metrics.h&quot;</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-MathematicaHelper.h&quot;</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-MATLABHelper.h&quot;</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#include &quot;../model-motor/p1906-mol-motor-medium.h&quot;</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;NS_LOG_COMPONENT_DEFINE (<span class="stringliteral">&quot;P1906Helper&quot;</span>);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacens3.html">ns3</a> {</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classns3_1_1_p1906_helper.html#a31f8954df3a8033d5d50f69a2ec5a15c">   86</a></span>&#160;<a class="code" href="classns3_1_1_p1906_helper.html#a31f8954df3a8033d5d50f69a2ec5a15c">P1906Helper::P1906Helper</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;{}</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;P1906Helper::~P1906Helper (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;{}</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classns3_1_1_p1906_helper.html#ae0532eb83ebdf92b35779444379432ba">   93</a></span>&#160;<a class="code" href="classns3_1_1_p1906_helper.html#ae0532eb83ebdf92b35779444379432ba">P1906Helper::Connect</a> (Ptr&lt;Node&gt; n, Ptr&lt;P1906NetDevice&gt; d, Ptr&lt;P1906Medium&gt; m, Ptr&lt;P1906CommunicationInterface&gt; c, Ptr&lt;P1906Field&gt; fi, Ptr&lt;P1906Perturbation&gt; p, Ptr&lt;P1906Specificity&gt; s)</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;{</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  d-&gt;SetNode (n);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  n-&gt;AddDevice (d);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  c-&gt;SetP1906NetDevice (d);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  c-&gt;SetP1906Medium (m);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  c-&gt;GetP1906TransmitterCommunicationInterface ()-&gt;SetP1906Perturbation (p);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  c-&gt;GetP1906TransmitterCommunicationInterface ()-&gt;SetP1906Field (fi);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  c-&gt;GetP1906ReceiverCommunicationInterface ()-&gt;SetP1906Specificity (s);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  s-&gt;SetP1906CommunicationInterface (c);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  m-&gt;AddP1906CommunicationInterface (c);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;}</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keywordtype">void</span> </div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="classns3_1_1_p1906_helper.html#ac544dee8a3d204835a86c5f51b8a5228">  107</a></span>&#160;<a class="code" href="classns3_1_1_p1906_helper.html#ac544dee8a3d204835a86c5f51b8a5228">P1906Helper::EnableLogComponents</a> (<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;{</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906NetDevice&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906Medium&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MessageCarrier&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906CommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906TransmitterCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906ReceiverCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906Field&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906Motion&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906Perturbation&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906Specificity&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMMessageCarrier&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMTransmitterCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMReceiverCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMField&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMMotion&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMPerturbation&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906EMSpecificity&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLMessageCarrier&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLTransmitterCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLReceiverCommunicationInterface&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLField&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLMotion&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLPerturbation&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOLSpecificity&quot;</span>, LOG_LEVEL_ALL);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  </div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  <span class="comment">// focus logging upon desired components</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  <span class="comment">// Warning level for Core components</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_Perturbation&quot;</span>, LOG_LEVEL_WARN);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  <span class="comment">//LogComponentEnable (&quot;P1906MOL_MOTOR_TransmitterCommunicationInterface&quot;, LOG_LEVEL_WARN);</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_ReceiverCommunicationInterface&quot;</span>, LOG_LEVEL_WARN);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_CommunicationInterface&quot;</span>, LOG_LEVEL_WARN);</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTORMedium&quot;</span>, LOG_LEVEL_INFO);</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  <span class="comment">// Detail for Motor components</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_Motor&quot;</span>, LOG_LEVEL_INFO);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_MicrotubulesField&quot;</span>, LOG_LEVEL_INFO);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_Motion&quot;</span>, LOG_LEVEL_INFO);  </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_ExtendedDiffusion&quot;</span>, LOG_LEVEL_INFO);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_ExtendedDiffusionWave&quot;</span>, LOG_LEVEL_INFO);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_VolSurface&quot;</span>, LOG_LEVEL_INFO);</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_Field&quot;</span>, LOG_LEVEL_INFO);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_Tube&quot;</span>, LOG_LEVEL_INFO);</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_Pos&quot;</span>, LOG_LEVEL_INFO);</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906_Metrics&quot;</span>, LOG_LEVEL_INFO);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_MathematicaHelper&quot;</span>, LOG_LEVEL_INFO);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  LogComponentEnable (<span class="stringliteral">&quot;P1906MOL_MOTOR_MATLABHelper&quot;</span>, LOG_LEVEL_INFO);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;}</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;} <span class="comment">// namespace ns3</span></div>
 <div class="ttc" id="namespacens3_html"><div class="ttname"><a href="namespacens3.html">ns3</a></div><div class="ttdoc">for ODE test </div><div class="ttdef"><b>Definition:</b> <a href="extension-name-p1906-communication-interface_8cc_source.html#l00041">extension-name-p1906-communication-interface.cc:41</a></div></div>
-<div class="ttc" id="classns3_1_1_p1906_helper_html_ac544dee8a3d204835a86c5f51b8a5228"><div class="ttname"><a href="classns3_1_1_p1906_helper.html#ac544dee8a3d204835a86c5f51b8a5228">ns3::P1906Helper::EnableLogComponents</a></div><div class="ttdeci">void EnableLogComponents(void)</div><div class="ttdoc">Helper to enable all log components related to the P1906 framework. </div><div class="ttdef"><b>Definition:</b> <a href="p1906-helper_8cc_source.html#l00096">p1906-helper.cc:96</a></div></div>
-<div class="ttc" id="classns3_1_1_p1906_helper_html_a31f8954df3a8033d5d50f69a2ec5a15c"><div class="ttname"><a href="classns3_1_1_p1906_helper.html#a31f8954df3a8033d5d50f69a2ec5a15c">ns3::P1906Helper::P1906Helper</a></div><div class="ttdeci">P1906Helper(void)</div><div class="ttdoc">Create a the helper object for the P1906 framework. </div><div class="ttdef"><b>Definition:</b> <a href="p1906-helper_8cc_source.html#l00075">p1906-helper.cc:75</a></div></div>
-<div class="ttc" id="classns3_1_1_p1906_helper_html_ae0532eb83ebdf92b35779444379432ba"><div class="ttname"><a href="classns3_1_1_p1906_helper.html#ae0532eb83ebdf92b35779444379432ba">ns3::P1906Helper::Connect</a></div><div class="ttdeci">void Connect(Ptr&lt; Node &gt;, Ptr&lt; P1906NetDevice &gt;, Ptr&lt; P1906Medium &gt; m, Ptr&lt; P1906CommunicationInterface &gt; c, Ptr&lt; P1906Field &gt;, Ptr&lt; P1906Perturbation &gt;, Ptr&lt; P1906Specificity &gt;)</div><div class="ttdoc">Helper to connect components, attributes, and devices. </div><div class="ttdef"><b>Definition:</b> <a href="p1906-helper_8cc_source.html#l00082">p1906-helper.cc:82</a></div></div>
+<div class="ttc" id="classns3_1_1_p1906_helper_html_ac544dee8a3d204835a86c5f51b8a5228"><div class="ttname"><a href="classns3_1_1_p1906_helper.html#ac544dee8a3d204835a86c5f51b8a5228">ns3::P1906Helper::EnableLogComponents</a></div><div class="ttdeci">void EnableLogComponents(void)</div><div class="ttdoc">Helper to enable all log components related to the P1906 framework. </div><div class="ttdef"><b>Definition:</b> <a href="p1906-helper_8cc_source.html#l00107">p1906-helper.cc:107</a></div></div>
+<div class="ttc" id="classns3_1_1_p1906_helper_html_a31f8954df3a8033d5d50f69a2ec5a15c"><div class="ttname"><a href="classns3_1_1_p1906_helper.html#a31f8954df3a8033d5d50f69a2ec5a15c">ns3::P1906Helper::P1906Helper</a></div><div class="ttdeci">P1906Helper(void)</div><div class="ttdoc">Create a the helper object for the P1906 framework. </div><div class="ttdef"><b>Definition:</b> <a href="p1906-helper_8cc_source.html#l00086">p1906-helper.cc:86</a></div></div>
+<div class="ttc" id="classns3_1_1_p1906_helper_html_ae0532eb83ebdf92b35779444379432ba"><div class="ttname"><a href="classns3_1_1_p1906_helper.html#ae0532eb83ebdf92b35779444379432ba">ns3::P1906Helper::Connect</a></div><div class="ttdeci">void Connect(Ptr&lt; Node &gt;, Ptr&lt; P1906NetDevice &gt;, Ptr&lt; P1906Medium &gt; m, Ptr&lt; P1906CommunicationInterface &gt; c, Ptr&lt; P1906Field &gt;, Ptr&lt; P1906Perturbation &gt;, Ptr&lt; P1906Specificity &gt;)</div><div class="ttdoc">Helper to connect components, attributes, and devices. </div><div class="ttdef"><b>Definition:</b> <a href="p1906-helper_8cc_source.html#l00093">p1906-helper.cc:93</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d634f21e635b1ea642c8b957ecf78b4f.html">helper</a></li><li class="navelem"><b>p1906-helper.cc</b></li>
-    <li class="footer">Generated on Sun Apr 5 2015 11:27:28 for IEEE-Std-1906 by
+    <li class="footer">Generated on Wed Apr 15 2015 14:41:56 for IEEE-Std-1906 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

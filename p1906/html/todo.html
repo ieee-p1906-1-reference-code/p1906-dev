@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('todo.html','');});
 <dd>wv is a growing list of waves, will need to remove waves that have reached equilibrium (or disseminated)  </dd>
 <dt><a class="anchor" id="_todo000004"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___extended_diffusion.html#aa97c5cb6a6edca754a84800553eb7129">ns3::P1906MOL_ExtendedDiffusion::transmit</a>  (double tt, double D, double ic, <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r___pos.html" title="Class implementing a generic nanotube structure. ">P1906MOL_MOTOR_Pos</a> ip)</dt>
 <dd>wv is a growing list of waves, will need to remove waves that have reached equilibrium (or disseminated)  </dd>
-<dt><a class="anchor" id="_todo000020"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___motor.html#ac60d2e25c0eb6a6df2110be5c9ae5326">ns3::P1906MOL_Motor::getTime</a>  ()</dt>
+<dt><a class="anchor" id="_todo000022"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___motor.html#ac60d2e25c0eb6a6df2110be5c9ae5326">ns3::P1906MOL_Motor::getTime</a>  ()</dt>
 <dd>return the propagation delay for a motor  </dd>
 <dt><a class="anchor" id="_todo000007"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r___microtubules_field.html#a01ba0902836e78ee4373464af6190c8d">ns3::P1906MOL_MOTOR_MicrotubulesField::genTubes</a>  ()</dt>
 <dd>get actual tube graph properties from biologist  </dd>
@@ -146,28 +146,33 @@ $(document).ready(function(){initNavTree('todo.html','');});
 <dd><p class="startdd">set realistic binding probability </p>
 <p class="enddd">set tube radius (thickness) globally  </p>
 </dd>
-<dt><a class="anchor" id="_todo000015"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r___tube.html#a3711a030f0d0e643f6db3ef0a858f734">ns3::P1906MOL_MOTOR_Tube::genTube</a>  (struct <a class="el" href="structtube_characteristcs__t.html" title="systemic properties of the microtubule network ">tubeCharacteristcs_t</a> *ts, gsl_rng *r, gsl_matrix *segMatrix, gsl_vector *startPt)</dt>
+<dt><a class="anchor" id="_todo000014"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r___motion.html#aa5f30ec708f5de451a3b8385e5e2c137">ns3::P1906MOL_MOTOR_Motion::move2Destination</a>  (Ptr&lt; P1906MessageCarrier &gt; carrier, gsl_matrix *tubeMatrix, size_t segPerTube, double timePeriod, vector&lt; P1906MOL_MOTOR_Pos &gt; &amp;pts)</dt>
+<dd>consider scheduling motor movement events rather than computing to end? Will that mess up the 1906 core?  </dd>
+<dt><a class="anchor" id="_todo000017"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r___tube.html#a3711a030f0d0e643f6db3ef0a858f734">ns3::P1906MOL_MOTOR_Tube::genTube</a>  (struct <a class="el" href="structtube_characteristcs__t.html" title="systemic properties of the microtubule network ">tubeCharacteristcs_t</a> *ts, gsl_rng *r, gsl_matrix *segMatrix, gsl_vector *startPt)</dt>
 <dd>randomize initial tube orientations  </dd>
-<dt><a class="anchor" id="_todo000016"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r___tube.html#aa9faa9a6104a50aaef4ca9277abbc23a">ns3::P1906MOL_MOTOR_Tube::getPersistenceLength</a>  ()</dt>
+<dt><a class="anchor" id="_todo000018"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r___tube.html#aa9faa9a6104a50aaef4ca9277abbc23a">ns3::P1906MOL_MOTOR_Tube::getPersistenceLength</a>  ()</dt>
 <dd>never implemented; may not be needed  </dd>
-<dt><a class="anchor" id="_todo000014"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r___tube.html#adf0d5d92a32c88ef31698a6d4fa17e16">ns3::P1906MOL_MOTOR_Tube::GetTypeId</a>  (void)</dt>
-<dd>tube might be made dynamic to implement dynamic instability, implement a callback from a Timer or Watchdog to modify tubes Molecular Biology of the Cell by Alberts et al. <a href="http://en.wikipedia.org/wiki/Microtubule">http://en.wikipedia.org/wiki/Microtubule</a> Microtubule Assembly Dynamics at the Nanoscale, DOI 10.1016/j.cub.2007.07.011 Rapid Microtubule Self-Assembly Kinetics, Cell 146, 582–592, August 19, 2011<ul>
+<dt><a class="anchor" id="_todo000016"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r___tube.html#adf0d5d92a32c88ef31698a6d4fa17e16">ns3::P1906MOL_MOTOR_Tube::GetTypeId</a>  (void)</dt>
+<dd><p class="startdd">tube might be made dynamic to implement dynamic instability, implement a callback from a Timer or Watchdog to modify tubes </p>
+<p class="enddd">we could sub-class each type of segment: alpha, beta, etc. and control assembly based on type of segment Molecular Biology of the Cell by Alberts et al. <a href="http://en.wikipedia.org/wiki/Microtubule">http://en.wikipedia.org/wiki/Microtubule</a> Microtubule Assembly Dynamics at the Nanoscale, DOI 10.1016/j.cub.2007.07.011 Rapid Microtubule Self-Assembly Kinetics, Cell 146, 582–592, August 19, 2011</p><ul>
 <li>end is high segment index, - end is low segment index Dynamic instability <a href="http://web.physics.ucsb.edu/~deborah/res/res_1.htm">http://web.physics.ucsb.edu/~deborah/res/res_1.htm</a> See <a href="file:///C:/Users/200004965/Documents/Book-Nanonets/docs/Gregoretti.pdf">file:///C:/Users/200004965/Documents/Book-Nanonets/docs/Gregoretti.pdf</a>  </li>
 </ul>
 </dd>
-<dt><a class="anchor" id="_todo000017"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r___tube.html#aa67d7e1c9c59f557a6bc0ad358a5e75e">ns3::P1906MOL_MOTOR_Tube::startPt</a>  </dt>
+<dt><a class="anchor" id="_todo000019"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r___tube.html#aa67d7e1c9c59f557a6bc0ad358a5e75e">ns3::P1906MOL_MOTOR_Tube::startPt</a>  </dt>
 <dd>get actual tube graph properties from a biologist  </dd>
-<dt><a class="anchor" id="_todo000019"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r___vol_surface.html#ab9de294ac38ab43f4ea3a19d19888a9b">ns3::P1906MOL_MOTOR_VolSurface::fluxMeter</a>  (gsl_matrix *tubeMatrix)</dt>
+<dt><a class="anchor" id="_todo000021"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r___vol_surface.html#ab9de294ac38ab43f4ea3a19d19888a9b">ns3::P1906MOL_MOTOR_VolSurface::fluxMeter</a>  (gsl_matrix *tubeMatrix)</dt>
 <dd>incorporate direction and motor rate along tube  </dd>
-<dt><a class="anchor" id="_todo000018"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r___vol_surface.html#a2a858ffa374524e97691b07ff2ead3b1">ns3::P1906MOL_MOTOR_VolSurface::GetTypeId</a>  (void)</dt>
-<dd>Trace should include flux and reflections </dd>
+<dt><a class="anchor" id="_todo000020"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r___vol_surface.html#a2a858ffa374524e97691b07ff2ead3b1">ns3::P1906MOL_MOTOR_VolSurface::GetTypeId</a>  (void)</dt>
+<dd>Trace should include flux and reflections  </dd>
+<dt><a class="anchor" id="_todo000015"></a>Member <a class="el" href="classns3_1_1_p1906_m_o_l___m_o_t_o_r_specificity.html#a6d7b7f7d225df42becaf34a246ecf4cb">ns3::P1906MOL_MOTORSpecificity::CheckRxCompatibility</a>  (Ptr&lt; P1906CommunicationInterface &gt; src, Ptr&lt; P1906CommunicationInterface &gt; dst, Ptr&lt; P1906MessageCarrier &gt; message)</dt>
+<dd>add attributes later </dd>
 </dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Apr 5 2015 11:27:28 for IEEE-Std-1906 by
+    <li class="footer">Generated on Wed Apr 15 2015 14:41:58 for IEEE-Std-1906 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9 </li>
   </ul>

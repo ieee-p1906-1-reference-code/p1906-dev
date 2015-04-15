@@ -20,9 +20,10 @@
  *  IEEE harmless from any damages or liability arising out of
  *  the use thereof.
  *
- * Author: Stephen F Bush - GE Global Research
- *                      bushsf@research.ge.com
- *                      http://www.amazon.com/author/stephenbush
+ * Author: Giuseppe Piro - Telematics Lab Research Group
+ *                         Politecnico di Bari
+ *                         giuseppe.piro@poliba.it
+ *                         telematics.poliba.it/piro
  */
 
 
@@ -32,6 +33,7 @@
 #include "ns3/object.h"
 #include "ns3/nstime.h"
 #include "ns3/ptr.h"
+
 #include "ns3/p1906-communication-interface.h"
 #include "ns3/p1906-transmitter-communication-interface.h"
 
@@ -49,19 +51,19 @@ class P1906NetDevice;
 /**
  * \ingroup P1906 framework
  *
- * \class P1906MOL_MOTOR_TransmitterCommunicationInterface
+ * \class P1906MOL_MOTORTransmitterCommunicationInterface
  *
  * \brief Base class implementing the Transmitter entity in
  * the P1906 framework for the MOLECULAR Example
  */
 
-class P1906MOL_MOTOR_TransmitterCommunicationInterface : public P1906TransmitterCommunicationInterface
+class P1906MOL_MOTORTransmitterCommunicationInterface : public P1906TransmitterCommunicationInterface
 {
 public:
   static TypeId GetTypeId (void);
 
-  P1906MOL_MOTOR_TransmitterCommunicationInterface ();
-  virtual ~P1906MOL_MOTOR_TransmitterCommunicationInterface();
+  P1906MOL_MOTORTransmitterCommunicationInterface ();
+  virtual ~P1906MOL_MOTORTransmitterCommunicationInterface();
 
 };
 

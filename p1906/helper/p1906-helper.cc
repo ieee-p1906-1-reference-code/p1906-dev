@@ -43,6 +43,7 @@
 #include "../model-core/p1906-transmitter-communication-interface.h"
 #include "../model-core/p1906-receiver-communication-interface.h"
 #include "../model-core/p1906-message-carrier.h"
+
 #include "../model-em/p1906-em-message-carrier.h"
 #include "../model-em/p1906-em-perturbation.h"
 #include "../model-em/p1906-em-motion.h"
@@ -65,8 +66,18 @@
 #include "../model-motor/p1906-mol-motor-motion.h"
 #include "../model-motor/p1906-mol-motor-field.h"
 #include "../model-motor/p1906-mol-motor-communication-interface.h"
-#include "../model-motor/p1906-mol-motor-transmitter-communication-interface.h"
+//#include "../model-motor/p1906-mol-motor-transmitter-communication-interface.h"
 #include "../model-motor/p1906-mol-motor-receiver-communication-interface.h"
+#include "../model-motor/p1906-mol-diffusion.h"
+#include "../model-motor/p1906-mol-diffusion-wave.h"
+#include "../model-motor/p1906-mol-motor-microtubule.h"
+#include "../model-motor/p1906-mol-motor-vol-surface.h"
+#include "../model-motor/p1906-mol-motor-tube.h"
+#include "../model-motor/p1906-mol-motor-pos.h"
+#include "../model-motor/p1906-metrics.h"
+#include "../model-motor/p1906-mol-motor-MathematicaHelper.h"
+#include "../model-motor/p1906-mol-motor-MATLABHelper.h"
+#include "../model-motor/p1906-mol-motor-medium.h"
 
 NS_LOG_COMPONENT_DEFINE ("P1906Helper");
 
@@ -126,15 +137,26 @@ P1906Helper::EnableLogComponents (void)
   LogComponentEnable ("P1906MOLPerturbation", LOG_LEVEL_ALL);
   LogComponentEnable ("P1906MOLSpecificity", LOG_LEVEL_ALL);
   
-  
-  LogComponentEnable ("P1906MOL_Motor", LOG_LEVEL_ALL);
-  LogComponentEnable ("P1906MOL_MOTOR_Field", LOG_LEVEL_ALL);
-  LogComponentEnable ("P1906MOL_MOTOR_Motion", LOG_LEVEL_ALL);
-  LogComponentEnable ("P1906MOL_MOTOR_Perturbation", LOG_LEVEL_ALL);
-  LogComponentEnable ("P1906MOL_MOTOR_TransmitterCommunicationInterface", LOG_LEVEL_ALL);
-  LogComponentEnable ("P1906MOL_MOTOR_ReceiverCommunicationInterface", LOG_LEVEL_ALL);
-  LogComponentEnable ("P1906MOL_MOTOR_CommunicationInterface", LOG_LEVEL_ALL);
-
+  // focus logging upon desired components
+  // Warning level for Core components
+  LogComponentEnable ("P1906MOL_MOTOR_Perturbation", LOG_LEVEL_WARN);
+  //LogComponentEnable ("P1906MOL_MOTOR_TransmitterCommunicationInterface", LOG_LEVEL_WARN);
+  LogComponentEnable ("P1906MOL_MOTOR_ReceiverCommunicationInterface", LOG_LEVEL_WARN);
+  LogComponentEnable ("P1906MOL_MOTOR_CommunicationInterface", LOG_LEVEL_WARN);
+  LogComponentEnable ("P1906MOL_MOTORMedium", LOG_LEVEL_INFO);
+  // Detail for Motor components
+  LogComponentEnable ("P1906MOL_Motor", LOG_LEVEL_INFO);
+  LogComponentEnable ("P1906MOL_MOTOR_MicrotubulesField", LOG_LEVEL_INFO);
+  LogComponentEnable ("P1906MOL_MOTOR_Motion", LOG_LEVEL_INFO);  
+  LogComponentEnable ("P1906MOL_ExtendedDiffusion", LOG_LEVEL_INFO);
+  LogComponentEnable ("P1906MOL_ExtendedDiffusionWave", LOG_LEVEL_INFO);
+  LogComponentEnable ("P1906MOL_MOTOR_VolSurface", LOG_LEVEL_INFO);
+  LogComponentEnable ("P1906MOL_MOTOR_Field", LOG_LEVEL_INFO);
+  LogComponentEnable ("P1906MOL_MOTOR_Tube", LOG_LEVEL_INFO);
+  LogComponentEnable ("P1906MOL_MOTOR_Pos", LOG_LEVEL_INFO);
+  LogComponentEnable ("P1906_Metrics", LOG_LEVEL_INFO);
+  LogComponentEnable ("P1906MOL_MOTOR_MathematicaHelper", LOG_LEVEL_INFO);
+  LogComponentEnable ("P1906MOL_MOTOR_MATLABHelper", LOG_LEVEL_INFO);
 }
 
 

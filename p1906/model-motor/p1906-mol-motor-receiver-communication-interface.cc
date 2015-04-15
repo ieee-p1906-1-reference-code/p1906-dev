@@ -27,16 +27,15 @@
 
 
 #include "ns3/log.h"
-
+#include "ns3/packet.h"
 #include "ns3/p1906-net-device.h"
-#include <ns3/packet.h>
-#include "ns3/p1906-specificity.h"
+
 #include "ns3/p1906-message-carrier.h"
 #include "ns3/p1906-communication-interface.h"
-#include "ns3/p1906-medium.h"
-#include "ns3/p1906-net-device.h"
 #include "ns3/p1906-motion.h"
-#include "ns3/p1906-mol-specificity.h"
+
+#include "ns3/p1906-mol-motor-medium.h"
+#include "ns3/p1906-mol-motor-specificity.h"
 #include "ns3/p1906-mol-motor-receiver-communication-interface.h"
 
 namespace ns3 {
@@ -66,7 +65,7 @@ P1906MOL_MOTOR_ReceiverCommunicationInterface::HandleReception (Ptr<P1906Communi
 {
   NS_LOG_FUNCTION (this);
 
-  Ptr<P1906MOLSpecificity> specificity = GetP1906Specificity ()->GetObject<P1906MOLSpecificity> ();
+  Ptr<P1906MOL_MOTORSpecificity> specificity = GetP1906Specificity ()->GetObject<P1906MOL_MOTORSpecificity> ();
   bool isRxOk = specificity->CheckRxCompatibility (src, dst, message);
   if (isRxOk)
     {

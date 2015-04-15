@@ -2,7 +2,8 @@ var hierarchy =
 [
     [ "Channel", null, [
       [ "ns3::P1906Medium", "classns3_1_1_p1906_medium.html", [
-        [ "ns3::ExtensionNameP1906Medium", "classns3_1_1_extension_name_p1906_medium.html", null ]
+        [ "ns3::ExtensionNameP1906Medium", "classns3_1_1_extension_name_p1906_medium.html", null ],
+        [ "ns3::P1906MOL_MOTORMedium", "classns3_1_1_p1906_m_o_l___m_o_t_o_r_medium.html", null ]
       ] ]
     ] ],
     [ "EstensionNameP1906MessageCarrier", "class_estension_name_p1906_message_carrier.html", null ],
@@ -70,7 +71,7 @@ var hierarchy =
       [ "ns3::P1906TransmitterCommunicationInterface", "classns3_1_1_p1906_transmitter_communication_interface.html", [
         [ "ns3::ExtensionNameP1906TransmitterCommunicationInterface", "classns3_1_1_extension_name_p1906_transmitter_communication_interface.html", null ],
         [ "ns3::P1906EMTransmitterCommunicationInterface", "classns3_1_1_p1906_e_m_transmitter_communication_interface.html", null ],
-        [ "ns3::P1906MOL_MOTOR_TransmitterCommunicationInterface", "classns3_1_1_p1906_m_o_l___m_o_t_o_r___transmitter_communication_interface.html", null ],
+        [ "ns3::P1906MOL_MOTORTransmitterCommunicationInterface", "classns3_1_1_p1906_m_o_l___m_o_t_o_r_transmitter_communication_interface.html", null ],
         [ "ns3::P1906MOLTransmitterCommunicationInterface", "classns3_1_1_p1906_m_o_l_transmitter_communication_interface.html", null ]
       ] ]
     ] ],
