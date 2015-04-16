@@ -33,6 +33,7 @@
 
 #include <iostream>
 #include <fstream>
+
 using namespace std;
 
 #include <gsl/gsl_linalg.h>
@@ -47,6 +48,7 @@ using namespace std;
 #include "ns3/object.h"
 #include "ns3/nstime.h"
 #include "ns3/ptr.h"
+
 #include "ns3/p1906-mol-motor-motion.h"
 #include "ns3/p1906-mol-message-carrier.h"
 #include "ns3/p1906-mol-motor-pos.h"
