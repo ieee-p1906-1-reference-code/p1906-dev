@@ -40,6 +40,7 @@
 
 #include <iostream>
 #include <fstream>
+
 using namespace std;
 
 #include "ns3/object.h"
@@ -49,6 +50,7 @@ using namespace std;
 #include "ns3/double.h"
 #include "ns3/traced-value.h"
 #include "ns3/trace-source-accessor.h"
+
 #include "ns3/p1906-mol-motor-field.h"
 
 namespace ns3 {
