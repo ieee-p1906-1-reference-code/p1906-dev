@@ -48,6 +48,7 @@
 
 #include "ns3/log.h"
 #include "ns3/string.h"
+
 #include "ns3/p1906-mol-motor.h"
 #include "ns3/p1906-mol-motor-MathematicaHelper.h"
 
@@ -347,8 +348,7 @@ void P1906MOL_Motor::updateTime(double event_time)
 {
   t.time += event_time;
   NS_LOG_DEBUG ("event duration: " << event_time);
-  NS_LOG_INFO ("motor time: " << t.time);
-  NS_LOG_INFO ("motor location: " << current_location);
+  NS_LOG_INFO ("motor location: " << current_location << " time since motor created: " << t.time);
 }
 
 //! return the elapsed time since the motor time was last initialized
