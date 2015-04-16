@@ -206,6 +206,7 @@ void P1906MOL_MOTOR_MathematicaHelper::points2Mma(vector<P1906MOL_MOTOR_Pos> & p
   P1906MOL_MOTOR_Pos pt;
   double x, y, z;
   
+  NS_LOG_FUNCTION(this);
   pFile = fopen (fname,"w");
   
   fprintf (pFile, "Graphics3D[{PointSize[Large], Blue, ");
