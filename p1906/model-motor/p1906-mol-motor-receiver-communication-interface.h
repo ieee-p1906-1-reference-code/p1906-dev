@@ -52,7 +52,7 @@ class P1906Motion;
  * \class P1906MOL_MOTOR_ReceiverCommunicationInterface
  *
  * \brief Base class implementing a the Receiver entity
- * of the P1906 framework for the MOLECULAR Example
+ * of the P1906 framework for the MOLECULAR MOTOR Example
  */
 
 class P1906MOL_MOTOR_ReceiverCommunicationInterface : public P1906ReceiverCommunicationInterface
