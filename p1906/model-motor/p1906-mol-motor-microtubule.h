@@ -128,8 +128,9 @@ public:
    */
   //! set the volume in which tubes will be generated
   void setTubeVolume(double volume = 25);
-  //! set the space in which the tube centers will be formed
+  //! set the spherical coordinate Phi orientation of the MTs
   void setTubeOrientationPhi(double orientation_phi);
+  //! set the spherical coordinate Theta orientation of the MTs
   void setTubeOrientationTheta(double orientation_theta);
   //! set the mean tube length
   void setTubeLength(double mean_tube_length = 100);
