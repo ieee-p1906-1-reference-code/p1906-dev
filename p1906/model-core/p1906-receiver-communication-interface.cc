@@ -44,6 +44,8 @@ namespace ns3 {
 
 NS_LOG_COMPONENT_DEFINE ("P1906ReceiverCommunicationInterface");
 
+NS_OBJECT_ENSURE_REGISTERED (P1906ReceiverCommunicationInterface);
+
 TypeId P1906ReceiverCommunicationInterface::GetTypeId (void)
 {
   static TypeId tid = TypeId ("ns3::P1906ReceiverCommunicationInterface")

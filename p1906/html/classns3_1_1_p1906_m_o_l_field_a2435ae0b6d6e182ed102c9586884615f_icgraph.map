@@ -1,0 +1,9 @@
+<map id="ns3::P1906MOLField::distance" name="ns3::P1906MOLField::distance">
+<area shape="rect" id="node2" href="$classns3_1_1_p1906_m_o_l_field.html#a35964be4e276aa748dc5457aa57d0d81" title="ns3::P1906MOLField\l::P1906MOLField" alt="" coords="613,72,757,113"/>
+<area shape="rect" id="node3" href="$classns3_1_1_p1906_m_o_l_field.html#a393238a8088b9caf4eb4b4a5f9452230" title="return the nearest segment in tubeMatrix to the point pt that falls within radius, otherwise &#45;1 " alt="" coords="197,79,341,120"/>
+<area shape="rect" id="node6" href="$classns3_1_1_p1906_m_o_l_field.html#a10b67a11f3af8aada1ff8ad7646a6da8" title="Methods related to vector fields write the vector field in MATLAB format using regular spacing betwee..." alt="" coords="389,169,565,211"/>
+<area shape="rect" id="node7" href="$classns3_1_1_p1906_m_o_l_field.html#a55bc0db190d22436d6e7a84c6bff32f6" title="return closest point within threshold " alt="" coords="197,196,341,237"/>
+<area shape="rect" id="node4" href="$classns3_1_1_p1906_m_o_l_field.html#aabea64c4f1e0b4fe7cc7b8ebcd00ca86" title="Methods related to walking along tubes and finding tube overlap walk along a specific tube identified..." alt="" coords="405,39,549,80"/>
+<area shape="rect" id="node5" href="$classns3_1_1_p1906_m_o_l_field.html#ae543086b0f21501a9ca1c16ab7853791" title="free float until intersection with any tube " alt="" coords="405,104,549,145"/>
+<area shape="rect" id="node8" href="$classns3_1_1_p1906_m_o_l_field.html#af2bddb0ba6b3964139931a0bc617a47c" title="test the findClosestPoint function " alt="" coords="392,235,563,276"/>
+</map>

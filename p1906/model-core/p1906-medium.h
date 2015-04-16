@@ -67,7 +67,7 @@ public:
    * \param xxx add parameters
    * The metod is is charge of delivering the message to the destination node
    */
-  void HandleTransmission  (Ptr<P1906CommunicationInterface> src,
+  virtual void HandleTransmission  (Ptr<P1906CommunicationInterface> src,
 		                    Ptr<P1906MessageCarrier> message,
 		                    Ptr<P1906Field> field);
 
@@ -92,11 +92,9 @@ public:
   void SetP1906CommunicationInterfaces (P1906CommunicationInterfaces* i);
   P1906CommunicationInterfaces* GetP1906CommunicationInterfaces ();
 
-private:
+protected:
   P1906CommunicationInterfaces* m_communicationInterfaces;
   Ptr<P1906Motion> m_motion;
-
-protected:
   virtual void DoDispose ();
 };
 

@@ -59,7 +59,7 @@ class P1906NetDevice;
 class P1906TransmitterCommunicationInterface : public Object
 {
 public:
-  static TypeId GetTypeId (void);
+  static TypeId GetTypeId (void);  
 
   P1906TransmitterCommunicationInterface ();
   virtual ~P1906TransmitterCommunicationInterface();

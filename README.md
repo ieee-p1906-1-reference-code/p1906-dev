@@ -39,7 +39,17 @@ cp ns-3-dev/p1906/example/first-example.cc scratch
 
 ./waf --run scratch/first-example
 
-== Run EM or MOLECULAR examples ==
 
-Have a look to the presentation into the docs folder 
+== Run MOTOR example ==
+
+./waf --run scratch/motor-example
+
+
+== Examine the API ==
+
+Use your browser to open p1906/motor-model/p1906/html/index.html
+
+Also see p1906/motor-model/p1906/motor-model/README.txt
+
+Finally, have a look to the presentation into the docs folder 
 
