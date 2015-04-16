@@ -54,7 +54,7 @@ TypeId P1906MOL_ExtendedDiffusion::GetTypeId (void)
 
 //! \todo transmission belongs in Perturbation
 //! \todo diffusion-wave is a Message Carrier
-//! \todo receive should be part of Specificity 
+//! \todo reception should be part of Specificity 
 P1906MOL_ExtendedDiffusion::P1906MOL_ExtendedDiffusion ()
 {
   /** This class implements persistence length as described in:
