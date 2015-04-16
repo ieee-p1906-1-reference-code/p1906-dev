@@ -141,8 +141,8 @@ void P1906MOL_MOTOR_MATLABHelper::vectorFieldMeshMATLAB(gsl_matrix * vf, const c
   gsl_vector_minmax (v, &vMin, &vMax);
   gsl_vector_minmax (w, &wMin, &wMax);
   
-  //NS_LOG_FUNCTION ("xMin: " << xMin << " yMin: " << yMin << " zMin: " << zMin << " uMin: " << uMin << " vMin: " << vMin << " wMin: " << wMin);
-  //NS_LOG_FUNCTION ("xMax: " << xMax << " yMax: " << yMax << " zMax: " << zMax << " uMax: " << uMax << " vMax: " << vMax << " wMax: " << wMax);
+  NS_LOG_DEBUG ("xMin: " << xMin << " yMin: " << yMin << " zMin: " << zMin << " uMin: " << uMin << " vMin: " << vMin << " wMin: " << wMin);
+  NS_LOG_DEBUG ("xMax: " << xMax << " yMax: " << yMax << " zMax: " << zMax << " uMax: " << uMax << " vMax: " << vMax << " wMax: " << wMax);
 	
   gsl_vector * pt1 = gsl_vector_alloc (3);
   gsl_vector * pt2 = gsl_vector_alloc (3);
@@ -153,7 +153,7 @@ void P1906MOL_MOTOR_MATLABHelper::vectorFieldMeshMATLAB(gsl_matrix * vf, const c
   double yStepsize = (yMax - yMin) / 10.0;
   double zStepsize = (zMax - zMin) / 10.0;
   
-  //NS_LOG_FUNCTION ("xStepsize: " << xStepsize << " yStepsize: " << yStepsize << " zStepsize: " << zStepsize);
+  NS_LOG_DEBUG ("xStepsize: " << xStepsize << " yStepsize: " << yStepsize << " zStepsize: " << zStepsize);
   
   //! step through equidistant points in a volume and store the vector values at each point
   for (double i = xMin; i < xMax; i += xStepsize)
@@ -162,33 +162,33 @@ void P1906MOL_MOTOR_MATLABHelper::vectorFieldMeshMATLAB(gsl_matrix * vf, const c
       {
 	    //! find the closest point to the current location
 	    P1906MOL_MOTOR_Field::point (pt1, i, j, k);
-		// printf ("pt1\n");
+		// NS_LOG_DEBUG ("pt1");
 		// displayPoint (pt1);
 	    P1906MOL_MOTOR_Field::findClosestPoint (pt1, vf, closest);
-		//printf ("(findClosestPoint) closest vector: %f %f %f %f %f %f\n",
-        //  gsl_vector_get (closest, 0),
-	    //  gsl_vector_get (closest, 1),
-	    //  gsl_vector_get (closest, 2),
-	    //  gsl_vector_get (closest, 3),
-	    //  gsl_vector_get (closest, 4),
-	    //  gsl_vector_get (closest, 5));
+		NS_LOG_DEBUG ("closest vector: " << " " <<
+          gsl_vector_get (closest, 0) << " " <<
+	      gsl_vector_get (closest, 1) << " " <<
+	      gsl_vector_get (closest, 2) << " " << 
+	      gsl_vector_get (closest, 3) << " " <<
+	      gsl_vector_get (closest, 4) << " " <<
+	      gsl_vector_get (closest, 5));
 		P1906MOL_MOTOR_Field::point (pt2, 
 		  gsl_vector_get (closest, 0),
 		  gsl_vector_get (closest, 1),
 		  gsl_vector_get (closest, 2));
 		  
-		// printf ("(vectorFieldMeshMATLAB) distance between pt and vector location: %f\n", distance (pt1, pt2));
+		NS_LOG_DEBUG ("distance between pt and vector location: " << distance (pt1, pt2));
 		//! check if distance within range
 		if (P1906MOL_MOTOR_Field::distance(pt1, pt2) > 2.0 * xStepsize)
 		{
 		  //! if not, store the null vector
-		  // printf ("(vectorFieldMeshMATLAB) using null vector\n");
+		  NS_LOG_DEBUG ("using null vector");
           P1906MOL_MOTOR_Field::point (vec, 0.0, 0.0, 0.0);
 		  // displayPoint (vec);
 	    } 
 		else 
 		{
-		  // printf ("(vectorFieldMeshMATLAB) using vector\n");
+		  NS_LOG_DEBUG ("using vector");
 		  //! otherwise, store the vector value
 		  P1906MOL_MOTOR_Field::point (vec,
 	        gsl_vector_get (closest, 3),
