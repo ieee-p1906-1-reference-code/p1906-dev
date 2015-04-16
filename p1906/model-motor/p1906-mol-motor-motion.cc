@@ -50,21 +50,19 @@
 #include "ns3/nstime.h"
 #include "ns3/ptr.h"
 #include "ns3/simulator.h"
+#include "ns3/mobility-model.h"
 
-#include "ns3/p1906-mol-motor-motion.h"
-//#include "ns3/p1906-mol-motor-tube.h"
-#include "ns3/p1906-mol-motor-pos.h"
+#include "ns3/p1906-net-device.h"
 
-#include "ns3/p1906-mol-motor-MathematicaHelper.h"
-#include "ns3/p1906-mol-motor-MATLABHelper.h"
 #include "ns3/p1906-metrics.h"
 #include "ns3/p1906-mol-motor.h"
 #include "ns3/p1906-mol-motor-pos.h"
 #include "ns3/p1906-mol-motor-microtubule.h"
-
+#include "ns3/p1906-mol-motor-motion.h"
+#include "ns3/p1906-mol-motor-pos.h"
+#include "ns3/p1906-mol-motor-MathematicaHelper.h"
+#include "ns3/p1906-mol-motor-MATLABHelper.h"
 #include "ns3/p1906-communication-interface.h"
-#include "ns3/mobility-model.h"
-#include "ns3/p1906-net-device.h"
 
 //! for ODE test \todo remove before submitting
 #include "ns3/p1906-mol-diffusion.h"
@@ -159,7 +157,7 @@ void P1906MOL_MOTOR_Motion::motorWalk(Ptr<P1906MessageCarrier> carrier, gsl_rng 
   size_t segOfTube = seg % segPerTube; //! the current segment within the tube
   size_t segToGo = segPerTube - segOfTube; //! segments until the end of tube
   
-  NS_LOG_DEBUG ("seg: " << seg << " segOfTube: " << segOfTube << " segToGo: " << segToGo);
+  NS_LOG_DEBUG ("segment: " << seg << " segment of MT: " << segOfTube << " segments to go of this MT: " << segToGo);
   for (size_t i = seg; i < (seg + segToGo); i++)
   {
     //! walk to end of segment
@@ -171,7 +169,7 @@ void P1906MOL_MOTOR_Motion::motorWalk(Ptr<P1906MessageCarrier> carrier, gsl_rng 
 	             gsl_vector_get(segment, 4), 
 			     gsl_vector_get(segment, 5) );
 	pts.insert(pts.end(), Pos);
-	NS_LOG_DEBUG ("segment(" << i << ") recorded position "<< Pos);
+	NS_LOG_DEBUG ("segment(" << i << ") recorded position " << Pos);
 	
 	//! get next-to-last point
 	Pos1 = pts.at(pts.size() - 2);
@@ -183,9 +181,9 @@ void P1906MOL_MOTOR_Motion::motorWalk(Ptr<P1906MessageCarrier> carrier, gsl_rng 
 	Pos2.getPos (&x2, &y2, &z2);
     P1906MOL_MOTOR_Field::point (pt2, x2, y2, z2);
 
-	NS_LOG_DEBUG ("distance: " << P1906MOL_MOTOR_Field::distance(pt1, pt2) <<
-	  " movementRate: " << movementRate << 
-	  " time: " << P1906MOL_MOTOR_Field::distance(pt1, pt2) / movementRate);
+	NS_LOG_DEBUG ( "distance: " << P1906MOL_MOTOR_Field::distance(pt1, pt2) <<
+				   " movementRate: " << movementRate << 
+				   " time: " << P1906MOL_MOTOR_Field::distance(pt1, pt2) / movementRate);
 	  
 	motor->updateTime(P1906MOL_MOTOR_Field::distance(pt1, pt2) / movementRate);
   }
@@ -205,7 +203,8 @@ void P1906MOL_MOTOR_Motion::displayPos(gsl_vector *pt)
 //!   startPt - where the motor began its random walk
 //!   timePeriod - length of each step of the walk
 //!   returns the index of the contact segment in tubeMatrix
-size_t P1906MOL_MOTOR_Motion::float2Tube(Ptr<P1906MessageCarrier> carrier, gsl_rng * r, gsl_vector * startPt, vector<P1906MOL_MOTOR_Pos> &pts, gsl_matrix * tubeMatrix, double timePeriod, vector<P1906MOL_MOTOR_VolSurface> & vsl)
+size_t P1906MOL_MOTOR_Motion::float2Tube(Ptr<P1906MessageCarrier> carrier, gsl_rng * r, gsl_vector * startPt, 
+	vector<P1906MOL_MOTOR_Pos> &pts, gsl_matrix * tubeMatrix, double timePeriod, vector<P1906MOL_MOTOR_VolSurface> & vsl)
 {
   gsl_vector * currentPos = gsl_vector_alloc (3);
   gsl_vector * newPos = gsl_vector_alloc (3);
@@ -258,7 +257,8 @@ size_t P1906MOL_MOTOR_Motion::float2Tube(Ptr<P1906MessageCarrier> carrier, gsl_r
 //! distance travelled will be a function of particle diameter, temperature, diffusion coefficient.
 //! for simplicity, the second moment is \f$\bar{x^2} = 2 D t\f$, where \f$D\f$ is the mass diffusivity and \f$t\f$ is time.
 //! note that Brownian motion landing on a receiver is a form of the "narrow escape" problem.
-void P1906MOL_MOTOR_Motion::brownianMotion(gsl_rng * r, gsl_vector * currentPos, gsl_vector * newPos, double timePeriod, double D, vector<P1906MOL_MOTOR_VolSurface> & vsl)
+void P1906MOL_MOTOR_Motion::brownianMotion(gsl_rng * r, gsl_vector * currentPos, gsl_vector * newPos, double timePeriod, 
+	double D, vector<P1906MOL_MOTOR_VolSurface> & vsl)
 {
   //! the new position is Gaussian with variance proportional to time taken: W_t - W_s ~ N(0, t - s)
   //! sigma is the standard deviation
@@ -442,11 +442,12 @@ double P1906MOL_MOTOR_Motion::ComputePropagationDelay (Ptr<P1906CommunicationInt
     
   //! Receiver volume surface center comes from the receiver Node location
   P1906MOL_MOTOR_Pos dvol;
-  NS_LOG_DEBUG ("position " << dv.x << " multiplier: " << distanceMultiplier);
+  NS_LOG_DEBUG ("receiver position " << dv.x << " multiplier: " << distanceMultiplier);
+  //! the Receiver has been made very large in order to ensure the motor can find it in a reasonable amount of time
   dvol.setPos (dv.x * distanceMultiplier, dv.y, dv.z);
   motor->addVolumeSurface(dvol, (dv.x * distanceMultiplier)/1.0001, P1906MOL_MOTOR_VolSurface::Receiver);
  
-  //! add a reflective barrier around the source and destination
+  //! add a large reflective barrier around the source and destination
   dvol.setPos (sv.x, sv.y, sv.z);
   motor->addVolumeSurface(dvol, distanceMultiplier * (dv.x + (0.1 * dv.x)), P1906MOL_MOTOR_VolSurface::ReflectiveBarrier);
 
@@ -460,7 +461,7 @@ double P1906MOL_MOTOR_Motion::ComputePropagationDelay (Ptr<P1906CommunicationInt
   motor->setStartingPoint(startPt);
 
   /*
-   * move randomly until destination reached
+   * move until inside Receiver volume surface
    */  
   //float2Destination(motor, timePeriod);
   move2Destination(motor, microtubules->tubeMatrix, microtubules->m_segments_per_tube, timePeriod, motor->pos_history);
@@ -470,18 +471,21 @@ double P1906MOL_MOTOR_Motion::ComputePropagationDelay (Ptr<P1906CommunicationInt
     NS_LOG_DEBUG ("motor history: " << motor->pos_history.at(i));
   }
 
-  NS_LOG_FUNCTION (this << "[propagation time]" << motor->getTime());
+  NS_LOG_INFO ("propagation time: " << motor->getTime());
   sprintf (plot_filename, "float2destination_%lf_%lf.mma", sv.x, dv.x * distanceMultiplier);
   mathematica.connectedPoints2Mma(motor->pos_history, plot_filename);
 
   if (motor->inDestination())
   {
+	//! a positive return value indicates that the motor has completed its journey and should continue with the reception process
 	NS_LOG_FUNCTION (this << "returning delay: " << motor->getTime());
 	return motor->getTime();
   }
   else
   {
 	NS_LOG_FUNCTION (this << "returning delay: " << -(motor->getTime()));
+	//! test rescheduling of a motor by forcing an incremental movement event
+	//! negative value indicates time that has elapsed BUT motor has not reached target and must repeat this method
 	//return -(motor->getTime());
 	return -10;
   }
@@ -528,7 +532,9 @@ void P1906MOL_MOTOR_Motion::float2Destination(Ptr<P1906MessageCarrier> carrier, 
 	for (size_t i = 0; i < motor->pos_history.size(); i++)
 	{
 		NS_LOG_DEBUG ("motor history: " << motor->pos_history.at(i));
-		NS_LOG_DEBUG ("motor history: " << motor->pos_history.at(i).pos_x << " " << motor->pos_history.at(i).pos_y << " " << motor->pos_history.at(i).pos_z);
+		NS_LOG_DEBUG ("motor history: " << motor->pos_history.at(i).pos_x << " " 
+										<< motor->pos_history.at(i).pos_y << " " 
+										<< motor->pos_history.at(i).pos_z);
 	}
   }
 }
@@ -552,9 +558,8 @@ void P1906MOL_MOTOR_Motion::move2Destination(Ptr<P1906MessageCarrier> carrier, g
 	strs << "move2Destination-" << motor->t.time << ".mma";
 	std::string fname = strs.str();
 	cout << fname << "\n";
-	mathematica.connectedPoints2Mma(motor->pos_history, fname.c_str());
-	//! \todo consider scheduling motor movement events rather than computing to end? Will that mess up the 1906 core?
-	// Simulator::Schedule(Seconds(1.0), &P1906MOL_MOTOR_Motion::move2Destination, this);
+	//! uncomment the following to display motor movement detail
+	//mathematica.connectedPoints2Mma(motor->pos_history, fname.c_str());
     //! returns the index of the segment in tubeMatrix to which the motor is bound 
     float2Tube(motor, motor->r, current_location, pts, tubeMatrix, timePeriod, motor->vsl);
 	motor->setLocation(pts.back());
