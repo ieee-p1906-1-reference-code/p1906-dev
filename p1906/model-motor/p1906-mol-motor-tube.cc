@@ -191,7 +191,6 @@ void P1906MOL_MOTOR_Tube::getSegmatrix(gsl_matrix * sm)
 }
     
 //! create and return a microtubule of given persistence length in segMatrix and its structural entropy in se
-//! \todo randomize initial tube orientations
 int P1906MOL_MOTOR_Tube::genTube(struct tubeCharacteristcs_t * ts, gsl_rng *r, gsl_matrix *segMatrix, gsl_vector *startPt)
 {
   /**
@@ -223,8 +222,6 @@ int P1906MOL_MOTOR_Tube::genTube(struct tubeCharacteristcs_t * ts, gsl_rng *r, g
   //    NS_LOG_DEBUG ("segAngleTheta(" << i << "," << j << ") = " << gsl_matrix_get (segAngleTheta, i, j));
   //    NS_LOG_DEBUG ("segAnglePsi(" << i << "," << j << ") = " << gsl_matrix_get (segAnglePsi, i, j));
   //  }
-  
-  // \todo: the persistence length angles should be with respect to the given orientation. add the angles to the orientation before using.
 	
   NS_LOG_DEBUG ("segments allocated " << segMatrix->size1 << " " << segMatrix->size2 << " numSegments " << ts->numSegments);
   
@@ -317,10 +314,7 @@ double P1906MOL_MOTOR_Tube::genPersistenceLength(gsl_rng * r, gsl_matrix * segAn
   {
     //! return a valid radian (0..2*pi)
     angle = fmod(gsl_ran_gaussian (r, sigma), (2 * M_PI));
-	NS_LOG_DEBUG ("angle(" << i << ") radians = " << angle);
-	
-    //! a radian is 180/Pi degrees
-	//NS_LOG_DEBUG ("angle(" << i << ") = " << angle * 180.00 / M_PI);
+	NS_LOG_DEBUG ("angle(" << i << ") = " << angle << " radians = " << angle * 180.00 / M_PI << " degrees");
 	
     gsl_matrix_set(segAngle, i, 0, angle);
   }
