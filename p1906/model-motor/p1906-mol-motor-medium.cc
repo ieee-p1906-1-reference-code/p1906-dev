@@ -20,10 +20,9 @@
  *  IEEE harmless from any damages or liability arising out of
  *  the use thereof.
  *
- * Author: Giuseppe Piro - Telematics Lab Research Group
- *                         Politecnico di Bari
- *                         giuseppe.piro@poliba.it
- *                         telematics.poliba.it/piro
+ * Author: Stephen F Bush - GE Global Research
+ *                      bushsf@research.ge.com
+ *                      http://www.amazon.com/author/stephenbush
  */
 
 
