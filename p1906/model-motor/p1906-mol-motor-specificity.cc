@@ -25,18 +25,18 @@
  *                      http://www.amazon.com/author/stephenbush
  */
 
-
 #include "ns3/log.h"
-#include "ns3/p1906-net-device.h"
 #include "ns3/mobility-model.h"
+
+#include "ns3/p1906-net-device.h"
 
 #include "ns3/p1906-specificity.h"
 #include "ns3/p1906-perturbation.h"
 #include "ns3/p1906-receiver-communication-interface.h"
 #include "ns3/p1906-transmitter-communication-interface.h"
 
-#include "ns3/p1906-mol-motor-specificity.h"
 #include "ns3/p1906-mol-motor.h"
+#include "ns3/p1906-mol-motor-specificity.h"
 #include "ns3/p1906-mol-motor-perturbation.h"
 
 namespace ns3 {
