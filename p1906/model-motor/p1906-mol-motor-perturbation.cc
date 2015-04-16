@@ -27,12 +27,13 @@
 
 #include "ns3/log.h"
 #include "ns3/packet.h"
+#include "ns3/simulator.h"
+
 #include "ns3/p1906-perturbation.h"
 #include "ns3/p1906-message-carrier.h"
 #include "ns3/p1906-mol-motor-perturbation.h"
 #include "ns3/p1906-mol-message-carrier.h"
 #include "ns3/p1906-mol-motor.h"
-#include "ns3/simulator.h"
 
 namespace ns3 {
 
