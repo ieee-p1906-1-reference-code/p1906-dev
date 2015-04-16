@@ -46,6 +46,7 @@ using namespace std;
 #include "ns3/object.h"
 #include "ns3/nstime.h"
 #include "ns3/ptr.h"
+
 #include "ns3/p1906-mol-motor-field.h"
 
 namespace ns3 {
@@ -81,7 +82,6 @@ public:
   gsl_rng * r;
   
   //! the tube starting point
-  //! \todo get actual tube graph properties from a biologist
   gsl_vector * startPt;
   //! hold the values for a tube comprised of many segments: x_start y_start z_start x_end y_end z_end
   gsl_matrix * segMatrix;
