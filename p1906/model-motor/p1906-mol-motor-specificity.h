@@ -32,10 +32,12 @@
 #include "ns3/object.h"
 #include "ns3/nstime.h"
 #include "ns3/ptr.h"
+
 #include "ns3/uinteger.h"
 #include "ns3/double.h"
 #include "ns3/traced-value.h"
 #include "ns3/trace-source-accessor.h"
+
 #include "ns3/p1906-specificity.h"
 
 namespace ns3 {
