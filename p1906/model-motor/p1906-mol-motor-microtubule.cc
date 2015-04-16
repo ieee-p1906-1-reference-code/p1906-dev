@@ -285,7 +285,8 @@ void P1906MOL_MOTOR_MicrotubulesField::displayTubeChars()
 void P1906MOL_MOTOR_MicrotubulesField::createTubes()
 {
   P1906MOL_MOTOR_MathematicaHelper mathematica;
-	
+
+  NS_LOG_INFO (this);
   //! create the microtubules
   tubeMatrix = gsl_matrix_alloc (ts.numTubes * ts.segPerTube, 6);
   genTubes();
@@ -420,10 +421,10 @@ void P1906MOL_MOTOR_MicrotubulesField::getTubes(gsl_matrix * tm)
   NS_LOG_FUNCTION (this);
   // copy tubeMatrix to tm, but only if tm->size1 and tm->size2 are consistent with tubeMatrix
   if (tm->size1 == tubeMatrix->size1 && tm->size2 == tubeMatrix->size2)
-    NS_LOG_WARN ("sizes not equal tm->size1: " << tm->size1 << 
-                 " tubeMatrix_size1: " << tubeMatrix->size1 << 
-				 " tm->size2: " << tm->size2 << 
-				 " tubeMatrix->size2: " << tubeMatrix->size2);
+  NS_LOG_WARN ("sizes not equal tm->size1: " << tm->size1 << 
+               " tubeMatrix_size1: " << tubeMatrix->size1 << 
+			   " tm->size2: " << tm->size2 << 
+			   " tubeMatrix->size2: " << tubeMatrix->size2);
   gsl_matrix_memcpy (tm, tubeMatrix);
 }
 
@@ -453,9 +454,10 @@ void P1906MOL_MOTOR_MicrotubulesField::persistenceVersusEntropy(gsl_vector * per
     setTubePersistenceLength (gsl_vector_get (persistenceLengths, i));
     genTubes();
 	
-	NS_LOG_DEBUG ("i: " << i);
-	NS_LOG_DEBUG ("tubeMatrix: " << tubeMatrix->size1 << " x " << tubeMatrix->size2);
-	NS_LOG_DEBUG ("segPerTube: " << ts.segPerTube);
+	NS_LOG_DEBUG ("i: " << i << 
+	              " tubeMatrix: " << tubeMatrix->size1 << 
+				  " x " << tubeMatrix->size2 << 
+				  " segPerTube: " << ts.segPerTube);
 	//gsl_matrix_fprintf (stdout, tubeMatrix, "%f");
 	
 	//! store the set of tubes
@@ -489,8 +491,11 @@ void P1906MOL_MOTOR_MicrotubulesField::genTubes()
   gsl_matrix * segMatrix = gsl_matrix_alloc (ts.segPerTube, 6);
   double total_structural_entropy = 0;
   
-  NS_LOG_DEBUG ("tubeMatrix: " << tubeMatrix->size1 << " x " << tubeMatrix->size2);
-  NS_LOG_DEBUG ("numTubes: " << ts.numTubes << " segPerTube: " << ts.segPerTube << " volume: " << ts.volume);
+  NS_LOG_DEBUG ("tubeMatrix: " << tubeMatrix->size1 << 
+                " x " << tubeMatrix->size2 << 
+				" numTubes: " << ts.numTubes << 
+				" segPerTube: " << ts.segPerTube << 
+				" volume: " << ts.volume);
   
   //! volume starts at 0, 0, 0 to volume^(1/4) in each dimension
   for(size_t i = 0; i < ts.numTubes; i++)
@@ -504,14 +509,12 @@ void P1906MOL_MOTOR_MicrotubulesField::genTubes()
 	//! create a single tube
     P1906MOL_MOTOR_Tube tube(&ts, startPt);
 	
-    //! create a single tube of many segments
-    //tube.genTube(ts, r, segMatrix, startPt);
-    //NS_LOG_DEBUG ("segMatrix");
-	//tube.displayTube();
+	//! accumulate the structural entropy
 	total_structural_entropy += (ts.se);
 	
+	//! retrieve MT into segMatrix
 	tube.getSegmatrix(segMatrix);
-	//! copy tube segments to main tube matrix
+	//! copy this MT into main tube matrix, tubeMatrix
 	for(size_t j = 0; j < ts.segPerTube; j++)
 	  for(size_t k = 0; k < 6; k++)
 	  {
@@ -741,14 +744,14 @@ bool P1906MOL_MOTOR_MicrotubulesField::unitTest_Distance()
   gsl_vector * pt1 = gsl_vector_alloc (3);
   gsl_vector * pt2 = gsl_vector_alloc (3);
   
-  NS_LOG_DEBUG ("Beginning\n");
+  NS_LOG_DEBUG ("Beginning");
   point (startPt, 0, 0, 0);
   point (pt1, -1, -1, -1);
   point (pt2, 2, 2, 2);
   line (segment, pt1, pt2);
   double d = P1906MOL_MOTOR_Field::distance (startPt, segment);
   NS_LOG_DEBUG ("distance: " << d);
-  NS_LOG_DEBUG ("Completed\n");
+  NS_LOG_DEBUG ("Completed");
   
   return true;
 }
@@ -775,7 +778,7 @@ bool P1906MOL_MOTOR_MicrotubulesField::unitTest_Overlap()
   line (tubeMatrix3D, 0, pt3, pt4);
   getOverlap3D(segment3D, tubeMatrix3D, pts3D, tubeSegments);
   if (isPointOverlap(pt1, segment3D))
-    NS_LOG_INFO ("point overlaps\n");
+    NS_LOG_INFO ("point overlaps");
   NS_LOG_DEBUG ("Completed");
   
   return true;
@@ -912,7 +915,7 @@ bool P1906MOL_MOTOR_MicrotubulesField::unitTest_Plot2Mma(vector<P1906MOL_MOTOR_P
   double x, y, z;
   
   NS_LOG_DEBUG ("Beginning");
-  //NS_LOG_DEBUG ("number of points: " << pts.size());
+  NS_LOG_DEBUG ("number of points: " << pts.size());
   if (pts.size() == 0) //! nothing to plot
   {
     NS_LOG_WARN ("nothing to plot");
