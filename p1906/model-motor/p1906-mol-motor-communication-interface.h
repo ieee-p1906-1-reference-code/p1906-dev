@@ -41,11 +41,11 @@ namespace ns3 {
 /**
  * \ingroup P1906 framework
  *
- * \class P1906MOLCommunicationInterface
+ * \class P1906MOL_MOTOR_CommunicationInterface
  *
  * \brief Base class implementing a communication interface, which
  * is a container of the transmitter and the receiver entities, for
- * the MOLECULAR Example
+ * the MOLECULAR MOTOR Example
  */
 
 class P1906MOL_MOTOR_CommunicationInterface : public P1906CommunicationInterface
