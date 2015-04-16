@@ -54,7 +54,7 @@ class P1906NetDevice;
  * \class P1906MOL_MOTORTransmitterCommunicationInterface
  *
  * \brief Base class implementing the Transmitter entity in
- * the P1906 framework for the MOLECULAR Example
+ * the P1906 framework for the MOLECULAR MOTOR Example
  */
 
 class P1906MOL_MOTORTransmitterCommunicationInterface : public P1906TransmitterCommunicationInterface
