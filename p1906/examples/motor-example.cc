@@ -30,15 +30,7 @@
  * this file models the molecular communication based on microtubules structures in class P1906MOL_MOTOR_Field
  */
  
-//! \todo (DONE) set microtubule field parameters from within motor-example.cc (expose the parameters to the command line)
-//! \todo (WRITTEN) pass the microtubule structures to both instances of field for the Nodes?
-//! \todo (DONE) remove the ts structure from the set methods
-//! \todo access diffusion (MOL) parameters from extended model (currently in Specificity; may need to move to motion)
-//! \todo ensure that brownianMotion and motorWalk are using realistic movement rates
-//! \todo plot results
-//! \todo change all printfs to ns-3 LOG output
-//! \todo review documentation of each method
-//! \todo (OK AS-IS) modify the unique float2destination.mma file names to be shorter
+//! \todo plot some results
 //! \todo modify _RUN_MOTOR_CHANNEL_CAPACITY_.sh to generate plot of distance versus Brownian motion
 //! \todo extra-credit: modify _RUN_MOTOR_CHANNEL_CAPACITY_.sh to generate plot of distance versus Brownian motion WITH TUBES @ given orientations
 //! \todo extra-credit: modify _RUN_MOTOR_CHANNEL_CAPACITY_.sh to generate plot of structural entropy WITH TUBES @ given orientations
@@ -126,8 +118,6 @@
 #include "ns3/p1906-mol-motor-motion.h"
 #include "ns3/p1906-mol-motor-microtubule.h"
 #include "ns3/p1906-mol-motor-communication-interface.h"
-//#include "ns3/p1906-mol-motor-transmitter-communication-interface.h"
-//#include "ns3/p1906-mol-motor-receiver-communication-interface.h"
 
 using namespace ns3;
 
@@ -253,9 +243,8 @@ int main (int argc, char *argv[])
   NetDeviceContainer d;
   n.Create (2);
 
-  // Create a medium and the Motion component
+  // Create a medium and the Motion component - all parameters should be set via ns-3 configuration above
   Ptr<P1906MOL_MOTORMedium> medium = CreateObject<P1906MOL_MOTORMedium> ();
-  //! may need to set other motion properties...
   Ptr<P1906MOL_MOTOR_Motion> motion = CreateObject<P1906MOL_MOTOR_Motion> ();
   
   motion->SetDiffusionCoefficient (m_diffusion_coefficient);
@@ -265,6 +254,7 @@ int main (int argc, char *argv[])
   Ptr<P1906NetDevice> dev1 = CreateObject<P1906NetDevice> ();
   Ptr<P1906MOL_MOTOR_CommunicationInterface> c1 = CreateObject<P1906MOL_MOTOR_CommunicationInterface> ();
   Ptr<P1906MOL_MOTORSpecificity> s1 = CreateObject<P1906MOL_MOTORSpecificity> ();
+    //! this class creates the MTs (field)
   Ptr<P1906MOL_MOTOR_MicrotubulesField> fi1 = CreateObject<P1906MOL_MOTOR_MicrotubulesField> ();
   fi1->setTubeVolume (m_tube_volume);
   fi1->setTubeOrientationPhi(m_orientation_phi);
@@ -277,7 +267,7 @@ int main (int argc, char *argv[])
   fi1->setTubeSegments (m_seg_per_tube);
   fi1->createTubes(); // could create a watchdog timer here to re-create tubes periodically
   
-  //! this class creates the motor (message carrier)
+  //! this class creates the molecular motors (message carrier)
   Ptr<P1906MOL_MOTOR_Perturbation> p1 = CreateObject<P1906MOL_MOTOR_Perturbation> ();
   
   //NS_LOG_DEBUG ("Device 1 created");
@@ -286,14 +276,14 @@ int main (int argc, char *argv[])
   Ptr<P1906NetDevice> dev2 = CreateObject<P1906NetDevice> ();
   Ptr<P1906MOL_MOTOR_CommunicationInterface> c2 = CreateObject<P1906MOL_MOTOR_CommunicationInterface> ();
   Ptr<P1906MOL_MOTORSpecificity> s2 = CreateObject<P1906MOL_MOTORSpecificity> ();
-  //! SFB: this class creates the microtubules
+  //! this class creates the MTs (field)
   Ptr<P1906MOL_MOTOR_MicrotubulesField> fi2 = CreateObject<P1906MOL_MOTOR_MicrotubulesField> ();
-  //! this class creates the motor (message carrier)
+  //! this class creates the molecular motors (message carrier)
   Ptr<P1906MOL_MOTOR_Perturbation> p2 = CreateObject<P1906MOL_MOTOR_Perturbation> ();
   
   //NS_LOG_DEBUG ("Device 2 created");
 
-  // Set position of nodes: receiver volume surface is located in 
+  // Set position of nodes: receiver volume surface is a sphere located at the
   //   receiving Node's location (ComputePropagationDelay) where radius 
   //   is currently set as function of position
   Ptr<ListPositionAllocator> positionAlloc =
@@ -301,9 +291,10 @@ int main (int argc, char *argv[])
   positionAlloc->Add (Vector(0, 0, 0));
   
   std::istringstream iss(m_receiver_location);
-  double x, y, z;
-  iss >> x >> y >> z;
+  double x, y, z, r;
+  iss >> x >> y >> z >> r;
   positionAlloc->Add (Vector(x, y, z));
+  Config::SetDefault ("ns3::P1906MOL_MOTOR_VolSurface::Radius", DoubleValue (r));
   MobilityHelper mobility;
   mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
   mobility.SetPositionAllocator(positionAlloc);
