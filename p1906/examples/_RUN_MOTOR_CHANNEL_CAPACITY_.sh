@@ -25,14 +25,18 @@
 # *                      http://www.amazon.com/author/stephenbush
 # */
 
+# This example is the first test of indepedent message carrier scheduling. 
+# In this case motors operate over 10s intervals for 100s resulting in 10 samples of output information.
+
 set -x
 set -e
 
-# Use setenv NS_LOG P1906MOL_MOTOR_Motion to display the motion details.
+# Use setenv NS_LOG P1906MOL_MOTOR_Motion to display the motor motion detail and retrieve latency: "[propagation time]".
 
 export NS_LOG='P1906MOL_MOTOR_CommunicationInterface=level_all|prefix_time'
 export NS_LOG=$NS_LOG:'P1906MOL_MOTOR_ReceiverCommunicationInterface=level_all|prefix_time'
 export NS_LOG=$NS_LOG:'P1906MOL_MOTORMedium=level_all|prefix_time'
+export NS_LOG=$NS_LOG:'P1906MOL_MOTOR_Motion=level_all|prefix_time'
 
 # Microtubule orientation is governed in 3D space via spherical coordinates, orientationPhi and orientationTheta. 
 # Microtubule rigidity is controlled vi a persistence length argument. 
@@ -40,12 +44,13 @@ export NS_LOG=$NS_LOG:'P1906MOL_MOTORMedium=level_all|prefix_time'
 # In this example we hold persistence length constant and modify the orientation of the MTs in radians and can simulate the impact on motor propagation time.
 # The results are stored in Mathematica files that can be Import[]'ed to display the microtubules and motor motion. 
 
-for orientationPhi in {0..3..1}
+for orientationPhi in 0.0 0.7854 1.5708 3.1416 4.7124
 do
 	../waf --run "motor-example --orientation-phi=${orientationPhi}" &> tmp_out
 	mkdir -p ../MT-Orientation-${orientationPhi}
 	mv tmp_out ../MT-Orientation-${orientationPhi}
 	mv ../tubes-*.mma ../MT-Orientation-${orientationPhi}
-	mv ../move2Destination-*.mma ../MT-Orientation-${orientationPhi}
+	#mv ../move2Destination-*.mma ../MT-Orientation-${orientationPhi}
 	mv ../volsurface_*.mma ../MT-Orientation-${orientationPhi}
+	cat ../MT-Orientation-${orientationPhi}/tmp_out | awk '/propagation/ {print $4}' > ../MT-Orientation-${orientationPhi}/latencies.txt
 done
