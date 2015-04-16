@@ -287,21 +287,21 @@ void P1906MOL_MOTOR_VolSurface::reflect(P1906MOL_MOTOR_Pos last_pos, P1906MOL_MO
   intersection.front().getPos (ip);
   //! lp is now (x_1 - x_0) == v
   gsl_vector_sub (lp, ip);
-  //NS_LOG_DEBUG ("lp: << 
-  //  gsl_vector_get (lp, 0) << " " <<
-  //  gsl_vector_get (lp, 1) << " " <<
-  //  gsl_vector_get (lp, 2))
+  NS_LOG_DEBUG ("last position (lp): " << 
+    gsl_vector_get (lp, 0) << " " <<
+    gsl_vector_get (lp, 1) << " " <<
+    gsl_vector_get (lp, 2));
 
   double dot;
   //! (x_1 - x_0) . n = v . n
   gsl_blas_ddot (lp, rad_vec, &dot);
-  //NS_LOG_DEBUG ("dot: " << dot);
+  NS_LOG_DEBUG ("dot product of last position with radius vector (dot): " << dot);
   //! 2 n [(x_1 - x_0) . n]
   gsl_vector_scale (rad_vec, 2.0 * dot);
-  //NS_LOG_DEBUG ("(reflect) rad_vec: " <<
-  //  gsl_vector_get (rad_vec, 0) << " " <<
-  //  gsl_vector_get (rad_vec, 1) << " " <<
-  //  gsl_vector_get (rad_vec, 2)); 
+  NS_LOG_DEBUG ("(reflect) rad_vec: " <<
+    gsl_vector_get (rad_vec, 0) << " " <<
+    gsl_vector_get (rad_vec, 1) << " " <<
+    gsl_vector_get (rad_vec, 2)); 
     
   //! v - 2 (v . n) n
   gsl_vector_sub (lp, rad_vec);
@@ -314,7 +314,6 @@ void P1906MOL_MOTOR_VolSurface::reflect(P1906MOL_MOTOR_Pos last_pos, P1906MOL_MO
   
   //! update the current position with the reflected position
   current_pos.setPos (lp);
-  //NS_LOG_DEBUG ("current_pos after reflection " << current_pos);
   
   m_reflections++;
   NS_LOG_DEBUG ("reflected current_pos: " << current_pos);
@@ -328,7 +327,7 @@ void P1906MOL_MOTOR_VolSurface::getRadiusLine(gsl_vector * v_radius, P1906MOL_MO
   line (v_radius, center, pt);
 }
 
-//! return the angle between two vectors
+//! return the angle between two vectors in degrees
 double P1906MOL_MOTOR_VolSurface::vectorAngle(gsl_vector * seg1, gsl_vector * seg2)
 {
   gsl_vector * v1 = gsl_vector_alloc (3);
@@ -365,19 +364,19 @@ double P1906MOL_MOTOR_VolSurface::vectorAngle(gsl_vector * seg1, gsl_vector * se
   
   double dot;
   gsl_blas_ddot (v1, v2, &dot);
-  //NS_LOG_DEBUG ("dot: \n" << dot);
-	
+  NS_LOG_DEBUG ("dot v1 and v2: " << dot);
+  
   //! get the magnitudes
   double m1 = gsl_blas_dnrm2 (v1);
   double m2 = gsl_blas_dnrm2 (v2);
-  //NS_LOG_DEBUG ("m1: " << m1 << " " << m2);
+  NS_LOG_DEBUG ("magnitudes of v1 and v2, m1: " << m1 << " m2: " << m2);
   
   //! solve for the angle
   double arc = dot / (m1 * m2);
-  //NS_LOG_DEBUG ("arc: " << arc);
-  double angle = acos (arc) * 180.0 / M_PI;
+  NS_LOG_DEBUG ("angle between v1 and v2, arc: " << arc << " radians");
+  double angle = acos (arc) * 180.0 / M_PI; //! convert to degrees
   
-  NS_LOG_DEBUG ("angle: " << angle);
+  NS_LOG_DEBUG ("angle: " << angle << " degrees");
   return angle;
 }
 
@@ -399,7 +398,7 @@ double P1906MOL_MOTOR_VolSurface::fluxMeter(gsl_matrix * tubeMatrix)
 	//! find the intersecting points with surface volume
     sphereIntersections(segment, ipts);
 	//! would like to know whether segment is pointing in or out of the tube
-	//NS_LOG_DEBUG (ipts.size() << " points");
+	NS_LOG_DEBUG (ipts.size() << " points of intersection");
   }
     
   //! use the total number of intersecting tubes for now
@@ -429,7 +428,7 @@ bool P1906MOL_MOTOR_VolSurface::isInsideVolSurf(P1906MOL_MOTOR_Pos pt)
   if (norm < radius)
     isInside = true;
   m_messages_received++; // this should be moved to motion where it is called and message payload counted
-  NS_LOG_INFO (isInside);
+  NS_LOG_INFO ("motor inside volume surface?" << isInside);
   return isInside;
 }
 
@@ -451,7 +450,7 @@ void P1906MOL_MOTOR_VolSurface::sphereIntersections(gsl_vector * segment, vector
   //! find the direction of flow of each tube: tubes always flow from lower index to higher index in tubeMatrix
   //! flux
   
-  //NS_LOG_DEBUG ("Begin");
+  NS_LOG_DEBUG ("Begin");
 	
   //! sphere equation: |x - c|^2 = r^2 where c (3D) is the center, r (scalar) is the radius, 
   //! and x (3D) is points on the sphere  
@@ -474,14 +473,14 @@ void P1906MOL_MOTOR_VolSurface::sphereIntersections(gsl_vector * segment, vector
 	gsl_vector_get (segment, 4) - gsl_vector_get (segment, 1),
 	gsl_vector_get (segment, 5) - gsl_vector_get (segment, 2)
   );
-  //NS_LOG_DEBUG ("segment vector: " << l.displayPos ());
+  NS_LOG_DEBUG ("segment vector: " << l);
   
   //! convert the segment vector into a unit vector; divide by length
   l.getPos (lv);
   double segMag = gsl_blas_dnrm2 (lv);
   gsl_vector_scale (lv, 1.0 / segMag);
   l.setPos (lv);
-  //NS_LOG_DEBUG ("segment unit vector: " << l.displayPos ());
+  NS_LOG_DEBUG ("segment unit vector: " << l);
   
   //! d = -l * (o - c) +/- sqrt((l * (o - c))^2 - |o - c|^2 + r^2)
   //! B = l * (o - c), 4AC = |o - c|^2 + r^2, -B +/- sqrt(B^2 - 4AC)/2A
@@ -492,20 +491,20 @@ void P1906MOL_MOTOR_VolSurface::sphereIntersections(gsl_vector * segment, vector
   
   o.getPos (O);
   center.getPos (C);
-  //NS_LOG_DEBUG ("C and O: " << center << " " << o);
+  NS_LOG_DEBUG ("C and O: " << center << " " << o);
   
   //! B = l . (o - c)
   gsl_vector_sub (O, C);
-  //NS_LOG_DEBUG ("0 - C: " << gsl_vector_get (O, 0) " " << gsl_vector_get (O, 1) << " " << gsl_vector_get (O, 2));
+  NS_LOG_DEBUG ("0 - C: " << gsl_vector_get (O, 0) << " " << gsl_vector_get (O, 1) << " " << gsl_vector_get (O, 2));
   gsl_blas_ddot (lv, O, &B);
-  //NS_LOG_DEBUG ("lv: << gsl_vector_get (lv, 0) << " " << gsl_vector_get (lv, 1) << " " << gsl_vector_get (lv, 2));
-  //NS_LOG_DEBUG ("B = l . (o - c): " << B);
+  NS_LOG_DEBUG ("lv: " << gsl_vector_get (lv, 0) << " " << gsl_vector_get (lv, 1) << " " << gsl_vector_get (lv, 2));
+  NS_LOG_DEBUG ("B = l . (o - c): " << B);
   
   //! AC = |o - c|^2 + r^2
   double norm = gsl_blas_dnrm2 (O);
-  //NS_LOG_DEBUG ("|o - c|^2: " << norm);
+  NS_LOG_DEBUG ("|o - c|^2: " << norm);
   AC = norm + pow(r, 2);
-  //NS_LOG_DEBUG ("AC = |o - c|^2 + r^2: << AC);
+  NS_LOG_DEBUG ("AC = |o - c|^2 + r^2: " << AC);
   
   //! it looks like a pow(B, 2) term should be added to AC
   
@@ -522,12 +521,12 @@ void P1906MOL_MOTOR_VolSurface::sphereIntersections(gsl_vector * segment, vector
 	d = -B;
 	if (abs(d) <= segMag)
 	{
-		//NS_LOG_DEBUG ("AC == 0 d: " << d << " segMag: " << segMag);
-		//NS_LOG_DEBUG ("l: " << l);
-		//NS_LOG_DEBUG ("o: " << o);
+		NS_LOG_DEBUG ("AC == 0 d: " << d << " segMag: " << segMag);
+		NS_LOG_DEBUG ("l: " << l);
+		NS_LOG_DEBUG ("o: " << o);
 		//! x = o + d l
 		o.shiftPos (l, d);
-		//NS_LOG_DEBUG ("o shifted: " << o);
+		NS_LOG_DEBUG ("o shifted: " << o);
 		ipt.insert(ipt.end(), o);
     }
   }
@@ -538,7 +537,7 @@ void P1906MOL_MOTOR_VolSurface::sphereIntersections(gsl_vector * segment, vector
     P1906MOL_MOTOR_Pos tmp;
 	gsl_vector * v_tmp = gsl_vector_alloc (3);
 	
-	//NS_LOG_DEBUG ("AC: " << AC);
+	NS_LOG_DEBUG ("AC: " << AC);
 	
 	//! set the tmp position with the same value as o
 	o.getPos (v_tmp);
@@ -548,29 +547,28 @@ void P1906MOL_MOTOR_VolSurface::sphereIntersections(gsl_vector * segment, vector
 	d = -B + sqrt(AC);
     if (abs(d) <= segMag)
 	{	
-		//NS_LOG_DEBUG ("AC > 0 and d = -B + sqrt(AC) d: " << d << " segMag: " << segMag);
-		//NS_LOG_DEBUG ("l: " << l);
-		//NS_LOG_DEBUG ("o: " << o);
+		NS_LOG_DEBUG ("AC > 0 and d = -B + sqrt(AC) d: " << d << " segMag: " << segMag);
+		NS_LOG_DEBUG ("l: " << l);
+		NS_LOG_DEBUG ("o: " << o);
 		//! x = o + d l
 		o.shiftPos (l, d);
-		//NS_LOG_DEBUG (" o shifted: " << o);
+		NS_LOG_DEBUG (" o shifted: " << o);
 		ipt.insert(ipt.end(), o);
     }	
 	//! only do this if d is <= length of tube
 	d = -B - sqrt(AC);
 	if (abs(d) <= segMag)
 	{
-		//NS_LOG_DEBUG ("AC > 0 and d = -B - sqrt(AC) d: " << d << " segMag: " << segMag);
-		//NS_LOG_DEBUG ("l: " << l);
-		//NS_LOG_DEBUG ("tmp: " << tmp);
+		NS_LOG_DEBUG ("AC > 0 and d = -B - sqrt(AC) d: " << d << " segMag: " << segMag);
+		NS_LOG_DEBUG ("l: " << l);
+		NS_LOG_DEBUG ("tmp: " << tmp);
 		//! x = o + d l
 		tmp.shiftPos (l, d);
-		//NS_LOG_DEBUG ("tmp shifted: " << tmp);
+		NS_LOG_DEBUG ("tmp shifted: " << tmp);
 		ipt.insert(ipt.end(), tmp);
 	}
   }
   NS_LOG_INFO ("number of intersection points: " << ipt.size());
-  //NS_LOG_DEBUG ("End");
 }
 
 P1906MOL_MOTOR_VolSurface::~P1906MOL_MOTOR_VolSurface ()
