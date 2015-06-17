@@ -1,6 +1,6 @@
 %/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 %/*
-% *  Copyright � 2014 by IEEE.
+% *  Copyright � 2015 by IEEE.
 % *
 % *  This source file is an essential part of IEEE P1906.1,
 % *  Recommended Practice for Nanoscale and Molecular
@@ -32,17 +32,21 @@ close all
 clc
 clear all
 
-d = linspace(1e-6,0.1,1e2);
 
 em = load(strcat('RES_EM'));    
 mol = load(strcat('RES_MOL'));    
 
+d=em(:,1);
+
+
 figure('Name','Channel capacity (EM vs MOL)')
-semilogy(d,em(:,2), '--*r');
+loglog(d,em(:,2), '-or');
 hold on
-semilogy(d,mol(:,2), '-sb');
-ylabel ('Channel capacity [bps]',  'fontsize', 14);
-xlabel ('Distance [m]',  'fontsize', 14);
-set(gca, 'fontsize', 14)
+loglog(d,mol(:,2), '--b');
+ylabel ('Channel capacity [bps]',  'fontsize', 30);
+xlabel ('Distance [m]',  'fontsize', 30);
+set(gca, 'fontsize', 30)
 legend ('EM communication', 'Molecular communication')
 grid
+xlim([1e-10 1e0])
+ylim([1e-10 1e15])

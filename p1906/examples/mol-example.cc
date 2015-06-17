@@ -59,7 +59,7 @@ int main (int argc, char *argv[])
   double nodeDistance = 0.001; 								//  [m]
   double nbOfMoleculas = 50000; 							//  [pJ]
   double pulseInterval = 1.;								//  [ms]
-  double diffusionCoefficient = 1;							//  [nm^2/ns]
+  double diffusionCoefficient = 1000;							//  [nm^2/ns]
 
   CommandLine cmd;
   cmd.AddValue("nodeDistance", "nodeDistance", nodeDistance);
@@ -68,7 +68,7 @@ int main (int argc, char *argv[])
   cmd.AddValue("pulseInterval", "pulseInterval", pulseInterval);
   cmd.Parse(argc, argv);
 
-  diffusionCoefficient = diffusionCoefficient * 1e-9;
+  diffusionCoefficient = diffusionCoefficient * 1e-12;
 
   Time::SetResolution(Time::NS);
 
@@ -139,7 +139,6 @@ int main (int argc, char *argv[])
   c1->HandleTransmission (message);
 
 
-  Simulator::Stop (Seconds (0.01));
   Simulator::Run ();
 
   Simulator::Destroy ();
