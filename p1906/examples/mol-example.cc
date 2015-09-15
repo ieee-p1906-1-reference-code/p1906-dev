@@ -56,7 +56,7 @@ int main (int argc, char *argv[])
 {	
 
   //set of parameters
-  double nodeDistance = 0.001; 								//  [m]
+  double nodeDistance = 0.005; 								//  [m]
   double nbOfMoleculas = 50000; 							//  [pJ]
   double pulseInterval = 1.;								//  [ms]
   double diffusionCoefficient = 1000;							//  [nm^2/ns]
