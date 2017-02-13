@@ -57,6 +57,7 @@ public:
 
 private:
 
+  int m_newVariable
 };
 
 }
